@@ -1,0 +1,17 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: harbor.system.cf-acc-am2.intranet.rws.nl/docker-mirror/openjdk
+
+inputs:
+- name: git-src
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    chmod +x ./git-src/conf/ci/buildapp.sh
+    ./git-src/conf/ci/buildapp.sh
