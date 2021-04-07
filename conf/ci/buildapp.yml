@@ -6,12 +6,12 @@ image_resource:
     repository: harbor.system.cf-acc-am2.intranet.rws.nl/docker-mirror/openjdk
 
 inputs:
-- name: git-src
+  - name: git-src
 
 run:
   path: sh
   args:
-  - -exc
-  - |
-    chmod +x ./git-src/conf/ci/buildapp.sh
-    ./git-src/conf/ci/buildapp.sh
+    - -exc
+    - |
+      chmod +x ./git-src/conf/ci/buildapp.sh
+      ./git-src/conf/ci/buildapp.sh

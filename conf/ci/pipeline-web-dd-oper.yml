@@ -1,28 +1,29 @@
 jobs:
-- name: Deploy-to-Development
-  serial: true
-  plan:
-  - get: git-src
-    resource: git-src-develop
-    trigger: true
-  - task: buildapp
-    file: git-src/ci/buildapp.yml
-  - put: cf-development
-    params:
-      current_app_name: ((app-name))-development
-#      manifest: git-src/cf-manifest/development_am2.yml
-      path: git-src/target/universal/rws-web-dd-oper-1.0-SNAPSHOT.zip
+  - name: Deploy-to-Development
+    serial: true
+    plan:
+      - get: git-src
+        resource: git-src-develop
+        trigger: true
+      - task: buildapp
+        file: git-src/ci/buildapp.yml
+      - put: cf-development
+        params:
+          current_app_name: ((app-name))-development
+          #      manifest: git-src/cf-manifest/development_am2.yml
+          path: git-src/target/universal/rws-web-dd-oper-1.0-SNAPSHOT.zip
 
-- name: git-src-develop
-  type: git
-  source:
-    uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER
+  - name: git-src-develop
+    type: git
+    source:
+      uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER
+      branch: master
 
-- name: cf-development
-  type: cf
-  source:
-    api: https://api.system.cf-acc-am2.intranet.rws.nl
-    username: ((wm-concourse-integration.username))
-    password: ((wm-concourse-integration.password))
-    organization: WM
-    space: DEV_WM_WEB
+  - name: cf-development
+    type: cf
+    source:
+      api: https://api.system.cf-acc-am2.intranet.rws.nl
+      username: ((wm-concourse-integration.username))
+      password: ((wm-concourse-integration.password))
+      organization: WM
+      space: DEV_WM_WEB
