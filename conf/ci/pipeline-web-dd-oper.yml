@@ -6,13 +6,14 @@ jobs:
         resource: git-src-develop
         trigger: true
       - task: buildapp
-        file: git-src/ci/buildapp.yml
+        file: git-src/conf/ci/buildapp.yml
       - put: cf-development
         params:
           current_app_name: ((app-name))-development
           #      manifest: git-src/cf-manifest/development_am2.yml
           path: git-src/target/universal/rws-web-dd-oper-1.0-SNAPSHOT.zip
 
+resources:
   - name: git-src-develop
     type: git
     source:
