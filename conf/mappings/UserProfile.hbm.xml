@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="models">
+    <class name="UserProfile" table="UserProfile">
+        <id name="id" type="long" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="firstname" type="string" column="firstname"/>
+        <property name="lastname" type="string" column="lastname"/>
+        <property name="email" type="string" column="email"/>
+        <property name="password" type="string" column="password"/>
+    </class>
+</hibernate-mapping>

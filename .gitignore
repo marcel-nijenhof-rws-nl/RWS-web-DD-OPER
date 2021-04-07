@@ -1,1 +1,21 @@
-﻿.idea
+# IDE cache files
+
+/.idea
+
+
+# Local files
+
+/test
+/conf/application.conf
+/logs/
+target/scala-2.13
+target/streams
+/conf/hibernate.cfg.xml
+logs/application.log
+target/global-logging
+project/target/streams
+conf/certification.properties
+conf/certificate.jks
+/node_modules/
+conf/hibernate.cfg.xml
+/target

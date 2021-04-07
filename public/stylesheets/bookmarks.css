@@ -1,0 +1,13 @@
+img.placeholder {
+    opacity: 0.5;
+    z-index: -100;
+    width: 20vw;
+    display: block;
+    margin: 20vh auto auto;
+}
+
+div.card-holder {
+    margin-top: 20px;
+    align-items: start;
+    display: flex;
+}

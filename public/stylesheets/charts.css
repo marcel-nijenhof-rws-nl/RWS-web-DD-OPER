@@ -1,0 +1,74 @@
+.chart-menu {
+    position: absolute;
+    right: 0;
+    top: 85px;
+    background-color: #154273;
+    color: #F3F3F3;
+    height: 90vh;
+    width: 15vw;
+    padding-left: 10px;
+    z-index: 1;
+    display: block;
+    box-shadow: 2px 2px 5px rgba(5, 5, 5, .4);
+}
+
+label {
+    width: 100px;
+    margin-right: auto;
+}
+
+button.mdl-button {
+    margin: auto;
+}
+
+div.row {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+div.row.bottom {
+    position: absolute;
+    margin-right: 5px;
+    bottom: 0;
+    right: 0;
+    justify-content: flex-end;
+}
+
+select.dropdown {
+    width: 80%;
+    border-radius: 5px;
+    height: 25px;
+    background-color: #fff;
+}
+
+select.dropdown option {
+    background-color: #fff;
+    color: #222222;
+    transition: 0.2s ease-in-out;
+}
+
+.chart-holder {
+    padding-top: 15px;
+    width: 78vw;
+    height: 90vh;
+}
+
+section.chart-placeholder {
+    color: #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    width: 82vw;
+    height: 80vh;
+}
+
+section.chart-placeholder img {
+    opacity: 0.5;
+    z-index: -100;
+    width: 20vw;
+    display: block;
+}
