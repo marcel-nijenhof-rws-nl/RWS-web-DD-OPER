@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="models">
+    <class name="BookmarkGroup" table="BookmarkGroup">
+        <id name="id" type="long" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="userprofile_id" type="java.lang.Long" column="userprofile_id"/>
+        <property name="name" type="string" column="name"/>
+    </class>
+</hibernate-mapping>

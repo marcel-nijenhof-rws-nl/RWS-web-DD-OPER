@@ -9,6 +9,9 @@ image_resource:
 inputs:
   - name: git-src
 
+outputs:
+  - name: git-src
+
 run:
   path: sh
   args:

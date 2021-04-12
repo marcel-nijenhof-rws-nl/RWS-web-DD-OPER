@@ -1,27 +1,29 @@
 # Navigation
-GET         /                                             controllers.NavigationController.login
-GET         /bookmarks                                    controllers.NavigationController.bookmarks
-GET         /charts                                       controllers.NavigationController.charts
-GET         /register                                     controllers.NavigationController.register
-GET         /settings                                     controllers.NavigationController.settings
-GET         /start                                        controllers.NavigationController.start
+GET           /                                             controllers.NavigationController.login
+GET           /bookmarks                                    controllers.NavigationController.bookmarks
+GET           /charts                                       controllers.NavigationController.charts
+GET           /register                                     controllers.NavigationController.register
+GET           /settings                                     controllers.NavigationController.settings
+GET           /start                                        controllers.NavigationController.start
 
 # Charts
-GET         /charts/locations                             controllers.ChartController.GetLocations()
-GET         /charts/locations/quantities                  controllers.ChartController.GetQuantities()
-GET         /charts/locations/:location                   controllers.ChartController.GetLocationInfo(location: String)
-GET         /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
-POST        /charts/result                                controllers.ChartController.GetMeasurementChart(request: Request)
+GET           /charts/locations                             controllers.ChartController.GetLocations()
+GET           /charts/locations/quantities                  controllers.ChartController.GetQuantities()
+GET           /charts/locations/:location                   controllers.ChartController.GetLocationInfo(location: String)
+GET           /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
+POST          /charts/result                                controllers.ChartController.GetMeasurementChart(request: Request)
 
 # Bookmarks
-GET         /bookmarks/:token                             controllers.BookmarkController.GetBookmarks(token: String)
-POST        /bookmarks/add                                controllers.BookmarkController.AddBookmark(request: Request)
+GET           /bookmarks/:token                             controllers.BookmarkController.GetBookmarks(token: String)
+POST          /bookmarks/add                                controllers.BookmarkController.AddBookmark(request: Request)
+PUT           /bookmarks/save                               controllers.BookmarkController.EditBookmarkGroupName(request: Request)
+DELETE        /bookmarks/delete/:id                         controllers.BookmarkController.DeleteBookmarkGroup(id : Long)
 
 # Login and registration
-POST        /login                                        controllers.LoginController.Login(request: Request)
-POST        /login/:token                                 controllers.LoginController.validateSession(token : String)
-POST        /register                                     controllers.LoginController.Register(request: Request)
-POST        /session/:token                               controllers.LoginController.validateSession(token : String)
+POST          /login                                        controllers.LoginController.Login(request: Request)
+POST          /login/:token                                 controllers.LoginController.validateSession(token : String)
+POST          /register                                     controllers.LoginController.Register(request: Request)
+POST          /session/:token                               controllers.LoginController.validateSession(token : String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                                 controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                 controllers.Assets.versioned(path="/public", file: Asset)
