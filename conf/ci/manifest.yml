@@ -1,0 +1,4 @@
+applications:
+  - name: RWS-web-DD-OPER
+    stack: cflinuxfs3
+    path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip

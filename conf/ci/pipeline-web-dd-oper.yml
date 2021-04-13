@@ -10,8 +10,8 @@ jobs:
       - put: cf-development
         params:
           current_app_name: RWS-web-DD-OPER
-          #      manifest: git-src/cf-manifest/development_am2.yml
-          path: git-src/target/universal/rws-web-dd-oper-1.0-SNAPSHOT.zip
+          manifest: git-src/conf/ci/manifest.yml
+          path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
 
 resources:
   - name: git-src-develop
