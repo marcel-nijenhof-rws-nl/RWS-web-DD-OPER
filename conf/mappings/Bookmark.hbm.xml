@@ -8,13 +8,10 @@
         <id name="id" type="long" column="id">
             <generator class="native"/>
         </id>
-        <property name="userprofile_id" type="long" column="userprofile_id"/>
-        <property name="name" type="string" column="name"/>
         <property name="location" type="string" column="location"/>
         <property name="quantity" type="string" column="quantity"/>
         <property name="aspectSet" type="string" column="aspectSet"/>
         <property name="interval" type="string" column="interval"/>
-        <property name="startTime" type="string" column="startTime"/>
-        <property name="endTime" type="string" column="endTime"/>
+        <property name="bookmarkGroup_id" type="java.lang.Long" column="bookmarkgroup_id"/>
     </class>
 </hibernate-mapping>

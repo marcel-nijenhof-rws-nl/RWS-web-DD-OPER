@@ -16,6 +16,7 @@ let bookmarkDialog = document.querySelector('dialog.bookmark-dialog');
 let responseMessage = document.querySelector('.mdl-js-snackbar');
 let latestResults;
 let latestDataSettings;
+let graphs = [{}, {}, {}, {}];
 
 let date = new Date();
 let endDate = new Date();
@@ -72,6 +73,10 @@ $.ajax({
     }
 });
 
+function resetGraphsCache() {
+    graphs = [{}, {}, {}, {}];
+}
+
 function removeLastDataset() {
     myChart.data.datasets.pop();
     colorIndex--;
@@ -93,6 +98,7 @@ function showSnackbar(message) {
 }
 
 function setValues() {
+    console.log(colorIndex);
     latestDataSettings = {
         "location": locationDropdown.value,
         "quantity": quantitiesDropdown.value,
@@ -103,13 +109,15 @@ function setValues() {
         "token": localStorage.getItem('session-token'),
     };
 
+    graphs[colorIndex] = latestDataSettings;
+
     return latestDataSettings;
 }
 
 function addBookmark() {
 
-    let data = setValues();
-    data.bookmarkName = document.querySelector("#bookmark-name").value;
+    let data = graphs;
+    data[0].bookmarkName = document.querySelector("#bookmark-name").value;
 
 
     $.ajax({
@@ -196,11 +204,21 @@ function setDepthOption(option) {
                         x.points.forEach(item => {
                             if (option != null) {
                                 if (item.coordinates[2] == option.value) {
-                                    data.push({"x": aspect.timeStamp, "y": item.value, "quality": item.quality, "additionalInfo": item.additionalInfo});
+                                    data.push({
+                                        "x": aspect.timeStamp,
+                                        "y": item.value,
+                                        "quality": item.quality,
+                                        "additionalInfo": item.additionalInfo
+                                    });
                                 }
                             } else {
                                 if (item.coordinates[2] == depthDropdown.value) {
-                                    data.push({"x": aspect.timeStamp, "y": item.value, "quality": item.quality, "additionalInfo": item.additionalInfo});
+                                    data.push({
+                                        "x": aspect.timeStamp,
+                                        "y": item.value,
+                                        "quality": item.quality,
+                                        "additionalInfo": item.additionalInfo
+                                    });
                                 }
                             }
                         });
@@ -225,7 +243,12 @@ function setDepthOption(option) {
             latestResults.events.forEach(aspect => {
                 aspect.points.forEach(point => {
                     if (point.coordinates[2] == depthDropdown.value) {
-                        data.push({"x": aspect.timeStamp, "y": point.value, "quality": point.quality, "additionalInfo": point.additionalInfo});
+                        data.push({
+                            "x": aspect.timeStamp,
+                            "y": point.value,
+                            "quality": point.quality,
+                            "additionalInfo": point.additionalInfo
+                        });
                     }
                 });
             });
@@ -242,7 +265,12 @@ function setExtraOption(option) {
     latestResults.events.forEach(aspect => {
         aspect.aspects.forEach(item => {
             if (item.name === option.value) {
-                data.push({"x": aspect.timeStamp, "y": item.value, "quality": item.quality, "additionalInfo": item.additionalInfo});
+                data.push({
+                    "x": aspect.timeStamp,
+                    "y": item.value,
+                    "quality": item.quality,
+                    "additionalInfo": item.additionalInfo
+                });
             }
         })
     });
@@ -260,7 +288,12 @@ function getData(results) {
     if (latestResults.events[0]?.value != null) {
         extraDropdown.parentElement.setAttribute('hidden', 'true');
         latestResults.events.forEach(item => {
-            data.push({"x": item.timeStamp, "y": item.value, "quality": item.quality, "additionalInfo": item.additionalInfo});
+            data.push({
+                "x": item.timeStamp,
+                "y": item.value,
+                "quality": item.quality,
+                "additionalInfo": item.additionalInfo
+            });
         });
         return data;
     } else {
@@ -431,6 +464,7 @@ function updateAxis() {
 
 function addNewDataset() {
     if (colorIndex < 3) {
+        colorIndex++;
 
         if (quantitiesDropdown.value === "waterchlorosity") {
             chlorosityDropdown.parentElement.removeAttribute('hidden');
@@ -449,7 +483,6 @@ function addNewDataset() {
                 showSnackbar("Er is geen data beschikbaar");
             },
             success: function (e) {
-                colorIndex++;
                 if (myChart) {
                     let dataset = {
                         yAxisID: getYaxisType(e.results[0].observationType.aspectSet.aspects[0].unit),
@@ -484,7 +517,6 @@ function generateNewChart(provider, results) {
         chlorosityDropdown.parentElement.removeAttribute('hidden');
     }
 
-    colorIndex = 0;
     let displayName = results.location?.properties?.displayNameGlobal
         + " - " + results.observationType?.quantityName
         + " (" + results.observationType?.aspectSet?.aspects[0]?.unit + ")";
