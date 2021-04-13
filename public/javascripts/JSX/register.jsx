@@ -1,3 +1,7 @@
+const React = require('react');
+const ReactDOM = require('react-dom');
+const CustomSnackbar = require('./Components/CustomSnackbar.jsx');
+
 const inputEmail = document.querySelector('#input_email');
 const inputEmail2 = document.querySelector('#input_email2');
 const inputPassword = document.querySelector('#input_password');
@@ -6,15 +10,6 @@ const inputLname = document.querySelector('#input_lname');
 
 const spinner = document.querySelector('#spinner');
 const registerBtn = document.querySelector('#register-button');
-
-// Messages
-const errFields = document.querySelector('#err_fields');
-const errEmail = document.querySelector('#err_email');
-const errEmailComp = document.querySelector('#err_email_comp');
-const errEmailPattern = document.querySelector('#err_email_pattern');
-const errReg = document.querySelector('#err_reg');
-
-const successfulRegister = document.querySelector('#suc_reg');
 
 registerBtn.addEventListener('click', () => {
    register();
@@ -26,13 +21,6 @@ function register() {
     let password = inputPassword.value;
     let firstname = inputFname.value;
     let lastname = inputLname.value;
-
-    successfulRegister.setAttribute('hidden', 'true');
-    errFields.setAttribute('hidden', 'true');
-    errEmail.setAttribute('hidden', 'true');
-    errEmailComp.setAttribute('hidden', 'true');
-    errEmailPattern.setAttribute('hidden', 'true');
-    errReg.setAttribute('hidden', 'true');
 
     if (email !== ""
         && email2 !== ""
@@ -60,27 +48,33 @@ function register() {
                     error: function (e) {
                         spinner.classList.remove('is-active');
                         if (e.status === 400) {
-                            errEmail.removeAttribute('hidden');
+                            ReactDOM.render(<CustomSnackbar message="Email is al in gebruik." severityStrength="error"/>,
+                                document.querySelector("#snackbar-holder"));
                         }
                         if (e.status === 500) {
-                            errReg.removeAttribute('hidden');
+                            ReactDOM.render(<CustomSnackbar message="Er is iets fout gegaan bij het registreren." severityStrength="error"/>,
+                                document.querySelector("#snackbar-holder"));
                         }
                     },
                     success: () => {
                         spinner.classList.remove('is-active');
-                        successfulRegister.removeAttribute('hidden');
+                        ReactDOM.render(<CustomSnackbar message="U bent geregistreerd. U wordt terug gebracht." severityStrength="success"/>,
+                            document.querySelector("#snackbar-holder"));
                         setTimeout(function () {
                             window.location.href = '/';
                         }, 2000);
                     }
                 });
             } else {
-                errEmailComp.removeAttribute('hidden');
+                ReactDOM.render(<CustomSnackbar message="Emails komen niet overeen." severityStrength="warning"/>,
+                    document.querySelector("#snackbar-holder"));
             }
         } else {
-            errEmailPattern.removeAttribute('hidden');
+            ReactDOM.render(<CustomSnackbar message="Voer een geldig email adres in." severityStrength="warning"/>,
+                document.querySelector("#snackbar-holder"));
         }
     } else {
-        errFields.removeAttribute('hidden');
+        ReactDOM.render(<CustomSnackbar message="Voer alle velden in." severityStrength="warning"/>,
+            document.querySelector("#snackbar-holder"));
     }
 }

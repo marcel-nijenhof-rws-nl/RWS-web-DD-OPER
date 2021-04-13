@@ -1,14 +1,15 @@
-var jws = require('jws');
+const jws = require('jws');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 const spinner = document.querySelector('#spinner');
 const inputEmail = document.querySelector('#input_email');
 const inputPassword = document.querySelector('#input_password');
 
-const errEmail = document.querySelector('#err_email_pattern');
-const errCred = document.querySelector('#err_cred');
-
 const loginBtn = document.querySelector('button.mdl-button');
 const token = localStorage.getItem("session-token");
+
+const CustomSnackbar = require('./Components/CustomSnackbar.jsx');
 
 if (token) {
     $.ajax({
@@ -22,7 +23,13 @@ if (token) {
 }
 
 
-inputPassword.addEventListener('keydown', function (e) {
+inputPassword.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+        login();
+    }
+});
+
+inputEmail.addEventListener('keydown', (e) => {
     if (e.keyCode === 13) {
         login();
     }
@@ -40,9 +47,6 @@ function loading() {
 function login() {
     let email = inputEmail.value;
     let password = inputPassword.value;
-
-    errEmail.setAttribute('hidden', 'true');
-    errCred.setAttribute('hidden', 'true');
 
     if (email !== "" && password !== "") {
         loginBtn.setAttribute("disabled", "true");
@@ -71,8 +75,10 @@ function login() {
                     data: JSON.stringify(credentials),
                     error: function (e) {
                         if (e.status === 422) {
+                            ReactDOM.render(<CustomSnackbar message="Email of wachtwoord bestaat niet."
+                                                            severityStrength="error"/>,
+                                document.querySelector("#snackbar-holder"));
                             loginBtn.removeAttribute("disabled");
-                            errCred.removeAttribute('hidden');
                             spinner.classList.remove('is-active');
                         } else {
                             window.location.reload();
@@ -86,7 +92,8 @@ function login() {
             });
 
         } else {
-            errEmail.removeAttribute('hidden');
+            ReactDOM.render(<CustomSnackbar message="Voer een geldig email adres in." severityStrength="warning"/>,
+                document.querySelector("#snackbar-holder"));
             loginBtn.removeAttribute("disabled");
         }
     }
