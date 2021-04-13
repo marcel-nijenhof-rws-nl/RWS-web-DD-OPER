@@ -10,7 +10,7 @@ inputs:
   - name: git-src
 
 outputs:
-  - name: git-src
+  - name: zip
 
 run:
   path: sh
