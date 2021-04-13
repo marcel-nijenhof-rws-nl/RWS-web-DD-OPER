@@ -10,7 +10,7 @@ inputs:
   - name: git-src
 
 outputs:
-  - name: zip
+  - name: play-app
 
 run:
   path: sh
