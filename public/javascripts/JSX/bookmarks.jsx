@@ -31,8 +31,8 @@ const KeyboardArrowUpIcon = require('@material-ui/icons/KeyboardArrowUp').defaul
 
 let emptyPlaceholder = document.querySelector("div img.placeholder");
 
-function createBookmarkRow(location, quantity, id) {
-    return {location, quantity, id}
+function createBookmarkRow(location, quantity, id, aspectSet) {
+    return {location, quantity, id, aspectSet}
 }
 
 function createRow(groupName, id, bookmark) {
@@ -155,6 +155,7 @@ function Row(props) {
                                     <TableRow>
                                         <TableCell>Locatie</TableCell>
                                         <TableCell>Kwantiteit</TableCell>
+                                        <TableCell>Aspect Set</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -164,6 +165,7 @@ function Row(props) {
                                                 {bookmark.location}
                                             </TableCell>
                                             <TableCell>{bookmark.quantity}</TableCell>
+                                            <TableCell>{bookmark.aspectSet}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -217,7 +219,7 @@ function refreshTable() {
                 e.forEach(item => {
                     let bookmarks = [];
                     item.forEach(x => {
-                        let bookmark = createBookmarkRow(x[0].location, x[0].quantity, x[0].id);
+                        let bookmark = createBookmarkRow(x[0].location, x[0].quantity, x[0].id, x[0].aspectSet);
                         bookmarks.push(bookmark);
                     })
 

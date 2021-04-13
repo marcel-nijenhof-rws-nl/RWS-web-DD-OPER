@@ -84204,11 +84204,12 @@ var KeyboardArrowUpIcon = require('@material-ui/icons/KeyboardArrowUp')["default
 
 var emptyPlaceholder = document.querySelector("div img.placeholder");
 
-function createBookmarkRow(location, quantity, id) {
+function createBookmarkRow(location, quantity, id, aspectSet) {
   return {
     location: location,
     quantity: quantity,
-    id: id
+    id: id,
+    aspectSet: aspectSet
   };
 }
 
@@ -84357,13 +84358,13 @@ function Row(props) {
   }, "Bladwijzers"), /*#__PURE__*/React.createElement(Table, {
     size: "small",
     "aria-label": "purchases"
-  }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, "Locatie"), /*#__PURE__*/React.createElement(TableCell, null, "Kwantiteit"))), /*#__PURE__*/React.createElement(TableBody, null, row.bookmark.map(function (bookmark) {
+  }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, "Locatie"), /*#__PURE__*/React.createElement(TableCell, null, "Kwantiteit"), /*#__PURE__*/React.createElement(TableCell, null, "Aspect Set"))), /*#__PURE__*/React.createElement(TableBody, null, row.bookmark.map(function (bookmark) {
     return /*#__PURE__*/React.createElement(TableRow, {
       key: bookmark.id
     }, /*#__PURE__*/React.createElement(TableCell, {
       component: "th",
       scope: "row"
-    }, bookmark.location), /*#__PURE__*/React.createElement(TableCell, null, bookmark.quantity));
+    }, bookmark.location), /*#__PURE__*/React.createElement(TableCell, null, bookmark.quantity), /*#__PURE__*/React.createElement(TableCell, null, bookmark.aspectSet));
   }))))))));
 }
 
@@ -84430,7 +84431,7 @@ function refreshTable() {
         e.forEach(function (item) {
           var bookmarks = [];
           item.forEach(function (x) {
-            var bookmark = createBookmarkRow(x[0].location, x[0].quantity, x[0].id);
+            var bookmark = createBookmarkRow(x[0].location, x[0].quantity, x[0].id, x[0].aspectSet);
             bookmarks.push(bookmark);
           });
           rows.push(createRow(item[0][1].name, item[0][1].id, bookmarks));
