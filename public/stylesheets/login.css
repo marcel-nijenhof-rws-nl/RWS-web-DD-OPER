@@ -2,17 +2,13 @@
     background: #F3F3F3;
     padding: 0;
     width: 400px;
-    border-radius: 20px;
+    border-radius: 15px;
     display: block;
     margin: 12.5% auto auto;
 }
 
 .input {
-    display: block;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin: 5px auto;
+    margin: 20px 75px 0;
 }
 
 .link {
@@ -31,32 +27,9 @@
     justify-content: center;
     margin: auto;
 }
-
+div.center {
+    padding-bottom: 25px;
+}
 .space-between {
     justify-content: space-between;
-}
-
-.error {
-    background: #ff9d96;
-    border-radius: 5px;
-    border: 2px solid #ff0000;
-    width: 400px;
-    height: 25px;
-    display: block;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: auto auto 2px;
-}
-.success {
-    background: #bbff96;
-    border-radius: 5px;
-    border: 2px solid #00ff00;
-    width: 400px;
-    height: 25px;
-    display: block;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: auto auto 2px;
 }

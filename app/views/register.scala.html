@@ -11,36 +11,7 @@
 
     <body>
         <div id="snackbar-holder"></div>
-        <div class="container">
-            <div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                    <input class="mdl-textfield__input" type="text" id="input_fname">
-                    <label class="mdl-textfield__label" for="input_fname">Voornaam</label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                    <input class="mdl-textfield__input" type="text" id="input_lname">
-                    <label class="mdl-textfield__label" for="input_lname">Achternaam</label>
-                </div>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                <input class="mdl-textfield__input" type="email" id="input_email">
-                <label class="mdl-textfield__label" for="input_email">Email</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                <input class="mdl-textfield__input" type="email" id="input_email2">
-                <label class="mdl-textfield__label" for="input_email2">Email bevestiging</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                <input class="mdl-textfield__input" type="password" id="input_password">
-                <label class="mdl-textfield__label" for="input_password">Wachtwoord</label>
-            </div>
-            <div id="spinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner center"></div>
-            <div class="buttons">
-                <button class="mdl-button mdl-js-button"
-                onclick="window.location.href = '@routes.NavigationController.login()'">Terug</button>
-                <button id="register-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--yellow">Registreer</button>
-            </div>
-        </div>
+        <div id="root" class="container"></div>
     </body>
 </html>
 
