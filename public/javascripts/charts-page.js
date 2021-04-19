@@ -43,35 +43,6 @@ let colors = {
     ],
 
 }
-date.setDate(date.getDate() - 1);
-endDate.setDate(endDate.getDate());
-
-startTimePicker.value = date.toISOString().slice(0, 16);
-endTimePicker.value = endDate.toISOString().slice(0, 16);
-
-$.ajax({
-    type: "GET",
-    url: "/charts/locations",
-    contentType: "application/json; charset=utf-8",
-    error: function () {
-        locationDropdown.remove(0);
-        locationDropdown.append(new Option("Locaties kunnen niet worden opgehaald", ""));
-        showSnackbar("ERROR: Locaties kunnen niet worden opgehaald");
-    },
-    success: function (e) {
-        locationDropdown.remove(0);
-        let placeholder = new Option("Kies locatie", "");
-        placeholder.classList.add("mdl-textfield__label");
-        placeholder.setAttribute("selected", "true");
-        placeholder.setAttribute("disabled", "true");
-        locationDropdown.append(placeholder);
-        e.results.forEach(o => {
-            let option = new Option(o.properties?.locationName, o.properties?.locationName);
-            option.classList.add("mdl-textfield__label");
-            locationDropdown.append(option);
-        })
-    }
-});
 
 function resetGraphsCache() {
     graphs = [{}, {}, {}, {}];
@@ -98,7 +69,6 @@ function showSnackbar(message) {
 }
 
 function setValues() {
-    console.log(colorIndex);
     latestDataSettings = {
         "location": locationDropdown.value,
         "quantity": quantitiesDropdown.value,
@@ -106,33 +76,12 @@ function setValues() {
         "endTime": endTimePicker.value,
         "interval": intervalDropdown.value,
         "aspectSet": aspectSet.value,
-        "token": localStorage.getItem('session-token'),
+        // "token": localStorage.getItem('session-token'),
     };
 
     graphs[colorIndex] = latestDataSettings;
 
     return latestDataSettings;
-}
-
-function addBookmark() {
-
-    let data = graphs;
-    data[0].bookmarkName = document.querySelector("#bookmark-name").value;
-
-
-    $.ajax({
-        type: "POST",
-        url: "/bookmarks/add",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        error: function (e) {
-
-        },
-        success: function () {
-            showSnackbar("Bladwijzer toegevoegd");
-            bookmarkDialog.close();
-        }
-    });
 }
 
 function showOptions() {
@@ -162,32 +111,6 @@ function showOptions() {
 
             if (quantitiesDropdown.childNodes[0].innerHTML.includes("waterlevel")) {
                 intervalDropdown.parentElement.removeAttribute('hidden');
-            }
-        }
-    });
-}
-
-function getChart() {
-    let data = setValues();
-
-    $.ajax({
-        type: "POST",
-        url: "/charts/result",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        error: function () {
-            showSnackbar("Er is geen data beschikbaar");
-        },
-        success: function (e) {
-            drawBtn.parentElement.setAttribute('hidden', true);
-            addSetBtn.parentElement.removeAttribute('hidden');
-            if (e.results[0].events.length === 0) {
-                showSnackbar("Er is geen data beschikbaar");
-            } else {
-                let responseTime = "Response in " + Math.abs(new Date() - new Date(e.provider?.responseTimestamp)) / 1000 + "s";
-                showSnackbar(responseTime);
-                generateNewChart(e.provider, e.results[0]);
-                localStorage.setItem('last-chart', JSON.stringify(data));
             }
         }
     });
@@ -462,9 +385,8 @@ function updateAxis() {
     }
 }
 
-function addNewDataset() {
+function addNewDataset(dataset = null) {
     if (colorIndex < 3) {
-        colorIndex++;
 
         if (quantitiesDropdown.value === "waterchlorosity") {
             chlorosityDropdown.parentElement.removeAttribute('hidden');
@@ -477,7 +399,7 @@ function addNewDataset() {
         $.ajax({
             type: "POST",
             url: "/charts/result",
-            data: JSON.stringify(parameters),
+            data: dataset != null ? JSON.stringify(dataset) : JSON.stringify(parameters),
             contentType: "application/json; charset=utf-8",
             error: function () {
                 showSnackbar("Er is geen data beschikbaar");
@@ -503,6 +425,8 @@ function addNewDataset() {
                 } else {
                     generateNewChart(e.provider, e.results[0]);
                 }
+
+                colorIndex++;
 
             }
         });

@@ -149,7 +149,19 @@ public class HTTPSUtils {
             return mapper.readTree(jsonString);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
+
+    public static JsonNode ConvertTokenToJsonNode(String token) {
+        Base64.Decoder decoder = java.util.Base64.getUrlDecoder();
+        if (token.contains(".")) {
+            String[] parts = token.split("\\.");
+            return ConvertToJsonNode(new String(decoder.decode(parts[1])));
+        }
+        else {
+            return ConvertToJsonNode(new String(decoder.decode(token)));
+        }
+    }
+
 }

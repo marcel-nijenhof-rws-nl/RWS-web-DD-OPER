@@ -12,19 +12,6 @@ const headerTitle = document.querySelector('#title');
 
 let menuOpen = false;
 
-// $(document).ready(function () {
-//     menuOpen = JSON.parse(localStorage.getItem('isMenuOpen'));
-//
-//     if (menuOpen) {
-//         menuBtn.classList.add('open');
-//         menu.classList.add('menu-open');
-//
-//         menuItems.forEach(item => {
-//             item.classList.add('menu-open__text');
-//         });
-//     }
-// });
-
 // Validate Session
 const token = localStorage.getItem('session-token');
 
