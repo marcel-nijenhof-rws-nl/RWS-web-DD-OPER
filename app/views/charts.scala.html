@@ -3,6 +3,9 @@
 
     <section>
         <div class="chart-menu">
+            <div class="row reload" hidden>
+                <button class="mdl-button mdl-color--yellow mdl-ripple mdl-js-ripple-effect">herlaad menu</button>
+            </div>
             <div class="row">
                 <label class="mdl-radio__label" for="locations">Locatie</label>
                 <select class="dropdown" id="locations" onchange="showOptions()">
@@ -56,8 +59,11 @@
             </div>
 
             <div class="row">
-                <button id="generate" class="mdl-button mdl-js-button mdl-button--icon" onclick="getChart()">
+                <button id="generate" class="mdl-button mdl-js-button mdl-button--icon">
                     <i class="material-icons">add_chart</i>
+                </button>
+                <button id="generate-from-token" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">launch</i>
                 </button>
             </div>
             <div class="row" hidden>
@@ -79,6 +85,12 @@
                 <div class="mdl-tooltip mdl-tooltip" for="add-bookmark">
                     Toevoegen aan bladwijzers
                 </div>
+                <button id="share-chart" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">share</i>
+                </button>
+                <div class="mdl-tooltip mdl-tooltip" for="share-chart">
+                    Grafiek Delen
+                </div>
             </div>
             <div class="row bottom">
                 <button class="mdl-button show-modal mdl-js-button mdl-button--accent mdl-button--icon">
@@ -90,6 +102,8 @@
 
         </div>
     </section>
+
+    <div id="dialog-holder"></div>
 
     <dialog class="mdl-dialog" style="margin: auto">
         <div class="mdl-dialog__content">
@@ -145,6 +159,8 @@
         <div class="mdl-snackbar__text"></div>
         <button type="button" class="mdl-snackbar__action"></button>
     </div>
+
+    <div class="snackbar-holder"></div>
 
     <script src="@routes.Assets.versioned("javascripts/charts-page.js")"></script>
     <script src="@routes.Assets.versioned("javascripts/charts.bundle.js")"></script>

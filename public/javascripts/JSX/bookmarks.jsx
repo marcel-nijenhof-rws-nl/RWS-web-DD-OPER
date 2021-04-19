@@ -96,7 +96,23 @@ function Row(props) {
                                                 severityStrength="success"/>, snackbarHolder);
                 refreshTable();
             }
+        });
+    }
 
+    const openBookmark = (row) => {
+        $.ajax({
+            type: "POST",
+            url: "/charts/bookmark",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(row),
+            error: () => {
+                ReactDOM.render(<CustomSnackbar message="De bladwijzer kon niet worden geopend."
+                                                severityStrength="error"/>, snackbarHolder);
+            },
+            success: (e) => {
+                localStorage.setItem('bookmark', JSON.stringify(e));
+                window.location.href = "/charts";
+            }
         });
     }
 
@@ -123,7 +139,7 @@ function Row(props) {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Open">
-                                <IconButton aria-label="launch">
+                                <IconButton aria-label="launch" onClick={openBookmark.bind(this, row)}>
                                     <LaunchIcon/>
                                 </IconButton>
                             </Tooltip>

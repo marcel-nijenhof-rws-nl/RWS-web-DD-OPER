@@ -7,9 +7,13 @@ jobs:
         trigger: true
       - task: buildapp
         file: git-src/conf/ci/buildapp.yml
+        params:
+          NEXUS_URL: ((nexus_url))
+          NEXUS_USER: ((nexus_user))
+          NEXUS_PASSWORD: ((nexus_password))
       - put: cf-development
         params:
-          current_app_name: RWS-web-DD-OPER
+          current_app_name: mn-test
           manifest: git-src/conf/ci/manifest.yml
           path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
 
@@ -17,7 +21,9 @@ resources:
   - name: git-src-develop
     type: git
     source:
-      uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER
+      uri: ((git_uri))
+      username: ((git_username))
+      password: ((git_password))
       branch: master
 
   - name: cf-development

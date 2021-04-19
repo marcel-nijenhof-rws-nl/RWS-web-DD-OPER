@@ -11,6 +11,9 @@ GET           /charts/locations                             controllers.ChartCon
 GET           /charts/locations/quantities                  controllers.ChartController.GetQuantities()
 GET           /charts/locations/:location                   controllers.ChartController.GetLocationInfo(location: String)
 GET           /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
+GET           /charts/load/                                 controllers.NavigationController.charts
+GET           /charts/load/:shortcut                        controllers.ChartController.GetChartFromJSON(shortcut : String)
+POST          /charts/bookmark                              controllers.ChartController.GetChartFromBookmark(bookmark: Request)
 POST          /charts/result                                controllers.ChartController.GetMeasurementChart(request: Request)
 
 # Bookmarks

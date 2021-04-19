@@ -84297,6 +84297,25 @@ function Row(props) {
     });
   };
 
+  var openBookmark = function openBookmark(row) {
+    $.ajax({
+      type: "POST",
+      url: "/charts/bookmark",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(row),
+      error: function error() {
+        ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+          message: "De bladwijzer kon niet worden geopend.",
+          severityStrength: "error"
+        }), snackbarHolder);
+      },
+      success: function success(e) {
+        localStorage.setItem('bookmark', JSON.stringify(e));
+        window.location.href = "/charts";
+      }
+    });
+  };
+
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(TableRow, {
     key: row.id
   }, /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(IconButton, {
@@ -84328,7 +84347,8 @@ function Row(props) {
   }, /*#__PURE__*/React.createElement(EditIcon, null))), /*#__PURE__*/React.createElement(Tooltip, {
     title: "Open"
   }, /*#__PURE__*/React.createElement(IconButton, {
-    "aria-label": "launch"
+    "aria-label": "launch",
+    onClick: openBookmark.bind(this, row)
   }, /*#__PURE__*/React.createElement(LaunchIcon, null)))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Tooltip, {
     title: "Opslaan"
   }, /*#__PURE__*/React.createElement(IconButton, {
