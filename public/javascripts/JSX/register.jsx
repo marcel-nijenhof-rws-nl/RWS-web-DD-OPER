@@ -10,49 +10,6 @@ const TextField = require('@material-ui/core/TextField').default;
 const Button = require('@material-ui/core/Button').default;
 const CircularProgress = require('@material-ui/core/CircularProgress').default;
 
-export default class RegisterForm extends React.Component {
-    render() {
-        return <>
-            <div className="input">
-                <TextField fullWidth required label={"Voornaam"} type={"text"} id="firstName"/>
-            </div>
-            <div className="input">
-                <TextField fullWidth required label={"Achternaam"} type={"text"} id="lastName"/>
-            </div>
-            <div className="input">
-                <TextField fullWidth required label={"Email"} type={"email"} id="email"/>
-            </div>
-            <div className="input">
-                <TextField fullWidth required label={"Herhaal Email"} type={"email"} id="email2"/>
-            </div>
-            <div className="input">
-                <TextField fullWidth required label={"Wachtwoord"} type={"password"} id="password"/>
-            </div>
-            <div className="input">
-                <TextField fullWidth required label={"Herhaal Wachtwoord"} type={"password"}
-                           id="password2"/>
-            </div>
-            <div className="buttons">
-                <Button onClick={returnToLogin.bind(this)} id="back-button">Terug</Button>
-                <ThemeProvider
-                    theme={createMuiTheme({
-                        palette: {
-                            primary: yellow,
-                        },
-                    })}>
-                    <Button variant="contained" color="primary" onClick={register.bind(this)}
-                            id="register-button">Registreer</Button>
-                </ThemeProvider>
-            </div>
-            <div hidden className="center" id="progress">
-                <CircularProgress/>
-            </div>
-        </>
-    }
-}
-
-ReactDOM.render(<RegisterForm/>, document.querySelector("#root"));
-
 function returnToLogin() {
     window.location.href = "/";
 }
@@ -131,3 +88,46 @@ function register() {
             document.querySelector("#snackbar-holder"));
     }
 }
+
+export default class RegisterForm extends React.Component {
+    render() {
+        return <>
+            <div className="input">
+                <TextField fullWidth required label={"Voornaam"} type={"text"} id="firstName"/>
+            </div>
+            <div className="input">
+                <TextField fullWidth required label={"Achternaam"} type={"text"} id="lastName"/>
+            </div>
+            <div className="input">
+                <TextField fullWidth required label={"Email"} type={"email"} id="email"/>
+            </div>
+            <div className="input">
+                <TextField fullWidth required label={"Herhaal Email"} type={"email"} id="email2"/>
+            </div>
+            <div className="input">
+                <TextField fullWidth required label={"Wachtwoord"} type={"password"} id="password"/>
+            </div>
+            <div className="input">
+                <TextField fullWidth required label={"Herhaal Wachtwoord"} type={"password"}
+                           id="password2"/>
+            </div>
+            <div className="buttons">
+                <Button onClick={returnToLogin.bind(this)} id="back-button">Terug</Button>
+                <ThemeProvider
+                    theme={createMuiTheme({
+                        palette: {
+                            primary: yellow,
+                        },
+                    })}>
+                    <Button variant="contained" color="primary" onClick={register.bind(this)}
+                            id="register-button">Registreer</Button>
+                </ThemeProvider>
+            </div>
+            <div hidden className="center" id="progress">
+                <CircularProgress/>
+            </div>
+        </>
+    }
+}
+
+ReactDOM.render(<RegisterForm/>, document.querySelector("#root"));
