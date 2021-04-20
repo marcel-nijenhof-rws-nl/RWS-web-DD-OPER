@@ -17,5 +17,6 @@ project/target/streams
 conf/certification.properties
 conf/certificate.jks
 /node_modules/
+conf/ci/rws-vars.yml
 conf/hibernate.cfg.xml
 /target

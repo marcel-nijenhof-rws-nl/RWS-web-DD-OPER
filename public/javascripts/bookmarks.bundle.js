@@ -84376,7 +84376,13 @@ function Row(props) {
   }, "Bladwijzers"), /*#__PURE__*/React.createElement(Table, {
     size: "small",
     "aria-label": "purchases"
-  }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, "Locatie"), /*#__PURE__*/React.createElement(TableCell, null, "Kwantiteit"), /*#__PURE__*/React.createElement(TableCell, null, "Aspect Set"))), /*#__PURE__*/React.createElement(TableBody, null, row.bookmark.map(function (bookmark) {
+  }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(Typography, {
+    variant: "body1"
+  }, "Locatie")), /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(Typography, {
+    variant: "body1"
+  }, "Kwantiteit")), /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(Typography, {
+    variant: "body1"
+  }, "Aspect Set")))), /*#__PURE__*/React.createElement(TableBody, null, row.bookmark.map(function (bookmark) {
     return /*#__PURE__*/React.createElement(TableRow, {
       key: bookmark.id
     }, /*#__PURE__*/React.createElement(TableCell, {

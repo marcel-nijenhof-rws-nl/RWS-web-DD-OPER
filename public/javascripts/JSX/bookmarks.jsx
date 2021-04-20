@@ -167,9 +167,9 @@ function Row(props) {
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Locatie</TableCell>
-                                        <TableCell>Kwantiteit</TableCell>
-                                        <TableCell>Aspect Set</TableCell>
+                                        <TableCell><Typography variant="body1">Locatie</Typography></TableCell>
+                                        <TableCell><Typography variant="body1">Kwantiteit</Typography></TableCell>
+                                        <TableCell><Typography variant="body1">Aspect Set</Typography></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

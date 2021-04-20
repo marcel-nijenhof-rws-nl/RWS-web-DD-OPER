@@ -69,6 +69,7 @@ showDialogModalButton.addEventListener('click', function () {
     document.querySelector(".bookmark-interval").innerHTML = latestDataSettings.interval;
     bookmarkDialog.showModal();
 });
+
 bookmarkDialog.querySelector('.close').addEventListener('click', function () {
     bookmarkDialog.close();
 });
@@ -76,6 +77,7 @@ bookmarkDialog.querySelector('.close').addEventListener('click', function () {
 bookmarkDialog.querySelector('.submit').addEventListener('click', function () {
     addBookmark();
 });
+
 document.querySelector("#share-chart").addEventListener('click', () => {
     encodeChart();
 });
