@@ -21,9 +21,7 @@ resources:
   - name: git-src-develop
     type: git
     source:
-      uri: ((git_uri))
-      username: ((git_username))
-      password: ((git_password))
+      uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER.git
       branch: master
 
   - name: cf-development
