@@ -1,4 +1,4 @@
-var React = require('react');
+const React = require('react');
 
 class NavigationMenu extends React.Component {
     render() {
@@ -39,6 +39,13 @@ class NavigationMenu extends React.Component {
                         <p>Afmelden</p>
                     </a>
                 </li>
+                <li>
+                    <a onClick={openGithubIssues}>
+                        <img className="menu-icon" src="assets/images/bug_report_white_18dp.svg"
+                             alt="Rapporteer"/>
+                        <p>Rapporteer</p>
+                    </a>
+                </li>
             </ul>
         </div>
     }
@@ -47,6 +54,10 @@ class NavigationMenu extends React.Component {
 function logout() {
     localStorage.removeItem("session-token");
     alert("U bent afgemeld.");
+}
+
+function openGithubIssues() {
+    window.open("https://github.com/SaleemTheKing/RWS-web-DD-OPER/issues/new?assignees=SaleemTheKing&labels=bug&template=bug_report.md&title=", "_blank");
 }
 
 module.exports = NavigationMenu;

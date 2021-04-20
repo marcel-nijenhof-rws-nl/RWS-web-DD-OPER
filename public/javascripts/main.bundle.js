@@ -30584,7 +30584,13 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
         className: "menu-icon",
         src: "assets/images/logout-white-18dp.svg",
         alt: "Afmelden"
-      }), /*#__PURE__*/React.createElement("p", null, "Afmelden")))));
+      }), /*#__PURE__*/React.createElement("p", null, "Afmelden"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+        onClick: openGithubIssues
+      }, /*#__PURE__*/React.createElement("img", {
+        className: "menu-icon",
+        src: "assets/images/bug_report_white_18dp.svg",
+        alt: "Rapporteer"
+      }), /*#__PURE__*/React.createElement("p", null, "Rapporteer")))));
     }
   }]);
 
@@ -30594,6 +30600,10 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
 function logout() {
   localStorage.removeItem("session-token");
   alert("U bent afgemeld.");
+}
+
+function openGithubIssues() {
+  window.open("https://github.com/SaleemTheKing/RWS-web-DD-OPER/issues/new?assignees=SaleemTheKing&labels=bug&template=bug_report.md&title=", "_blank");
 }
 
 module.exports = NavigationMenu;
@@ -30612,19 +30622,7 @@ var menuBtn = document.querySelector('.burger');
 var menu = document.querySelector('.menu');
 var menuItems = document.querySelectorAll('.menu ul li a p');
 var headerTitle = document.querySelector('#title');
-var menuOpen = false; // $(document).ready(function () {
-//     menuOpen = JSON.parse(localStorage.getItem('isMenuOpen'));
-//
-//     if (menuOpen) {
-//         menuBtn.classList.add('open');
-//         menu.classList.add('menu-open');
-//
-//         menuItems.forEach(item => {
-//             item.classList.add('menu-open__text');
-//         });
-//     }
-// });
-// Validate Session
+var menuOpen = false; // Validate Session
 
 var token = localStorage.getItem('session-token');
 
