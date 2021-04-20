@@ -84082,7 +84082,7 @@ var CustomSnackbar = /*#__PURE__*/function (_React$Component) {
         openSnackbar: false
       });
       setTimeout(function () {
-        ReactDOM.unmountComponentAtNode(document.querySelector("#snackbar-holder"));
+        ReactDOM.unmountComponentAtNode(document.querySelector("div.snackbar-holder"));
       }, 500);
     }
   }, {
@@ -84158,8 +84158,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var React = require('react');
 
 var ReactDOM = require('react-dom');
-
-var snackbarHolder = document.querySelector("#snackbar-holder");
 
 var Table = require('@material-ui/core/Table')["default"];
 
@@ -84247,7 +84245,7 @@ function Row(props) {
       ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
         message: "Naam is niet veranderd, wijzingen zijn niet opgeslagen.",
         severityStrength: "info"
-      }), snackbarHolder);
+      }), document.querySelector("div.snackbar-holder"));
       return;
     }
 
@@ -84264,13 +84262,13 @@ function Row(props) {
         ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
           message: "De wijzingen werden geweigerd door een foutieve verbinding.",
           severityStrength: "error"
-        }), snackbarHolder);
+        }), document.querySelector("div.snackbar-holder"));
       },
       success: function success() {
         ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
           message: "Wijzigingen opgeslagen",
           severityStrength: "success"
-        }), snackbarHolder);
+        }), document.querySelector("div.snackbar-holder"));
         refreshTable();
       }
     });
@@ -84285,13 +84283,13 @@ function Row(props) {
         ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
           message: "De bladwijzer kon niet worden verwijderd.",
           severityStrength: "error"
-        }), snackbarHolder);
+        }), document.querySelector("div.snackbar-holder"));
       },
       success: function success() {
         ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
           message: "Bladwijzer verwijderd",
           severityStrength: "success"
-        }), snackbarHolder);
+        }), document.querySelector("div.snackbar-holder"));
         refreshTable();
       }
     });
@@ -84307,7 +84305,7 @@ function Row(props) {
         ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
           message: "De bladwijzer kon niet worden geopend.",
           severityStrength: "error"
-        }), snackbarHolder);
+        }), document.querySelector("div.snackbar-holder"));
       },
       success: function success(e) {
         localStorage.setItem('bookmark', JSON.stringify(e));
@@ -84442,7 +84440,7 @@ function refreshTable() {
       ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
         message: "De bladwijzers konden niet worden opgehaald.",
         severityStrength: "error"
-      }), snackbarHolder);
+      }), document.querySelector("div.snackbar-holder"));
     },
     success: function success(e) {
       if (e.length > 0) {

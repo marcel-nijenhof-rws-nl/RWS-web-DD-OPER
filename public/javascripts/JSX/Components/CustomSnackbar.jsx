@@ -16,7 +16,7 @@ class CustomSnackbar extends React.Component {
     handleClose() {
         this.setState({openSnackbar: false});
         setTimeout(() => {
-            ReactDOM.unmountComponentAtNode(document.querySelector("#snackbar-holder"));
+            ReactDOM.unmountComponentAtNode(document.querySelector("div.snackbar-holder"));
         }, 500);
     }
 

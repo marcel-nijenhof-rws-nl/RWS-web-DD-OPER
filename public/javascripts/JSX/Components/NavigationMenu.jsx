@@ -1,4 +1,7 @@
 const React = require('react');
+const ReactDOM = require('react-dom');
+
+const CustomSnackbar = require('./CustomSnackbar.jsx');
 
 class NavigationMenu extends React.Component {
     render() {
@@ -53,7 +56,7 @@ class NavigationMenu extends React.Component {
 
 function logout() {
     localStorage.removeItem("session-token");
-    alert("U bent afgemeld.");
+    ReactDOM.render(<CustomSnackbar message="U bent afgemeld" severityStrength="info"/>, document.querySelector("div.snackbar-holder"));
 }
 
 function openGithubIssues() {

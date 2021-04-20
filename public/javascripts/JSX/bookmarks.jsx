@@ -3,8 +3,6 @@ import {Checkbox} from "@material-ui/core";
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-const snackbarHolder = document.querySelector("#snackbar-holder");
-
 const Table = require('@material-ui/core/Table').default;
 const TableBody = require('@material-ui/core/TableBody').default;
 const TableCell = require('@material-ui/core/TableCell').default;
@@ -56,7 +54,7 @@ function Row(props) {
 
         if (newName === row.groupName) {
             ReactDOM.render(<CustomSnackbar message="Naam is niet veranderd, wijzingen zijn niet opgeslagen."
-                                            severityStrength="info"/>, snackbarHolder);
+                                            severityStrength="info"/>, document.querySelector("div.snackbar-holder"));
             return;
         }
 
@@ -72,11 +70,11 @@ function Row(props) {
             contentType: "application/json; charset=utf-8",
             error: function () {
                 ReactDOM.render(<CustomSnackbar message="De wijzingen werden geweigerd door een foutieve verbinding."
-                                                severityStrength="error"/>, snackbarHolder);
+                                                severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
             },
             success: function () {
                 ReactDOM.render(<CustomSnackbar message="Wijzigingen opgeslagen"
-                                                severityStrength="success"/>, snackbarHolder);
+                                                severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
                 refreshTable();
             }
         });
@@ -89,11 +87,11 @@ function Row(props) {
             contentType: "application/json; charset=utf-8",
             error: function () {
                 ReactDOM.render(<CustomSnackbar message="De bladwijzer kon niet worden verwijderd."
-                                                severityStrength="error"/>, snackbarHolder);
+                                                severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
             },
             success: function () {
                 ReactDOM.render(<CustomSnackbar message="Bladwijzer verwijderd"
-                                                severityStrength="success"/>, snackbarHolder);
+                                                severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
                 refreshTable();
             }
         });
@@ -107,7 +105,7 @@ function Row(props) {
             data: JSON.stringify(row),
             error: () => {
                 ReactDOM.render(<CustomSnackbar message="De bladwijzer kon niet worden geopend."
-                                                severityStrength="error"/>, snackbarHolder);
+                                                severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
             },
             success: (e) => {
                 localStorage.setItem('bookmark', JSON.stringify(e));
@@ -226,7 +224,7 @@ function refreshTable() {
         contentType: "application/json; charset=utf-8",
         error: function () {
             ReactDOM.render(<CustomSnackbar message="De bladwijzers konden niet worden opgehaald."
-                                            severityStrength="error"/>, snackbarHolder);
+                                            severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
         },
         success: function (e) {
             if (e.length > 0) {

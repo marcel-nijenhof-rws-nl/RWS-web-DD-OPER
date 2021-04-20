@@ -20,7 +20,6 @@ let dialog = document.querySelector('dialog');
 let showModalButton = document.querySelector('.show-modal');
 let showDialogModalButton = document.querySelector('#add-bookmark');
 
-
 ReactDOM.render(<ChartComponent/>, document.querySelector('section div.chart-holder'));
 
 date.setDate(date.getDate() - 1);
@@ -98,8 +97,7 @@ document.querySelector("#generate-from-token").addEventListener('click', () => {
             contentType: "application/json; charset=utf-8",
             error: function (e) {
                 ReactDOM.render(<CustomSnackbar message={"Er is iets mis gegaan, STATUS: " + e.status}
-                                                severityStrength="error"/>,
-                    document.querySelector("div.snackbar-holder"));
+                                                severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
             },
             success: (e) => {
                 for (let i = 0; i < Object.keys(e).length; i++) {
@@ -160,8 +158,7 @@ function reloadMenu() {
         error: function () {
             document.querySelector("div.reload").removeAttribute('hidden');
             ReactDOM.render(<CustomSnackbar message="Locaties kunnen niet worden opgehaald"
-                                            severityStrength="error"/>,
-                document.querySelector('div.snackbar-holder'));
+                                            severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
         },
         success: function (e) {
             locationDropdown.remove(0);
@@ -193,13 +190,11 @@ function addBookmark() {
         contentType: "application/json; charset=utf-8",
         error: function () {
             ReactDOM.render(<CustomSnackbar message="Bladwijzer kon niet worden toegevoegd"
-                                            severityStrength="error"/>,
-                document.querySelector('div.snackbar-holder'));
+                                            severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
         },
         success: function () {
             ReactDOM.render(<CustomSnackbar message="Bladwijzer toegevoegd"
-                                            severityStrength="success"/>,
-                document.querySelector('div.snackbar-holder'));
+                                            severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
             bookmarkDialog.close();
         }
     });
