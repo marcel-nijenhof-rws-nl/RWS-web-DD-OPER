@@ -76,7 +76,7 @@ function setValues() {
         "endTime": endTimePicker.value,
         "interval": intervalDropdown.value,
         "aspectSet": aspectSet.value,
-        // "token": localStorage.getItem('session-token'),
+        "token": localStorage.getItem('session-token'),
     };
 
     graphs[colorIndex] = latestDataSettings;
