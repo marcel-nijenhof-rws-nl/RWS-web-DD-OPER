@@ -10,18 +10,17 @@ public class HibernateUtil {
         try {
 
             System.out.println("***** ENV VARS *****");
-            System.out.println(System.getenv("system_env_json"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql.credentials"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql.credentials.jdbcUrl"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql.credentials.username"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql.credentials.password"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql[0]"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql[0].credentials"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql[0].credentials.jdbcUrl"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql[0].credentials.username"));
-            System.out.println(System.getenv("system_env_json.VCAP_SERVICES.postgresql[0].credentials.password"));
+            System.out.println(System.getenv("VCAP_SERVICES"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.jdbcUrl"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.username"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.password"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0]"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.jdbcUrl"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.username"));
+            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.password"));
             System.out.println("********************");
 
             Configuration cfg = new Configuration();
