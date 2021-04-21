@@ -1,5 +1,7 @@
 package com.saleem.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -9,25 +11,21 @@ public class HibernateUtil {
     static {
         try {
 
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode envNode = mapper.readTree(System.getenv("VCAP_SERVICES"));
+
             System.out.println("***** ENV VARS *****");
             System.out.println(System.getenv("VCAP_SERVICES"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.jdbcUrl"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.username"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql.credentials.password"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0]"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.jdbcUrl"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.username"));
-            System.out.println(System.getenv("VCAP_SERVICES.postgresql[0].credentials.password"));
+            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("jdbcUrl").textValue());
+            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("username").textValue());
+            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("password").textValue());
             System.out.println("********************");
 
             Configuration cfg = new Configuration();
             cfg.configure("hibernate.cfg.xml");
-            cfg.setProperty("hibernate.connection.url", System.getenv("jdbcUrl"));
-            cfg.setProperty("hibernate.connection.username", System.getenv("username"));
-            cfg.setProperty("hibernate.connection.password", System.getenv("password"));
+            cfg.setProperty("hibernate.connection.url", envNode.get("postgresql").get(0).get("credentials").get("jdbcUrl").textValue());
+            cfg.setProperty("hibernate.connection.username", envNode.get("postgresql").get(0).get("credentials").get("username").textValue());
+            cfg.setProperty("hibernate.connection.password", envNode.get("postgresql").get(0).get("credentials").get("password").textValue());
             sessionFactory = cfg.buildSessionFactory();
 
         } catch (Throwable ex) {
