@@ -12,24 +12,22 @@ public class HibernateUtil {
         try {
 
             ObjectMapper mapper = new ObjectMapper();
+            Configuration cfg = new Configuration();
             JsonNode envNode = mapper.readTree(System.getenv("VCAP_SERVICES"));
 
-            System.out.println("***** ENV VARS *****");
-            System.out.println(System.getenv("VCAP_SERVICES"));
-            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("jdbcUrl").textValue());
-            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("username").textValue());
-            System.out.println(envNode.get("postgresql").get(0).get("credentials").get("password").textValue());
-            System.out.println("********************");
+            String connectionUrl = envNode.get("postgresql").get(0).get("credentials").get("jdbcUrl").textValue();
+            String username = envNode.get("postgresql").get(0).get("credentials").get("username").textValue();
+            String password = envNode.get("postgresql").get(0).get("credentials").get("password").textValue();
 
-            Configuration cfg = new Configuration();
             cfg.configure("hibernate.cfg.xml");
-            cfg.setProperty("hibernate.connection.url", envNode.get("postgresql").get(0).get("credentials").get("jdbcUrl").textValue());
-            cfg.setProperty("hibernate.connection.username", envNode.get("postgresql").get(0).get("credentials").get("username").textValue());
-            cfg.setProperty("hibernate.connection.password", envNode.get("postgresql").get(0).get("credentials").get("password").textValue());
+            cfg.setProperty("hibernate.connection.url", connectionUrl);
+            cfg.setProperty("hibernate.connection.username", username);
+            cfg.setProperty("hibernate.connection.password", password);
+
             sessionFactory = cfg.buildSessionFactory();
 
         } catch (Throwable ex) {
-            System.err.println("Could not load from System Env Vars, trying localhost...");
+            System.err.println("Could not load from VCAP_SERVICES, trying localhost...");
             try {
                 Configuration cfg = new Configuration();
 
@@ -40,7 +38,7 @@ public class HibernateUtil {
                 sessionFactory = cfg.buildSessionFactory();
 
             } catch (Throwable exc) {
-                System.err.println("Could not load from System Env Vars from localhost");
+                System.err.println("Could not load System Env Vars from localhost");
                 System.err.println("Exception stack Trace ************** begin");
                 System.err.println("Hibernate : Initial SessionFactory creation failed." + exc);
                 exc.printStackTrace();
