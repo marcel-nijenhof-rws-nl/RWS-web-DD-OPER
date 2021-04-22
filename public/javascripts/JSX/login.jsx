@@ -86,7 +86,7 @@ if (token) {
             ReactDOM.render(<CustomSnackbar message="Kon niet automatisch inloggen"
                                             severityStrength="error"/>,
                 document.querySelector("div.snackbar-holder"));
-            ReactDOM.render(<Login/>, document.querySelector("#snackbar-holder"));
+            ReactDOM.render(<Login/>, document.querySelector("div.container"));
         }
     });
 } else {

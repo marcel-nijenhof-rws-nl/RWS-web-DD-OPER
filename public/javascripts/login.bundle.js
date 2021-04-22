@@ -113144,7 +113144,7 @@ var CustomSnackbar = /*#__PURE__*/function (_React$Component) {
         openSnackbar: false
       });
       setTimeout(function () {
-        ReactDOM.unmountComponentAtNode(document.querySelector("#snackbar-holder"));
+        ReactDOM.unmountComponentAtNode(document.querySelector("div.snackbar-holder"));
       }, 500);
     }
   }, {
@@ -113316,7 +113316,7 @@ if (token) {
         message: "Kon niet automatisch inloggen",
         severityStrength: "error"
       }), document.querySelector("div.snackbar-holder"));
-      ReactDOM.render( /*#__PURE__*/React.createElement(Login, null), document.querySelector("#snackbar-holder"));
+      ReactDOM.render( /*#__PURE__*/React.createElement(Login, null), document.querySelector("div.container"));
     }
   });
 } else {
