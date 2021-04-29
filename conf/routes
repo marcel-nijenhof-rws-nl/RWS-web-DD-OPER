@@ -28,5 +28,9 @@ POST          /login/:token                                 controllers.LoginCon
 POST          /register                                     controllers.LoginController.Register(request: Request)
 POST          /session/:token                               controllers.LoginController.validateSession(token : String)
 
+# Settings
+GET           /settings/user/:token                         controllers.LoginController.GetUserInfo(token: String)
+PUT           /settings/user                                controllers.LoginController.UpdateUserInfo(request: Request)
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                                 controllers.Assets.versioned(path="/public", file: Asset)

@@ -1,0 +1,25 @@
+.paper {
+    position: relative;
+    width: 95%;
+    margin: 20px auto 20px auto;
+}
+
+.label-text {
+    margin: 10px;
+}
+
+.button {
+
+
+}
+
+.button--edit {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+
+.textfield--edit {
+    margin: 0 0 10px 10px;
+    width: 20%;
+}

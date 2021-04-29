@@ -1,6 +1,9 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.base.Strings;
 import com.saleem.utils.HTTPSUtils;
 import com.saleem.utils.HibernateUtil;
 import models.UserProfile;
@@ -68,6 +71,7 @@ public class LoginController extends Controller {
                     .getSingleResult();
 
             em.close();
+            sessionFactory.close();
             if (userPassword.equals(hash)) {
                 return ok();
             } else {
@@ -81,6 +85,90 @@ public class LoginController extends Controller {
     public Result validateSession(String token) {
         if (HTTPSUtils.IsSessionValid(token)) return ok();
         else return forbidden();
+    }
+
+    public Result GetUserInfo(String token) {
+        String email = HTTPSUtils.GetEmailFromToken(token);
+
+        SessionFactory sessionFactory = HibernateUtil.getSession();
+        EntityManager em = sessionFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        UserProfile profile = em.createQuery("select u from UserProfile u where email = :email", UserProfile.class)
+                .setParameter("email", email)
+                .getSingleResult();
+
+        em.close();
+
+        if (profile != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode node = mapper.createObjectNode();
+            node.put("id", profile.getId());
+            node.put("firstName", profile.getFirstname());
+            node.put("lastName", profile.getLastname());
+            node.put("email", profile.getEmail());
+            node.put("password", profile.getPassword());
+
+            return ok(node);
+        } else {
+            return notFound();
+        }
+
+    }
+
+    public Result UpdateUserInfo(Http.Request request) {
+        JsonNode node = request.body().asJson();
+
+        Long userId = node.get("id").asLong();
+        boolean hasPasswordChanged = false;
+
+        SessionFactory sessionFactory = HibernateUtil.getSession();
+        EntityManager em = sessionFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        UserProfile profile = em.createQuery("select u from UserProfile u where id = :id", UserProfile.class)
+                .setParameter("id", userId)
+                .getSingleResult();
+
+
+        profile.setFirstname(node.get("firstName").textValue());
+        profile.setLastname(node.get("lastName").textValue());
+
+        em.createQuery("update UserProfile u set u.firstname = :firstName, u.lastname = :lastName where u.id = :userId")
+                .setParameter("userId", userId)
+                .setParameter("firstName", node.get("firstName").textValue())
+                .setParameter("lastName", node.get("lastName").textValue());
+
+
+        if (!Strings.isNullOrEmpty(node.get("oldPassword").textValue())
+                && !Strings.isNullOrEmpty(node.get("newPassword").textValue())
+                && !Strings.isNullOrEmpty(node.get("newPasswordRepeat").textValue())
+        ) {
+            String oldPasswordHashed = HashPassword(node.get("oldPassword").textValue());
+
+            if (profile.getPassword().equals(oldPasswordHashed)) {
+                if (node.get("newPassword").textValue().equals(node.get("newPasswordRepeat").textValue())) {
+                    String newHashedPassword = HashPassword(node.get("newPassword").textValue());
+                    profile.setPassword(newHashedPassword);
+                    hasPasswordChanged = true;
+
+                    em.createQuery("update UserProfile u set u.password = :password where u.id = :userId")
+                            .setParameter("userId", userId)
+                            .setParameter("password", newHashedPassword);
+
+                } else {
+                    return badRequest("De nieuwe wachtwoorden komen niet overeen");
+                }
+            } else {
+                return badRequest("Het oude wachtwoord komt niet overeen");
+            }
+
+        }
+
+        em.getTransaction().commit();
+        em.close();
+
+        return hasPasswordChanged ? ok("Gegevens opgeslagen") : ok("Gegevens opgeslagen, wachtwoord ongewijzigd");
     }
 
     public static String HashPassword(String password) {
