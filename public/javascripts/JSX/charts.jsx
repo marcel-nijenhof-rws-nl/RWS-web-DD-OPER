@@ -1,206 +1,1191 @@
-import {IconButton} from "@material-ui/core";
+const IconButton = require("@material-ui/core/IconButton").default;
+const MenuItem = require("@material-ui/core/MenuItem").default;
+const Typography = require("@material-ui/core/TypoGraphy").default;
+const FormControl = require("@material-ui/core/FormControl").default;
+const InputLabel = require("@material-ui/core/InputLabel").default;
+const Select = require("@material-ui/core/Select").default;
+const Autocomplete = require("@material-ui/lab/Autocomplete").default;
 
 const Button = require('@material-ui/core/Button').default;
+const ButtonGroup = require('@material-ui/core/ButtonGroup').default;
+const Chip = require('@material-ui/core/Chip').default;
 const Dialog = require('@material-ui/core/Dialog').default;
 const DialogActions = require('@material-ui/core/DialogActions').default;
 const DialogContent = require('@material-ui/core/DialogContent').default;
 const DialogContentText = require('@material-ui/core/DialogContentText').default;
 const DialogTitle = require('@material-ui/core/DialogTitle').default;
 const TextField = require('@material-ui/core/TextField').default;
+const CircularProgress = require('@material-ui/core/CircularProgress').default;
 
 const CloseIcon = require('@material-ui/icons/Close').default;
+const InfoIcon = require('@material-ui/icons/Info').default;
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 const jws = require('jws');
 const ChartComponent = require('./Components/Chart.jsx');
 const CustomSnackbar = require('./Components/CustomSnackbar.jsx');
+const Chart = require('chart.js');
+
+let colors = {
+    backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(21, 84, 255, 0.2)',
+        'rgba(153, 0, 255, 0.2)',
+        'rgba(0, 90, 0, 0.2)',
+    ],
+    pointBackgroundColor: [
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(21, 84, 255, 0.5)',
+        'rgba(153, 0, 255, 0.5)',
+        'rgba(0, 90, 0, 0.5)',
+    ],
+    borderColor: [
+        'rgb(255,99,132)',
+        'rgb(21,84,255)',
+        'rgb(153,0,255)',
+        'rgb(0,90,0)',
+    ],
+
+}
+
+let myChart;
+let latestDataSettings = {};
+let graphs = [];
+let latestResults;
 
 let dialog = document.querySelector('dialog');
 let showModalButton = document.querySelector('.show-modal');
 let showDialogModalButton = document.querySelector('#add-bookmark');
 
-ReactDOM.render(<ChartComponent/>, document.querySelector('section div.chart-holder'));
+function updateAxis() {
+    if (myChart) {
+        let firstSet = false;
 
-date.setDate(date.getDate() - 1);
-endDate.setDate(endDate.getDate());
+        myChart.options.scales.yAxes.forEach(scale => {
+            scale.display = false;
+        });
 
-startTimePicker.value = date.toISOString().slice(0, 16);
-endTimePicker.value = endDate.toISOString().slice(0, 16);
+        myChart.data.datasets.forEach(set => {
+            switch (set.yAxisID) {
+                case "level":
+                    myChart.options.scales.yAxes[0].display = true;
+                    break;
+                case "sqcms":
+                    myChart.options.scales.yAxes[1].display = true;
+                    break;
+                case "speed":
+                    myChart.options.scales.yAxes[2].display = true;
+                    break;
+                case "temperature":
+                    myChart.options.scales.yAxes[3].display = true;
+                    break;
+                case "pressure":
+                    myChart.options.scales.yAxes[4].display = true;
+                    break;
+                case "angle":
+                    myChart.options.scales.yAxes[5].display = true;
+                    break;
+                case "m3s":
+                    myChart.options.scales.yAxes[6].display = true;
+                    break;
+                case "mgl":
+                    myChart.options.scales.yAxes[7].display = true;
+                    break;
+                case "gkg":
+                    myChart.options.scales.yAxes[8].display = true;
+                    break;
+                case "kgm3":
+                    myChart.options.scales.yAxes[9].display = true;
+                    break;
+                case "siemens":
+                    myChart.options.scales.yAxes[10].display = true;
+                    break;
+            }
+        });
 
-reloadMenu();
-
-document.querySelector("div.reload button").addEventListener('click', () => {
-    reloadMenu();
-});
-
-if (localStorage.getItem('bookmark') != null) {
-    let node = JSON.parse(localStorage.getItem('bookmark'));
-    console.log(Object.keys(node.bookmarks).length);
-    localStorage.removeItem('bookmark');
-
-    node.bookmarks.forEach(bookmark => {
-        addNewDataset(bookmark);
-    });
-}
-
-if (!dialog.showModal) {
-    dialogPolyfill.registerDialog(dialog);
-}
-
-showModalButton.addEventListener('click', function () {
-    dialog.showModal();
-});
-
-dialog.querySelector('.close').addEventListener('click', function () {
-    dialog.close();
-});
-
-if (!bookmarkDialog.showModal) {
-    dialogPolyfill.registerDialog(bookmarkDialog);
-}
-showDialogModalButton.addEventListener('click', function () {
-    setValues();
-    document.querySelector(".bookmark-location").innerHTML = latestDataSettings.location;
-    document.querySelector(".bookmark-quantity").innerHTML = latestDataSettings.quantity;
-    document.querySelector(".bookmark-aspect").innerHTML = latestDataSettings.aspectSet;
-    document.querySelector(".bookmark-startTime").innerHTML = latestDataSettings.startTime;
-    document.querySelector(".bookmark-endTime").innerHTML = latestDataSettings.endTime;
-    document.querySelector(".bookmark-interval").innerHTML = latestDataSettings.interval;
-    bookmarkDialog.showModal();
-});
-
-bookmarkDialog.querySelector('.close').addEventListener('click', function () {
-    bookmarkDialog.close();
-});
-
-bookmarkDialog.querySelector('.submit').addEventListener('click', function () {
-    addBookmark();
-});
-
-document.querySelector("#share-chart").addEventListener('click', () => {
-    encodeChart();
-});
-
-document.querySelector("#generate").addEventListener('click', () => {
-    addNewDataset();
-    drawBtn.parentElement.setAttribute('hidden', 'true');
-    addSetBtn.parentElement.removeAttribute('hidden');
-});
-
-document.querySelector("#generate-from-token").addEventListener('click', () => {
-
-    const handleClick = () => {
-        let token = document.querySelector("#token-field").value;
-
-        $.ajax({
-            type: "GET",
-            url: "/charts/load/" + token,
-            contentType: "application/json; charset=utf-8",
-            error: function (e) {
-                ReactDOM.render(<CustomSnackbar message={"Er is iets mis gegaan, STATUS: " + e.status}
-                                                severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
-            },
-            success: (e) => {
-                for (let i = 0; i < Object.keys(e).length; i++) {
-                    addNewDataset(e[i]);
+        myChart.options.scales.yAxes.forEach(scale => {
+            if (scale.display && !firstSet) {
+                firstSet = true;
+                scale.position = 'left';
+            } else {
+                if (scale.display && firstSet) {
+                    scale.position = 'right';
                 }
             }
         });
+
+        myChart.update();
+    }
+}
+
+function getYaxisType(observationType) {
+    switch (observationType) {
+        case "cm":
+            return 'level'
+        case "cm^2s":
+            return 'sqcms'
+        case "m/s":
+            return "speed"
+        case "Cel":
+            return "temperature"
+        case "hPa":
+            return "pressure"
+        case "angle_degree":
+            return "angle"
+        case "m^3/s":
+            return "m3s"
+        case "mg/l":
+            return "mgl"
+        case "g/kg":
+            return "gkg"
+        case "kg/m^3":
+            return "kgm3"
+        case "S/m":
+            return "siemens"
+    }
+}
+
+class ChartMenu extends React.Component {
+    constructor(props) {
+        super(props)
+        {
+            let date = new Date();
+            date.setDate(date.getDate() - 1);
+
+            this.state = {
+                colorIndex: 0,
+                aspectSet: "standard",
+                location: "",
+                quantity: "",
+                quantities: [""],
+                interval: "10min",
+                chlorosity: "",
+                startTime: date.toISOString().slice(0, 16),
+                endTime: new Date().toISOString().slice(0, 16),
+                extraOption: false,
+                depthOption: false,
+                options: [""],
+                option: "",
+                type: "measurement",
+                graphs: [],
+            }
+
+            this.setLocation = this.setLocation.bind(this);
+            this.setQuantity = this.setQuantity.bind(this);
+            this.setDataType = this.setDataType.bind(this);
+            this.setAspectSet = this.setAspectSet.bind(this);
+            this.setInterval = this.setInterval.bind(this);
+            this.setChlorosity = this.setChlorosity.bind(this);
+            this.setStartTime = this.setStartTime.bind(this);
+            this.setEndTime = this.setEndTime.bind(this);
+            this.setValues = this.setValues.bind(this);
+            this.setOption = this.setOption.bind(this);
+            this.addNewDataset = this.addNewDataset.bind(this);
+            this.getResultsData = this.getResultsData.bind(this);
+            this.generateNewChart = this.generateNewChart.bind(this);
+            this.showExtraOptions = this.showExtraOptions.bind(this);
+            this.setDepthOption = this.setDepthOption.bind(this);
+            this.addPreloadedData = this.addPreloadedData.bind(this);
+            this.removeDataset = this.removeDataset.bind(this);
+            this.openChartWithToken = this.openChartWithToken.bind(this);
+            this.showInfo = this.showInfo.bind(this);
+        }
     }
 
-    const handleClose = () => {
-        ReactDOM.unmountComponentAtNode(document.querySelector("#dialog-holder"));
+    setValues() {
+        latestDataSettings = {
+            "location": this.state.location,
+            "quantity": this.state.quantity,
+            "startTime": this.state.startTime,
+            "endTime": this.state.endTime,
+            "interval": this.state.interval,
+            "aspectSet": this.state.aspectSet,
+            "type": this.state.type,
+            "token": localStorage.getItem('session-token'),
+        };
+
+        graphs.push(latestDataSettings);
+        this.setState({graphs: graphs});
+
+        return latestDataSettings;
     }
 
-    let dialog =
-        <Dialog open={true}>
-            <DialogTitle onClose={handleClose.bind(this)} id="form-dialog-title">
-                <span>Grafiek inladen</span>
-                <IconButton onClick={handleClose.bind(this)} style={{right: 8, top: 8, position: "absolute"}}>
-                    <CloseIcon/>
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    Plak hier de token om de grafiek in te laden.
-                </DialogContentText>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="token-field"
-                    label="Token"
-                    type="text"
-                    fullWidth
-                />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClick.bind(this)} color="primary">
-                    Laad Grafiek
-                </Button>
-            </DialogActions>
-        </Dialog>
+    setLocation(e) {
+        if (e !== null && e !== "") {
+            this.setState({location: e});
+            $.ajax({
+                type: "GET",
+                url: "/charts/locations/quantities/" + e,
+                success: (response) => {
+                    let quantities = [];
 
-    ReactDOM.render(dialog, document.querySelector("#dialog-holder"));
-});
+                    response.results.forEach(x => {
+                        quantities.push(x);
+                    });
 
-document.querySelector("#bookmark-name").addEventListener('input', function () {
-    if (document.querySelector("#bookmark-name").value !== "") {
-        bookmarkDialog.querySelector(".submit").removeAttribute('disabled');
-    } else {
-        bookmarkDialog.querySelector(".submit").setAttribute('disabled', 'true');
+                    this.setState({quantities: quantities});
+
+                },
+                error: () => {
+                    ReactDOM.render(<CustomSnackbar
+                            message="Er zijn geen kwantiteiten beschikbaar of konden niet worden opgehaald"
+                            severityStrength="error"/>,
+                        document.querySelector("div.snackbar-holder"));
+                },
+            });
+        }
     }
-});
 
-function reloadMenu() {
-    $.ajax({
-        type: "GET",
-        url: "/charts/locations",
-        contentType: "application/json; charset=utf-8",
-        error: function () {
-            document.querySelector("div.reload").removeAttribute('hidden');
-            ReactDOM.render(<CustomSnackbar message="Locaties kunnen niet worden opgehaald"
-                                            severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
-        },
-        success: function (e) {
-            locationDropdown.remove(0);
-            document.querySelector("div.reload").setAttribute('hidden', 'true');
-            let placeholder = new Option("Kies locatie", "");
-            placeholder.classList.add("mdl-textfield__label");
-            placeholder.setAttribute("selected", "true");
-            placeholder.setAttribute("disabled", "true");
-            locationDropdown.append(placeholder);
-            e.results.forEach(o => {
-                let option = new Option(o.properties?.locationName, o.properties?.locationName);
-                option.classList.add("mdl-textfield__label");
-                locationDropdown.append(option);
+    setQuantity(e) {
+        this.setState({quantity: e});
+    }
+
+    setDataType(e) {
+        this.setState({type: e});
+    }
+
+    setAspectSet(e) {
+        this.setState({aspectSet: e})
+    }
+
+    setInterval(e) {
+        this.setState({interval: e})
+    }
+
+    setChlorosity(e) {
+        this.setState({chlorosity: e});
+    }
+
+    setStartTime(e) {
+        this.setState({startTime: e})
+    }
+
+    setEndTime(e) {
+        this.setState({endTime: e})
+    }
+
+    setOption(e) {
+        this.setState({option: e});
+    }
+
+    generateNewChart(provider, results) {
+        document.querySelector('#chart-holder').removeAttribute('hidden');
+        document.querySelector('section.chart-placeholder').setAttribute('hidden', 'true');
+
+        let displayName = results.location?.properties?.displayNameGlobal
+            + " - " + results.observationType?.quantityName
+            + " (" + results.observationType?.aspectSet?.aspects[0]?.unit + ")";
+
+        let labels = [];
+        results.events.forEach(x => {
+            let date = new Date(x.timeStamp);
+            labels.push(date.toUTCString());
+        });
+
+        let ctx = document.getElementById("myChart").getContext("2d");
+        myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    yAxisID: getYaxisType(results.observationType?.aspectSet?.aspects[0]?.unit),
+                    label: displayName,
+                    data: this.getResultsData(results),
+                    backgroundColor: colors.backgroundColor[this.state.colorIndex],
+                    pointBackgroundColor: colors.pointBackgroundColor[this.state.colorIndex],
+                    borderColor: colors.borderColor[this.state.colorIndex],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    position: 'nearest',
+                    callbacks: {
+                        label: function (x, y) {
+                            // DEBUGGING
+                            // console.log(x, y);
+                            return "Y-Waarde: " + y.datasets[x.datasetIndex].data[x.index].y
+                                + " - Kwaliteit: " + y.datasets[x.datasetIndex].data[x.index].quality
+                                + " - Informatie: " + y.datasets[x.datasetIndex].data[x.index].additionalInfo;
+
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                responsiveAnimationDuration: 150,
+                onResize: function (chart, newSize) {
+                    myChart.update();
+                },
+                maintainAspectRatio: false,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: false,
+                        display: false,
+                        id: 'level',
+                        position: 'left',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "cm"
+                        }
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'sqcms',
+                        position: 'left',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "cm^2 per seconde"
+                        }
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'speed',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "m/s"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'temperature',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Celcius"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'pressure',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "hPa"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'angle',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Hoek in Graden"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'm3s',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Kubieke meters per seconde"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'mgl',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "milligram per liter"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'gkg',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "gram per kilogram"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'kgm3',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "kilogram per Kubieke meter"
+                        },
+                    }, {
+                        stacked: false,
+                        display: false,
+                        id: 'siemens',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Siemens per meter"
+                        },
+                    }],
+                    xAxes: [{
+                        stacked: false,
+                        type: 'time',
+                        distribution: 'linear',
+                        time: {
+                            tooltipFormat: "DD MMM YYYY HH:mm",
+                            stepSize: this.state.interval === '10min' ? 10 : 1,
+                            unit: 'minute',
+                            displayFormats: {
+                                minute: 'HH:mm'
+                            },
+                            parser: function (utc) {
+                                let stamp = new Date(utc);
+                                stamp.setHours(stamp.getHours() + (stamp.getTimezoneOffset() / 60))
+                                return stamp;
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+
+        updateAxis();
+        //updateDialog(provider.apiVersion, results.source.institution.name, results.source.process);
+    }
+
+    addNewDataset(dataset = null) {
+        if (this.state.colorIndex < 3) {
+            if (this.state.quantity === "waterchlorosity" && this.state.chlorosity === "") {
+                ReactDOM.render(<CustomSnackbar
+                        message={"Kies eerst de Chlorosity"}
+                        severityStrength={"warning"}/>,
+                    document.querySelector("div.snackbar-holder"));
+                return;
+            }
+
+            let parameters = this.setValues();
+
+            $.ajax({
+                type: "POST",
+                url: "/charts/result",
+                data: dataset != null ? JSON.stringify(dataset) : JSON.stringify(parameters),
+                contentType: "application/json; charset=utf-8",
+                error: () => {
+                    graphs.pop();
+                    this.setState({graphs: graphs});
+                    ReactDOM.render(<CustomSnackbar
+                            message={"Er is geen data beschikbaar"}
+                            severityStrength={"error"}/>,
+                        document.querySelector("div.snackbar-holder"));
+                },
+                success: (e) => {
+                    if (myChart) {
+                        this.setState({colorIndex: this.state.colorIndex + 1});
+                        let dataset = {
+                            yAxisID: getYaxisType(e.results[0].observationType.aspectSet.aspects[0].unit),
+                            label: e.results[0].location?.properties?.displayNameGlobal
+                                + " - " + e.results[0].observationType?.quantityName
+                                + " (" + e.results[0].observationType.aspectSet.aspects[0].unit + ")",
+                            data: this.getResultsData(e.results[0]),
+                            backgroundColor: colors.backgroundColor[this.state.colorIndex],
+                            pointBackgroundColor: colors.pointBackgroundColor[this.state.colorIndex],
+                            borderColor: colors.borderColor[this.state.colorIndex],
+                            borderWidth: 1
+                        }
+                        myChart.data.datasets.push(dataset);
+                        let responseTime = "Response in " + Math.abs(new Date().getTime() - new Date(e.provider?.responseTimestamp).getTime()) / 1000 + "s";
+                        ReactDOM.render(<CustomSnackbar
+                                message={responseTime}
+                                severityStrength={"success"}/>,
+                            document.querySelector("div.snackbar-holder"));
+                        updateAxis();
+                    } else {
+                        this.generateNewChart(e.provider, e.results[0]);
+                    }
+                }
+            });
+        }
+    }
+
+    getResultsData(results) {
+        console.log(results);
+        latestResults = results;
+        let data = []
+
+        if (latestResults.events[0]?.value != null) {
+            this.setState({option: false});
+            latestResults.events.forEach(item => {
+                data.push({
+                    "x": item.timeStamp,
+                    "y": item.value,
+                    "quality": item.quality,
+                    "additionalInfo": item.additionalInfo
+                });
+            });
+            return data;
+
+        } else if (this.state.quantity === "waterchlorosity") {
+            this.setState({option: false});
+            latestResults.events.forEach(event => {
+                event.aspects.forEach(aspect => {
+                    if (aspect.name === this.state.chlorosity) {
+                        data.push(aspect);
+                    }
+                });
+            });
+            this.showExtraOptions(data);
+        } else {
+            ReactDOM.render(<CustomSnackbar
+                    message={"Kies een optie uit het keuzemenu"}
+                    severityStrength={"info"}/>,
+                document.querySelector("div.snackbar-holder"));
+            this.showExtraOptions(latestResults);
+        }
+
+        updateAxis();
+    }
+
+    showExtraOptions(results) {
+        if (results[0] != null) {
+            if (results[0].hasOwnProperty("points")) {
+                let optionsList = [];
+                results[0].points.forEach(point => {
+                    optionsList.push({name: point.coordinates[2]});
+                });
+
+                this.setState({extraOption: false, depthOption: true, options: optionsList});
+            }
+        } else {
+            if (results.events[0]?.hasOwnProperty("points")) {
+                if (results.events[0]?.points[0]?.hasOwnProperty("coordinates")) {
+                    let optionsList = [];
+                    results.events[0].points.forEach(point => {
+                        optionsList.push({name: point.coordinates[2]});
+                    });
+
+                    this.setState({extraOption: false, depthOption: true, options: optionsList});
+                } else {
+                    this.setState({extraOption: true, depthOption: false, options: results.events[0].points});
+                }
+            } else if (results.events[0]?.hasOwnProperty("aspects")) {
+                if (results.events[0]?.aspects[0]?.hasOwnProperty("points")) {
+                    this.setState({
+                        extraOption: true,
+                        depthOption: false,
+                        options: results.events[0].aspects[0].points
+                    });
+                } else {
+                    this.setState({extraOption: true, depthOption: false, options: results.events[0].aspects});
+                }
+            } else {
+                this.setState({extraOption: false});
+                alert("There are extra options but they are not ready, contact the administrator");
+            }
+        }
+    }
+
+    setDepthOption(option) {
+        let data = [];
+        let index = 0;
+        this.setState({option: option})
+        switch (this.state.quantity) {
+            case "waterchlorosity":
+                latestResults.events.forEach(aspect => {
+                    aspect.aspects.forEach(x => {
+                        if (x.name === this.state.chlorosity) {
+                            x.points.forEach(item => {
+                                if (item.coordinates[2] == this.state.option) {
+                                    data.push({
+                                        "x": aspect.timeStamp,
+                                        "y": item.value,
+                                        "quality": item.quality,
+                                        "additionalInfo": item.additionalInfo
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+                switch (this.state.chlorosity) {
+                    case "Average":
+                        index = 0;
+                        break;
+                    case "AverageSalinity":
+                        index = 1;
+                        break;
+                    case "AverageSpecificWeight":
+                        index = 2;
+                        break;
+                }
+                myChart.data.datasets.pop();
+                this.addPreloadedData(data, index);
+                break;
+            default:
+                latestResults.events.forEach(aspect => {
+                    aspect.points.forEach(point => {
+                        if (point.coordinates[2] == this.state.option) {
+                            data.push({
+                                "x": aspect.timeStamp,
+                                "y": point.value,
+                                "quality": point.quality,
+                                "additionalInfo": point.additionalInfo
+                            });
+                        }
+                    });
+                });
+                myChart.data.datasets.pop();
+                this.addPreloadedData(data)
+                break;
+        }
+
+        updateAxis();
+    }
+
+    setExtraOption(option) {
+        this.setOption(option);
+        let data = [];
+        latestResults.events.forEach(aspect => {
+            aspect.aspects.forEach(item => {
+                if (item.name === option) {
+                    data.push({
+                        "x": aspect.timeStamp,
+                        "y": item.value,
+                        "quality": item.quality,
+                        "additionalInfo": item.additionalInfo
+                    });
+                }
             })
+        });
+
+        myChart.data.datasets.pop();
+        this.addPreloadedData(data);
+        updateAxis();
+    }
+
+    addPreloadedData(data, index = 0) {
+        if (this.state.colorIndex < 4) {
+
+            let dataset = {
+                label: latestResults.location.properties.displayNameGlobal
+                    + " - " + latestResults.observationType.quantityName
+                    + " (" + latestResults.observationType.aspectSet.aspects[index].unit + ")",
+                data: data,
+                yAxisID: getYaxisType(latestResults.observationType.aspectSet.aspects[index].unit),
+                backgroundColor: colors.backgroundColor[this.state.colorIndex],
+                pointBackgroundColor: colors.pointBackgroundColor[this.state.colorIndex],
+                borderColor: colors.borderColor[this.state.colorIndex],
+                borderWidth: 1
+            }
+
+            myChart.data.datasets.push(dataset);
+            myChart.update();
         }
-    });
+    }
+
+    removeDataset(index) {
+        myChart.data.datasets.splice(index, 1);
+        graphs.splice(index, 1);
+        this.setState({colorIndex: this.state.colorIndex - 1});
+
+        for (let i = 0; i < myChart.data.datasets.length; i++) {
+            myChart.data.datasets[i].backgroundColor = colors.backgroundColor[i];
+            myChart.data.datasets[i].borderColor = colors.borderColor[i];
+            myChart.data.datasets[i].pointBackgroundColor = colors.pointBackgroundColor[i];
+        }
+
+        updateAxis();
+    }
+
+    openChartWithToken() {
+
+        const handleClick = () => {
+            let token = document.getElementById("token-field").value;
+
+
+            if (token === "") {
+                ReactDOM.render(<CustomSnackbar message={"Geen token ingevuld"}
+                                                severityStrength="warning"/>,
+                    document.querySelector("div.snackbar-holder"));
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/charts/load/" + token,
+                    contentType: "application/json; charset=utf-8",
+                    error: function (e) {
+                        ReactDOM.render(<CustomSnackbar message={"Er is iets mis gegaan, STATUS: " + e.status}
+                                                        severityStrength="error"/>,
+                            document.querySelector("div.snackbar-holder"));
+                    },
+                    success: (e) => {
+                        ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+                        for (let i = 0; i < Object.keys(e).length; i++) {
+                            console.log(graphs);
+                            this.setState({location: e[i].location, quantity: e[i].quantity, type: e[i].type});
+                            this.addNewDataset(e[i]);
+                        }
+                        this.setState({graphs: graphs});
+                    }
+                });
+            }
+        }
+
+        const handleClose = () => {
+            ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+        }
+
+        let dialog =
+            <Dialog open={true}>
+                <DialogTitle onClose={handleClose.bind(this)} id="form-dialog-title">
+                    <span>Grafiek inladen</span>
+                    <IconButton onClick={handleClose.bind(this)} style={{right: 8, top: 8, position: "absolute"}}>
+                        <CloseIcon/>
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Plak hier de token om de grafiek in te laden.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="token-field"
+                        label="Token"
+                        type="text"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClick.bind(this)} color="primary">
+                        Laad Grafiek
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
+    }
+
+    showInfo(event) {
+        const handleClose = () => {
+            ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+        }
+
+        let dialog =
+            <>
+                <div>
+                    <Dialog
+                        open={true}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle>{"Parameters"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>{"Locatie: " + event.location}</DialogContentText>
+                            <DialogContentText>{"Kwantiteit: " + event.quantity}</DialogContentText>
+                            <DialogContentText>{"Type Meting: " + event.type}</DialogContentText>
+                            <DialogContentText>{"Interval: " + event.interval}</DialogContentText>
+                            <DialogContentText>{"Start Tijd: " + new Date(event.startTime).toUTCString()}</DialogContentText>
+                            <DialogContentText>{"Eind Tijd: " + new Date(event.endTime).toUTCString()}</DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary" autoFocus>{"Sluit"}</Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            </>
+
+
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
+
+    }
+
+    render() {
+        return <>
+            <FormControl className={"formControl"} variant={"outlined"}>
+                <Autocomplete
+                    id="location-select"
+                    options={this.props.locations}
+                    getOptionLabel={(option) => option.toString()}
+                    noOptionsText={"Geen locatie gevonden"}
+                    loadingText={"Locaties laden..."}
+                    onChange={(e, value) => this.setLocation(value)}
+                    renderInput={(params) =>
+                        <TextField {...params}
+                                   label="Locatie"
+                                   variant="outlined"
+                                   InputProps={{
+                                       ...params.InputProps,
+                                       style: {
+                                           color: "white"
+                                       }
+                                   }}
+                                   InputLabelProps={{
+                                       style: {
+                                           color: "white"
+                                       }
+                                   }}
+                        />}
+                />
+            </FormControl>
+
+            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"quantity-select-label"} className={"label-white"}>Kwantiteit</InputLabel>
+                <Select className={"label-white"}
+                        id={"quantity-select"}
+                        labelId={"quantity-select-label"}
+                        value={this.state.quantity}
+                        label={"Kwantiteit"}
+                        onChange={(e) => this.setQuantity(e.target.value)}
+                >
+                    {this.state.quantities.map(quantity => (
+                        <MenuItem key={quantity} value={quantity}>{quantity}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"type-select-label"} className={"label-white"}>Type Data</InputLabel>
+                <Select className={"label-white"}
+                        id={"type-select"}
+                        labelId={"type-select-label"}
+                        value={this.state.type}
+                        label={"Type Data"}
+                        onChange={(e) => this.setDataType(e.target.value)}
+                >
+                    <MenuItem selected key={"measurement"} value={"measurement"}>{"Measurement"}</MenuItem>
+                    <MenuItem key={"astronomical"} value={"astronomical"}>{"Astronomical"}</MenuItem>
+                    <MenuItem key={"forecast"} value={"forecast"}>{"Forecast"}</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"aspect-select-label"} className={"label-white"}>Aspect Set</InputLabel>
+                <Select className={"label-white"}
+                        id={"aspect-select"}
+                        labelId={"aspect-select-label"}
+                        value={this.state.aspectSet}
+                        label={"Aspect Set"}
+                        onChange={(e) => this.setAspectSet(e.target.value)}
+                >
+                    <MenuItem key={"minimum"} value={"minimum"}>{"Minimum"}</MenuItem>
+                    <MenuItem selected key={"standard"} value={"standard"}>{"Standaard"}</MenuItem>
+                    <MenuItem key={"maximum"} value={"maximum"}>{"Maximum"}</MenuItem>
+                </Select>
+            </FormControl>
+
+            <TextField
+                className={"label-white"}
+                hidden={this.state.quantities[0] === ""}
+                style={{
+                    backgroundColor: 'rgba(14, 121, 191, 0.4)',
+                    marginTop: 10,
+                    width: '95%',
+                    borderStyle: 'none',
+                    borderRadius: 5
+                }}
+                variant={"outlined"}
+                id="start-time"
+                label="Start Tijd"
+                type="datetime-local"
+                defaultValue={this.state.startTime}
+                InputLabelProps={{
+                    shrink: true,
+                    style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
+                }}
+                InputProps={{
+                    className: "label-white"
+                }}
+            />
+
+            <TextField
+                className={"label-white"}
+                hidden={this.state.quantities[0] === ""}
+                style={{
+                    backgroundColor: 'rgba(14, 121, 191, 0.4)',
+                    marginTop: 10,
+                    width: '95%',
+                    borderStyle: 'none',
+                    borderRadius: 5
+                }}
+                variant={"outlined"}
+                id="end-time"
+                label="Eind Tijd"
+                type="datetime-local"
+                defaultValue={this.state.endTime}
+                InputLabelProps={{
+                    shrink: true,
+                    style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
+                }}
+                InputProps={{
+                    className: "label-white"
+                }}
+            />
+
+            <FormControl hidden={this.state.quantity !== "waterlevel"} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"interval-select-label"} className={"label-white"}>Interval</InputLabel>
+                <Select className={"label-white"}
+                        id={"interval-select"}
+                        labelId={"interval-select-label"}
+                        value={this.state.interval}
+                        label={"Interval"}
+                        onChange={(e) => this.setInterval(e.target.value)}
+                >
+                    <MenuItem key={"1min"} value={"1min"}>{"1 Minuut"}</MenuItem>
+                    <MenuItem selected key={"10min"} value={"10min"}>{"10 Minuten"}</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl hidden={this.state.quantity !== "waterchlorosity"} className={"formControl"}
+                         variant={"outlined"}>
+                <InputLabel id={"chlorosity-select-label"} className={"label-white"}>Chlorosity</InputLabel>
+                <Select className={"label-white"}
+                        id={"chlorosity-select"}
+                        labelId={"chlorosity-select-label"}
+                        value={this.state.chlorosity}
+                        label={"Chlorisity"}
+                        onChange={(e) => this.setChlorosity(e.target.value)}
+                >
+                    <MenuItem selected key={"Average"} value={"Average"}>{"Average"}</MenuItem>
+                    <MenuItem key={"AverageSalinity"} value={"AverageSalinity"}>{"AverageSalinity"}</MenuItem>
+                    <MenuItem key={"AverageSpecificWeight"}
+                              value={"AverageSpecificWeight"}>{"AverageSpecificWeight"}</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl hidden={!this.state.extraOption} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"extra-option-select-label"} className={"label-white"}>Opties</InputLabel>
+                <Select className={"label-white"}
+                        id={"extra-option-select"}
+                        labelId={"extra-option-select-label"}
+                        value={this.state.option}
+                        label={"Opties"}
+                        onChange={(e) => this.setExtraOption(e.target.value)}
+                >
+                    {this.state.options.map(option => (
+                        <MenuItem key={option.name} value={option.name}>{option.name}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            <FormControl hidden={!this.state.depthOption} className={"formControl"} variant={"outlined"}>
+                <InputLabel id={"depth-option-select-label"} className={"label-white"}>Diepte</InputLabel>
+                <Select className={"label-white"}
+                        id={"depth-option-select"}
+                        labelId={"depth-option-select-label"}
+                        value={this.state.option}
+                        label={"Diepte"}
+                        onChange={(e) => this.setDepthOption(e.target.value)}
+                >
+                    {this.state.options.map(option => (
+                        <MenuItem key={option.name} value={option.name}>{option.name} meter</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            {myChart
+                ?
+                <div style={{display: "flex", justifyContent: "center", margin: 10}}>
+                    <ButtonGroup>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => this.addNewDataset()}>Toevoegen</Button>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => encodeChart()}>Delen</Button>
+                    </ButtonGroup>
+                </div>
+                :
+                <div style={{display: "flex", justifyContent: "center", margin: 10}}>
+                    <ButtonGroup>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => this.addNewDataset()}>Teken</Button>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => this.openChartWithToken()}>Open</Button>
+                    </ButtonGroup>
+                </div>
+            }
+
+            <div hidden={this.state.graphs.length === 0}>
+                {this.state.graphs.map(item => (
+                    <Chip
+                        icon={<InfoIcon style={{color: 'rgba(0, 0, 0, 0.25)'}}/>}
+                        label={
+                            <Typography variant={"subtitle1"} style={{whiteSpace: 'normal'}}>
+                                {item.location + " - " + item.quantity + " (" + item.type + ")"}
+                            </Typography>
+                        }
+                        clickable
+                        onClick={() => this.showInfo(item)}
+                        onDelete={() => this.removeDataset(this.state.graphs.indexOf(item))}
+                        style={{
+                            margin: 10,
+                            backgroundColor: colors.borderColor[this.state.graphs.indexOf(item)],
+                            height: '100%'
+                        }}
+                    />
+                ))}
+            </div>
+        </>;
+    }
 }
 
-function addBookmark() {
+$.ajax({
+    type: "GET",
+    url: "/charts/locations",
+    success: (e) => {
+        console.log(e);
+        let locations = [];
+        e.results.forEach(x => {
+            locations.push(x.properties.locationName);
+        });
 
-    let data = graphs;
-    data[0].bookmarkName = document.querySelector("#bookmark-name").value;
+        ReactDOM.render(<ChartMenu locations={locations}/>, document.querySelector('div.chart-menu'));
+
+    },
+    error: () => {
+        ReactDOM.render(<CustomSnackbar message={"Locaties konden niet worden opgehaald"}
+                                        severityStrength={"error"}/>,
+            document.querySelector("div.snackbar-holder"));
+    }
+
+});
 
 
-    $.ajax({
-        type: "POST",
-        url: "/bookmarks/add",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        error: function () {
-            ReactDOM.render(<CustomSnackbar message="Bladwijzer kon niet worden toegevoegd"
-                                            severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
-        },
-        success: function () {
-            ReactDOM.render(<CustomSnackbar message="Bladwijzer toegevoegd"
-                                            severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
-            bookmarkDialog.close();
-        }
-    });
-}
+ReactDOM.render(<ChartComponent/>, document.querySelector('section div.chart-holder'));
+ReactDOM.render(<div style={{display: "flex", justifyContent: "center", margin: 10}}>
+    <CircularProgress style={{color: '#F9E11E'}}/>
+</div>, document.querySelector('section div.chart-menu'));
+
+// date.setDate(date.getDate() - 1);
+// endDate.setDate(endDate.getDate());
+//
+// startTimePicker.value = date.toISOString().slice(0, 16);
+// endTimePicker.value = endDate.toISOString().slice(0, 16);
+//
+// reloadMenu();
+// document.querySelector("div.reload button").addEventListener('click', () => {
+//     reloadMenu();
+// });
+//
+// if (localStorage.getItem('bookmark') != null) {
+//     let node = JSON.parse(localStorage.getItem('bookmark'));
+//     console.log(Object.keys(node.bookmarks).length);
+//     localStorage.removeItem('bookmark');
+//
+//     node.bookmarks.forEach(bookmark => {
+//         addNewDataset(bookmark);
+//     });
+// }
+//
+// if (!dialog.showModal) {
+//     dialogPolyfill.registerDialog(dialog);
+// }
+//
+// showModalButton.addEventListener('click', function () {
+//     dialog.showModal();
+// });
+//
+// dialog.querySelector('.close').addEventListener('click', function () {
+//     dialog.close();
+// });
+//
+// if (!bookmarkDialog.showModal) {
+//     dialogPolyfill.registerDialog(bookmarkDialog);
+// }
+// showDialogModalButton.addEventListener('click', function () {
+//     setValues();
+//     document.querySelector(".bookmark-location").innerHTML = latestDataSettings.location;
+//     document.querySelector(".bookmark-quantity").innerHTML = latestDataSettings.quantity;
+//     document.querySelector(".bookmark-aspect").innerHTML = latestDataSettings.aspectSet;
+//     document.querySelector(".bookmark-startTime").innerHTML = latestDataSettings.startTime;
+//     document.querySelector(".bookmark-endTime").innerHTML = latestDataSettings.endTime;
+//     document.querySelector(".bookmark-interval").innerHTML = latestDataSettings.interval;
+//     bookmarkDialog.showModal();
+// });
+//
+// bookmarkDialog.querySelector('.close').addEventListener('click', function () {
+//     bookmarkDialog.close();
+// });
+//
+// bookmarkDialog.querySelector('.submit').addEventListener('click', function () {
+//     addBookmark();
+// });
+//
+// document.querySelector("#share-chart").addEventListener('click', () => {
+//     encodeChart();
+// });
+//
+// document.querySelector("#generate").addEventListener('click', () => {
+//     addNewDataset();
+//     drawBtn.parentElement.setAttribute('hidden', 'true');
+//     addSetBtn.parentElement.removeAttribute('hidden');
+// });
+//
+
+
+// document.querySelector("#bookmark-name").addEventListener('input', function () {
+//     if (document.querySelector("#bookmark-name").value !== "") {
+//         bookmarkDialog.querySelector(".submit").removeAttribute('disabled');
+//     } else {
+//         bookmarkDialog.querySelector(".submit").setAttribute('disabled', 'true');
+//     }
+// });
+
+
+// function addBookmark() {
+//
+//     let data = graphs;
+//     data[0].bookmarkName = document.querySelector("#bookmark-name").value;
+//
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "/bookmarks/add",
+//         data: JSON.stringify(data),
+//         contentType: "application/json; charset=utf-8",
+//         error: function () {
+//             ReactDOM.render(<CustomSnackbar message="Bladwijzer kon niet worden toegevoegd"
+//                                             severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
+//         },
+//         success: function () {
+//             ReactDOM.render(<CustomSnackbar message="Bladwijzer toegevoegd"
+//                                             severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
+//             bookmarkDialog.close();
+//         }
+//     });
+// }
 
 function encodeChart() {
 
@@ -220,7 +1205,7 @@ function encodeChart() {
         }
 
         const handleClose = () => {
-            ReactDOM.unmountComponentAtNode(document.querySelector("#dialog-holder"));
+            ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
         }
 
         let dialog =
@@ -255,7 +1240,7 @@ function encodeChart() {
                 </DialogActions>
             </Dialog>
 
-        ReactDOM.render(dialog, document.querySelector("#dialog-holder"));
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     });
 }
 
