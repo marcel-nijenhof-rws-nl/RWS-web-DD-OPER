@@ -2,150 +2,8 @@
     <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/charts.css")">
 
     <section>
-        <div class="chart-menu">
-            <div class="row reload" hidden>
-                <button class="mdl-button mdl-color--yellow mdl-ripple mdl-js-ripple-effect">herlaad menu</button>
-            </div>
-            <div class="row">
-                <label class="mdl-radio__label" for="locations">Locatie</label>
-                <select class="dropdown" id="locations" onchange="showOptions()">
-                    <option>Locaties ophalen...</option>
-                </select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="quantities">Kwantiteit</label>
-                <select class="dropdown" id="quantities" onchange="checkForQuantity(this)"></select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="aspect">Aspect Set</label>
-                <select class="dropdown" id="aspect">
-                    <option class="mdl-textfield__label" value="minimum">Minimum</option>
-                    <option selected class="mdl-textfield__label" value="standard">Standaard</option>
-                    <option class="mdl-textfield__label" value="maximum">Maximum</option>
-                </select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="startTime">Start Tijd</label>
-                <input id="startTime" type="datetime-local" value="">
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="endTime">Eind Tijd</label>
-                <input id="endTime" type="datetime-local" value="">
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="timeSeries">Interval</label>
-                <select class="dropdown" id="timeSeries">
-                    <option class="mdl-textfield__label" value="1min">1 minuut</option>
-                    <option class="mdl-textfield__label" selected value="10min">10 minuten</option>
-                </select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="extra">Opties</label>
-                <select class="dropdown" id="extra" onchange="setExtraOption(this)"></select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="chlorosity">Optie</label>
-                <select class="dropdown" id="chlorosity" onchange="setDepthOption(null)">
-                    <option selected value="Average">Average</option>
-                    <option value="AverageSalinity">Average Salinity</option>
-                    <option value="AverageSpecificWeight">Average Specific Weigth</option>
-                </select>
-            </div>
-            <div class="row" hidden>
-                <label class="mdl-radio__label" for="depth">Diepte</label>
-                <select class="dropdown" id="depth" onchange="setDepthOption(this)">
-                    <option selected disabled>Kies Diepte</option>
-                </select>
-            </div>
-
-            <div class="row">
-                <button id="generate" class="mdl-button mdl-js-button mdl-button--icon">
-                    <i class="material-icons">add_chart</i>
-                </button>
-                <button id="generate-from-token" class="mdl-button mdl-js-button mdl-button--icon">
-                    <i class="material-icons">launch</i>
-                </button>
-            </div>
-            <div class="row" hidden>
-                <button id="add-dataset" class="mdl-button mdl-js-button mdl-button--icon" onclick="addNewDataset()">
-                    <i class="material-icons">add</i>
-                </button>
-                <div class="mdl-tooltip mdl-tooltip" for="add-dataset">
-                    Dataset Toevoegen
-                </div>
-                <button id="remove-dataset" class="mdl-button mdl-js-button mdl-button--icon" onclick="removeLastDataset()">
-                    <i class="material-icons">remove</i>
-                </button>
-                <div class="mdl-tooltip mdl-tooltip" for="remove-dataset">
-                    Laatste dataset verwijderen
-                </div>
-                <button id="add-bookmark" class="mdl-button mdl-js-button mdl-button--icon">
-                    <i class="material-icons">bookmark_add</i>
-                </button>
-                <div class="mdl-tooltip mdl-tooltip" for="add-bookmark">
-                    Toevoegen aan bladwijzers
-                </div>
-                <button id="share-chart" class="mdl-button mdl-js-button mdl-button--icon">
-                    <i class="material-icons">share</i>
-                </button>
-                <div class="mdl-tooltip mdl-tooltip" for="share-chart">
-                    Grafiek Delen
-                </div>
-            </div>
-            <div class="row bottom">
-                <button class="mdl-button show-modal mdl-js-button mdl-button--accent mdl-button--icon">
-                    <i class="material-icons">info</i>
-                </button>
-            </div>
-
-            <div id="set-containers"></div>
-
-        </div>
+        <div class="chart-menu"></div>
     </section>
-
-    <div id="dialog-holder"></div>
-
-    <dialog class="mdl-dialog" style="margin: auto">
-        <div class="mdl-dialog__content">
-            <h5>Provider informatie</h5>
-            <p>API versie <span class="api-version"></span></p>
-            <p>Bron: <span class="source"></span></p>
-            <p>Proces: <span class="process"></span></p>
-            <p><a class="link" href="http://rws.nl/" target="_blank">Ondersteuning</a></p>
-            <p>
-                <strong>DISCLAIMER:</strong> Dit project is nog sterk in ontwikkeling en daardoor zullen
-                er een aantal functionaliteiten ontbreken of niet werken, ververs de pagina
-                als er iets mis gaat.
-            </p>
-        </div>
-        <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button close">Sluiten</button>
-        </div>
-    </dialog>
-
-    <dialog class="mdl-dialog bookmark-dialog" style="margin: auto">
-        <div class="mdl-dialog__content">
-            <h5>De volgende instellingen zullen worden toegevoegd aan de bladwijzer:</h5>
-            <p class="bookmark-location"></p>
-            <p class="bookmark-quantity"></p>
-            <p class="bookmark-aspect"></p>
-            <p class="bookmark-startTime"></p>
-            <p class="bookmark-endTime"></p>
-            <p class="bookmark-interval"></p>
-
-
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label input">
-                <input class="mdl-textfield__input" type="text" id="bookmark-name" value="">
-                <label class="mdl-textfield__label" for="bookmark-name">Bladwijzer Naam</label>
-            </div>
-        </div>
-        <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button submit mdl-button--colored" disabled>Toevoegen</button>
-            <button type="button" class="mdl-button close">Annuleer</button>
-        </div>
-    </dialog>
-
-    <section class="dialog-container"></section>
 
     <section id="chart-holder" hidden>
         <div class="chart-holder"></div>
@@ -155,12 +13,10 @@
         <img src="@routes.Assets.versioned("images/placeholder-statistics.svg")" alt="chart"/>
     </section>
 
-    <div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar mdl-color--primary">
-        <div class="mdl-snackbar__text"></div>
-        <button type="button" class="mdl-snackbar__action"></button>
-    </div>
+    <section>
+        <div class="dialog-holder"></div>
+    </section>
 
-    <script src="@routes.Assets.versioned("javascripts/charts-page.js")"></script>
     <script src="@routes.Assets.versioned("javascripts/charts.bundle.js")"></script>
 
 }

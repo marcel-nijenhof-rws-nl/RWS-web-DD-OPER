@@ -12,57 +12,6 @@
     box-shadow: 2px 2px 5px rgba(5, 5, 5, .4);
 }
 
-label {
-    width: 100px;
-    margin-right: auto;
-}
-
-button.mdl-button {
-    margin: auto;
-}
-
-div.row {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    margin-right: 5px;
-}
-
-div.row.bottom {
-    position: absolute;
-    margin-right: 5px;
-    bottom: 0;
-    right: 0;
-    justify-content: flex-end;
-}
-
-select.dropdown {
-    color: #f2f2f2;
-    background-color: rgba(255, 255, 255, 0.1);
-    width: 80%;
-    border-radius: 5px;
-    border-style: none;
-    height: 30px;
-    padding-left: 12px;
-}
-
-select.dropdown option {
-    background-color: #fff;
-    color: #222222;
-    transition: 0.2s ease-in-out;
-}
-
-input[type="datetime-local"] {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #f2f2f2;
-    border-radius: 5px;
-    border-style: none;
-    padding: 15px;
-    height: 25px;
-    width: 80%;
-}
-
 .chart-holder {
     padding-top: 15px;
     width: 78vw;
@@ -84,4 +33,18 @@ section.chart-placeholder img {
     z-index: -100;
     width: 20vw;
     display: block;
+}
+
+/* NEW CHART PAGE */
+
+.formControl {
+    margin-top: 10px;
+    width: 95%;
+    border-radius: 5px;
+    border-style: none;
+    background-color: rgba(14, 121, 191, 0.4);
+}
+
+.label-white {
+    color: #F2F2F2;
 }
