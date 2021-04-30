@@ -880,7 +880,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../styles/withStyles":68,"../utils/useEventCallback":86,"../utils/useForkRef":87,"../utils/useIsFocusVisible":88,"./TouchRipple":25,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"clsx":159,"prop-types":183,"react":206,"react-dom":190}],24:[function(require,module,exports){
+},{"../styles/withStyles":81,"../utils/useEventCallback":99,"../utils/useForkRef":100,"../utils/useIsFocusVisible":101,"./TouchRipple":25,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"clsx":179,"prop-types":203,"react":226,"react-dom":210}],24:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -998,7 +998,7 @@ process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
 var _default = Ripple;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../utils/useEventCallback":86,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"_process":179,"clsx":159,"prop-types":183,"react":206}],25:[function(require,module,exports){
+},{"../utils/useEventCallback":99,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"_process":199,"clsx":179,"prop-types":203,"react":226}],25:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -1341,7 +1341,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../styles/withStyles":68,"./Ripple":24,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@babel/runtime/helpers/toConsumableArray":20,"_process":179,"clsx":159,"prop-types":183,"react":206,"react-transition-group":201}],26:[function(require,module,exports){
+},{"../styles/withStyles":81,"./Ripple":24,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@babel/runtime/helpers/toConsumableArray":20,"_process":199,"clsx":179,"prop-types":203,"react":226,"react-transition-group":221}],26:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -1564,7 +1564,7 @@ if (process.env.NODE_ENV !== 'production') {
 var _default = ClickAwayListener;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../utils/ownerDocument":79,"../utils/useEventCallback":86,"../utils/useForkRef":87,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/utils":156,"_process":179,"prop-types":183,"react":206,"react-dom":190}],28:[function(require,module,exports){
+},{"../utils/ownerDocument":92,"../utils/useEventCallback":99,"../utils/useForkRef":100,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/utils":176,"_process":199,"prop-types":203,"react":226,"react-dom":210}],28:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -1581,6 +1581,192 @@ Object.defineProperty(exports, "default", {
 
 var _ClickAwayListener = _interopRequireDefault(require("./ClickAwayListener"));
 },{"./ClickAwayListener":27,"@babel/runtime/helpers/interopRequireDefault":10}],29:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _colorManipulator = require("../styles/colorManipulator");
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      height: 1,
+      margin: 0,
+      // Reset browser default style.
+      border: 'none',
+      flexShrink: 0,
+      backgroundColor: theme.palette.divider
+    },
+
+    /* Styles applied to the root element if `absolute={true}`. */
+    absolute: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '100%'
+    },
+
+    /* Styles applied to the root element if `variant="inset"`. */
+    inset: {
+      marginLeft: 72
+    },
+
+    /* Styles applied to the root element if `light={true}`. */
+    light: {
+      backgroundColor: (0, _colorManipulator.fade)(theme.palette.divider, 0.08)
+    },
+
+    /* Styles applied to the root element if `variant="middle"`. */
+    middle: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2)
+    },
+
+    /* Styles applied to the root element if `orientation="vertical"`. */
+    vertical: {
+      height: '100%',
+      width: 1
+    },
+
+    /* Styles applied to the root element if `flexItem={true}`. */
+    flexItem: {
+      alignSelf: 'stretch',
+      height: 'auto'
+    }
+  };
+};
+
+exports.styles = styles;
+var Divider = /*#__PURE__*/React.forwardRef(function Divider(props, ref) {
+  var _props$absolute = props.absolute,
+      absolute = _props$absolute === void 0 ? false : _props$absolute,
+      classes = props.classes,
+      className = props.className,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'hr' : _props$component,
+      _props$flexItem = props.flexItem,
+      flexItem = _props$flexItem === void 0 ? false : _props$flexItem,
+      _props$light = props.light,
+      light = _props$light === void 0 ? false : _props$light,
+      _props$orientation = props.orientation,
+      orientation = _props$orientation === void 0 ? 'horizontal' : _props$orientation,
+      _props$role = props.role,
+      role = _props$role === void 0 ? Component !== 'hr' ? 'separator' : undefined : _props$role,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'fullWidth' : _props$variant,
+      other = (0, _objectWithoutProperties2.default)(props, ["absolute", "classes", "className", "component", "flexItem", "light", "orientation", "role", "variant"]);
+  return /*#__PURE__*/React.createElement(Component, (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, variant !== 'fullWidth' && classes[variant], absolute && classes.absolute, flexItem && classes.flexItem, light && classes.light, orientation === 'vertical' && classes.vertical),
+    role: role,
+    ref: ref
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? Divider.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * Absolutely position the element.
+   */
+  absolute: _propTypes.default.bool,
+
+  /**
+   * @ignore
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: _propTypes.default
+  /* @typescript-to-proptypes-ignore */
+  .elementType,
+
+  /**
+   * If `true`, a vertical divider will have the correct height when used in flex container.
+   * (By default, a vertical divider will have a calculated height of `0px` if it is the child of a flex container.)
+   */
+  flexItem: _propTypes.default.bool,
+
+  /**
+   * If `true`, the divider will have a lighter color.
+   */
+  light: _propTypes.default.bool,
+
+  /**
+   * The divider orientation.
+   */
+  orientation: _propTypes.default.oneOf(['horizontal', 'vertical']),
+
+  /**
+   * @ignore
+   */
+  role: _propTypes.default.string,
+
+  /**
+   * The variant to use.
+   */
+  variant: _propTypes.default.oneOf(['fullWidth', 'inset', 'middle'])
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiDivider'
+})(Divider);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../styles/colorManipulator":62,"../styles/withStyles":81,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],30:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _Divider.default;
+  }
+});
+
+var _Divider = _interopRequireDefault(require("./Divider"));
+},{"./Divider":29,"@babel/runtime/helpers/interopRequireDefault":10}],31:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -1855,7 +2041,7 @@ Grow.muiSupportAuto = true;
 var _default = Grow;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../styles/useTheme":67,"../transitions/utils":71,"../utils/useForkRef":87,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@babel/runtime/helpers/slicedToArray":19,"_process":179,"prop-types":183,"react":206,"react-transition-group":201}],30:[function(require,module,exports){
+},{"../styles/useTheme":80,"../transitions/utils":84,"../utils/useForkRef":100,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@babel/runtime/helpers/slicedToArray":19,"_process":199,"prop-types":203,"react":226,"react-transition-group":221}],32:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -1871,7 +2057,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _Grow = _interopRequireDefault(require("./Grow"));
-},{"./Grow":29,"@babel/runtime/helpers/interopRequireDefault":10}],31:[function(require,module,exports){
+},{"./Grow":31,"@babel/runtime/helpers/interopRequireDefault":10}],33:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -2098,7 +2284,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../ButtonBase":26,"../styles/colorManipulator":49,"../styles/withStyles":68,"../utils/capitalize":72,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"clsx":159,"prop-types":183,"react":206}],32:[function(require,module,exports){
+},{"../ButtonBase":26,"../styles/colorManipulator":62,"../styles/withStyles":81,"../utils/capitalize":85,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"clsx":179,"prop-types":203,"react":226}],34:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2114,7 +2300,806 @@ Object.defineProperty(exports, "default", {
 });
 
 var _IconButton = _interopRequireDefault(require("./IconButton"));
-},{"./IconButton":31,"@babel/runtime/helpers/interopRequireDefault":10}],33:[function(require,module,exports){
+},{"./IconButton":33,"@babel/runtime/helpers/interopRequireDefault":10}],35:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _ListContext = _interopRequireDefault(require("../List/ListContext"));
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      minWidth: 56,
+      color: theme.palette.action.active,
+      flexShrink: 0,
+      display: 'inline-flex'
+    },
+
+    /* Styles applied to the root element when the parent `ListItem` uses `alignItems="flex-start"`. */
+    alignItemsFlexStart: {
+      marginTop: 8
+    }
+  };
+};
+/**
+ * A simple wrapper to apply `List` styles to an `Icon` or `SvgIcon`.
+ */
+
+
+exports.styles = styles;
+var ListItemIcon = /*#__PURE__*/React.forwardRef(function ListItemIcon(props, ref) {
+  var classes = props.classes,
+      className = props.className,
+      other = (0, _objectWithoutProperties2.default)(props, ["classes", "className"]);
+  var context = React.useContext(_ListContext.default);
+  return /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, context.alignItems === 'flex-start' && classes.alignItemsFlexStart),
+    ref: ref
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? ListItemIcon.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The content of the component, normally `Icon`, `SvgIcon`,
+   * or a `@material-ui/icons` SVG icon element.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiListItemIcon'
+})(ListItemIcon);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../List/ListContext":42,"../styles/withStyles":81,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],36:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _ListItemIcon.default;
+  }
+});
+
+var _ListItemIcon = _interopRequireDefault(require("./ListItemIcon"));
+},{"./ListItemIcon":35,"@babel/runtime/helpers/interopRequireDefault":10}],37:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _Typography = _interopRequireDefault(require("../Typography"));
+
+var _ListContext = _interopRequireDefault(require("../List/ListContext"));
+
+var styles = {
+  /* Styles applied to the root element. */
+  root: {
+    flex: '1 1 auto',
+    minWidth: 0,
+    marginTop: 4,
+    marginBottom: 4
+  },
+
+  /* Styles applied to the `Typography` components if primary and secondary are set. */
+  multiline: {
+    marginTop: 6,
+    marginBottom: 6
+  },
+
+  /* Styles applied to the `Typography` components if dense. */
+  dense: {},
+
+  /* Styles applied to the root element if `inset={true}`. */
+  inset: {
+    paddingLeft: 56
+  },
+
+  /* Styles applied to the primary `Typography` component. */
+  primary: {},
+
+  /* Styles applied to the secondary `Typography` component. */
+  secondary: {}
+};
+exports.styles = styles;
+var ListItemText = /*#__PURE__*/React.forwardRef(function ListItemText(props, ref) {
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$disableTypogra = props.disableTypography,
+      disableTypography = _props$disableTypogra === void 0 ? false : _props$disableTypogra,
+      _props$inset = props.inset,
+      inset = _props$inset === void 0 ? false : _props$inset,
+      primaryProp = props.primary,
+      primaryTypographyProps = props.primaryTypographyProps,
+      secondaryProp = props.secondary,
+      secondaryTypographyProps = props.secondaryTypographyProps,
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"]);
+
+  var _React$useContext = React.useContext(_ListContext.default),
+      dense = _React$useContext.dense;
+
+  var primary = primaryProp != null ? primaryProp : children;
+
+  if (primary != null && primary.type !== _Typography.default && !disableTypography) {
+    primary = /*#__PURE__*/React.createElement(_Typography.default, (0, _extends2.default)({
+      variant: dense ? 'body2' : 'body1',
+      className: classes.primary,
+      component: "span",
+      display: "block"
+    }, primaryTypographyProps), primary);
+  }
+
+  var secondary = secondaryProp;
+
+  if (secondary != null && secondary.type !== _Typography.default && !disableTypography) {
+    secondary = /*#__PURE__*/React.createElement(_Typography.default, (0, _extends2.default)({
+      variant: "body2",
+      className: classes.secondary,
+      color: "textSecondary",
+      display: "block"
+    }, secondaryTypographyProps), secondary);
+  }
+
+  return /*#__PURE__*/React.createElement("div", (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, dense && classes.dense, inset && classes.inset, primary && secondary && classes.multiline),
+    ref: ref
+  }, other), primary, secondary);
+});
+process.env.NODE_ENV !== "production" ? ListItemText.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * Alias for the `primary` prop.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * If `true`, the children won't be wrapped by a Typography component.
+   * This can be useful to render an alternative Typography variant by wrapping
+   * the `children` (or `primary`) text, and optional `secondary` text
+   * with the Typography component.
+   */
+  disableTypography: _propTypes.default.bool,
+
+  /**
+   * If `true`, the children will be indented.
+   * This should be used if there is no left avatar or left icon.
+   */
+  inset: _propTypes.default.bool,
+
+  /**
+   * The main content element.
+   */
+  primary: _propTypes.default.node,
+
+  /**
+   * These props will be forwarded to the primary typography component
+   * (as long as disableTypography is not `true`).
+   */
+  primaryTypographyProps: _propTypes.default.object,
+
+  /**
+   * The secondary content element.
+   */
+  secondary: _propTypes.default.node,
+
+  /**
+   * These props will be forwarded to the secondary typography component
+   * (as long as disableTypography is not `true`).
+   */
+  secondaryTypographyProps: _propTypes.default.object
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiListItemText'
+})(ListItemText);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../List/ListContext":42,"../Typography":53,"../styles/withStyles":81,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],38:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _ListItemText.default;
+  }
+});
+
+var _ListItemText = _interopRequireDefault(require("./ListItemText"));
+},{"./ListItemText":37,"@babel/runtime/helpers/interopRequireDefault":10}],39:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _utils = require("@material-ui/utils");
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _ButtonBase = _interopRequireDefault(require("../ButtonBase"));
+
+var _isMuiElement = _interopRequireDefault(require("../utils/isMuiElement"));
+
+var _useForkRef = _interopRequireDefault(require("../utils/useForkRef"));
+
+var _ListContext = _interopRequireDefault(require("../List/ListContext"));
+
+var ReactDOM = _interopRequireWildcard(require("react-dom"));
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
+    root: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      position: 'relative',
+      textDecoration: 'none',
+      width: '100%',
+      boxSizing: 'border-box',
+      textAlign: 'left',
+      paddingTop: 8,
+      paddingBottom: 8,
+      '&$focusVisible': {
+        backgroundColor: theme.palette.action.selected
+      },
+      '&$selected, &$selected:hover': {
+        backgroundColor: theme.palette.action.selected
+      },
+      '&$disabled': {
+        opacity: 0.5
+      }
+    },
+
+    /* Styles applied to the `container` element if `children` includes `ListItemSecondaryAction`. */
+    container: {
+      position: 'relative'
+    },
+
+    /* Pseudo-class applied to the `component`'s `focusVisibleClassName` prop if `button={true}`. */
+    focusVisible: {},
+
+    /* Styles applied to the `component` element if dense. */
+    dense: {
+      paddingTop: 4,
+      paddingBottom: 4
+    },
+
+    /* Styles applied to the `component` element if `alignItems="flex-start"`. */
+    alignItemsFlexStart: {
+      alignItems: 'flex-start'
+    },
+
+    /* Pseudo-class applied to the inner `component` element if `disabled={true}`. */
+    disabled: {},
+
+    /* Styles applied to the inner `component` element if `divider={true}`. */
+    divider: {
+      borderBottom: "1px solid ".concat(theme.palette.divider),
+      backgroundClip: 'padding-box'
+    },
+
+    /* Styles applied to the inner `component` element if `disableGutters={false}`. */
+    gutters: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
+
+    /* Styles applied to the inner `component` element if `button={true}`. */
+    button: {
+      transition: theme.transitions.create('background-color', {
+        duration: theme.transitions.duration.shortest
+      }),
+      '&:hover': {
+        textDecoration: 'none',
+        backgroundColor: theme.palette.action.hover,
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent'
+        }
+      }
+    },
+
+    /* Styles applied to the `component` element if `children` includes `ListItemSecondaryAction`. */
+    secondaryAction: {
+      // Add some space to avoid collision as `ListItemSecondaryAction`
+      // is absolutely positioned.
+      paddingRight: 48
+    },
+
+    /* Pseudo-class applied to the root element if `selected={true}`. */
+    selected: {}
+  };
+};
+
+exports.styles = styles;
+var useEnhancedEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+/**
+ * Uses an additional container component if `ListItemSecondaryAction` is the last child.
+ */
+
+var ListItem = /*#__PURE__*/React.forwardRef(function ListItem(props, ref) {
+  var _props$alignItems = props.alignItems,
+      alignItems = _props$alignItems === void 0 ? 'center' : _props$alignItems,
+      _props$autoFocus = props.autoFocus,
+      autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus,
+      _props$button = props.button,
+      button = _props$button === void 0 ? false : _props$button,
+      childrenProp = props.children,
+      classes = props.classes,
+      className = props.className,
+      componentProp = props.component,
+      _props$ContainerCompo = props.ContainerComponent,
+      ContainerComponent = _props$ContainerCompo === void 0 ? 'li' : _props$ContainerCompo,
+      _props$ContainerProps = props.ContainerProps;
+  _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
+  var ContainerClassName = _props$ContainerProps.className,
+      ContainerProps = (0, _objectWithoutProperties2.default)(_props$ContainerProps, ["className"]),
+      _props$dense = props.dense,
+      dense = _props$dense === void 0 ? false : _props$dense,
+      _props$disabled = props.disabled,
+      disabled = _props$disabled === void 0 ? false : _props$disabled,
+      _props$disableGutters = props.disableGutters,
+      disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters,
+      _props$divider = props.divider,
+      divider = _props$divider === void 0 ? false : _props$divider,
+      focusVisibleClassName = props.focusVisibleClassName,
+      _props$selected = props.selected,
+      selected = _props$selected === void 0 ? false : _props$selected,
+      other = (0, _objectWithoutProperties2.default)(props, ["alignItems", "autoFocus", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
+  var context = React.useContext(_ListContext.default);
+  var childContext = {
+    dense: dense || context.dense || false,
+    alignItems: alignItems
+  };
+  var listItemRef = React.useRef(null);
+  useEnhancedEffect(function () {
+    if (autoFocus) {
+      if (listItemRef.current) {
+        listItemRef.current.focus();
+      } else if (process.env.NODE_ENV !== 'production') {
+        console.error('Material-UI: Unable to set focus to a ListItem whose component has not been rendered.');
+      }
+    }
+  }, [autoFocus]);
+  var children = React.Children.toArray(childrenProp);
+  var hasSecondaryAction = children.length && (0, _isMuiElement.default)(children[children.length - 1], ['ListItemSecondaryAction']);
+  var handleOwnRef = React.useCallback(function (instance) {
+    // #StrictMode ready
+    listItemRef.current = ReactDOM.findDOMNode(instance);
+  }, []);
+  var handleRef = (0, _useForkRef.default)(handleOwnRef, ref);
+  var componentProps = (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, childContext.dense && classes.dense, !disableGutters && classes.gutters, divider && classes.divider, disabled && classes.disabled, button && classes.button, alignItems !== "center" && classes.alignItemsFlexStart, hasSecondaryAction && classes.secondaryAction, selected && classes.selected),
+    disabled: disabled
+  }, other);
+  var Component = componentProp || 'li';
+
+  if (button) {
+    componentProps.component = componentProp || 'div';
+    componentProps.focusVisibleClassName = (0, _clsx.default)(classes.focusVisible, focusVisibleClassName);
+    Component = _ButtonBase.default;
+  }
+
+  if (hasSecondaryAction) {
+    // Use div by default.
+    Component = !componentProps.component && !componentProp ? 'div' : Component; // Avoid nesting of li > li.
+
+    if (ContainerComponent === 'li') {
+      if (Component === 'li') {
+        Component = 'div';
+      } else if (componentProps.component === 'li') {
+        componentProps.component = 'div';
+      }
+    }
+
+    return /*#__PURE__*/React.createElement(_ListContext.default.Provider, {
+      value: childContext
+    }, /*#__PURE__*/React.createElement(ContainerComponent, (0, _extends2.default)({
+      className: (0, _clsx.default)(classes.container, ContainerClassName),
+      ref: handleRef
+    }, ContainerProps), /*#__PURE__*/React.createElement(Component, componentProps, children), children.pop()));
+  }
+
+  return /*#__PURE__*/React.createElement(_ListContext.default.Provider, {
+    value: childContext
+  }, /*#__PURE__*/React.createElement(Component, (0, _extends2.default)({
+    ref: handleRef
+  }, componentProps), children));
+});
+process.env.NODE_ENV !== "production" ? ListItem.propTypes = {
+  /**
+   * Defines the `align-items` style property.
+   */
+  alignItems: _propTypes.default.oneOf(['flex-start', 'center']),
+
+  /**
+   * If `true`, the list item will be focused during the first mount.
+   * Focus will also be triggered if the value changes from false to true.
+   */
+  autoFocus: _propTypes.default.bool,
+
+  /**
+   * If `true`, the list item will be a button (using `ButtonBase`). Props intended
+   * for `ButtonBase` can then be applied to `ListItem`.
+   */
+  button: _propTypes.default.bool,
+
+  /**
+   * The content of the component. If a `ListItemSecondaryAction` is used it must
+   * be the last child.
+   */
+  children: (0, _utils.chainPropTypes)(_propTypes.default.node, function (props) {
+    var children = React.Children.toArray(props.children); // React.Children.toArray(props.children).findLastIndex(isListItemSecondaryAction)
+
+    var secondaryActionIndex = -1;
+
+    for (var i = children.length - 1; i >= 0; i -= 1) {
+      var child = children[i];
+
+      if ((0, _isMuiElement.default)(child, ['ListItemSecondaryAction'])) {
+        secondaryActionIndex = i;
+        break;
+      }
+    } //  is ListItemSecondaryAction the last child of ListItem
+
+
+    if (secondaryActionIndex !== -1 && secondaryActionIndex !== children.length - 1) {
+      return new Error('Material-UI: You used an element after ListItemSecondaryAction. ' + 'For ListItem to detect that it has a secondary action ' + 'you must pass it as the last child to ListItem.');
+    }
+
+    return null;
+  }),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   * By default, it's a `li` when `button` is `false` and a `div` when `button` is `true`.
+   */
+  component: _propTypes.default
+  /* @typescript-to-proptypes-ignore */
+  .elementType,
+
+  /**
+   * The container component used when a `ListItemSecondaryAction` is the last child.
+   */
+  ContainerComponent: _propTypes.default.elementType,
+
+  /**
+   * Props applied to the container component if used.
+   */
+  ContainerProps: _propTypes.default.object,
+
+  /**
+   * If `true`, compact vertical padding designed for keyboard and mouse input will be used.
+   */
+  dense: _propTypes.default.bool,
+
+  /**
+   * If `true`, the list item will be disabled.
+   */
+  disabled: _propTypes.default.bool,
+
+  /**
+   * If `true`, the left and right padding is removed.
+   */
+  disableGutters: _propTypes.default.bool,
+
+  /**
+   * If `true`, a 1px light border is added to the bottom of the list item.
+   */
+  divider: _propTypes.default.bool,
+
+  /**
+   * @ignore
+   */
+  focusVisibleClassName: _propTypes.default.string,
+
+  /**
+   * Use to apply selected styling.
+   */
+  selected: _propTypes.default.bool
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiListItem'
+})(ListItem);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../ButtonBase":26,"../List/ListContext":42,"../styles/withStyles":81,"../utils/isMuiElement":91,"../utils/useForkRef":100,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"clsx":179,"prop-types":203,"react":226,"react-dom":210}],40:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _ListItem.default;
+  }
+});
+
+var _ListItem = _interopRequireDefault(require("./ListItem"));
+},{"./ListItem":39,"@babel/runtime/helpers/interopRequireDefault":10}],41:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _ListContext = _interopRequireDefault(require("./ListContext"));
+
+var styles = {
+  /* Styles applied to the root element. */
+  root: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+    position: 'relative'
+  },
+
+  /* Styles applied to the root element if `disablePadding={false}`. */
+  padding: {
+    paddingTop: 8,
+    paddingBottom: 8
+  },
+
+  /* Styles applied to the root element if dense. */
+  dense: {},
+
+  /* Styles applied to the root element if a `subheader` is provided. */
+  subheader: {
+    paddingTop: 0
+  }
+};
+exports.styles = styles;
+var List = /*#__PURE__*/React.forwardRef(function List(props, ref) {
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'ul' : _props$component,
+      _props$dense = props.dense,
+      dense = _props$dense === void 0 ? false : _props$dense,
+      _props$disablePadding = props.disablePadding,
+      disablePadding = _props$disablePadding === void 0 ? false : _props$disablePadding,
+      subheader = props.subheader,
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "component", "dense", "disablePadding", "subheader"]);
+  var context = React.useMemo(function () {
+    return {
+      dense: dense
+    };
+  }, [dense]);
+  return /*#__PURE__*/React.createElement(_ListContext.default.Provider, {
+    value: context
+  }, /*#__PURE__*/React.createElement(Component, (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, dense && classes.dense, !disablePadding && classes.padding, subheader && classes.subheader),
+    ref: ref
+  }, other), subheader, children));
+});
+process.env.NODE_ENV !== "production" ? List.propTypes = {
+  /**
+   * The content of the component.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: _propTypes.default
+  /* @typescript-to-proptypes-ignore */
+  .elementType,
+
+  /**
+   * If `true`, compact vertical padding designed for keyboard and mouse input will be used for
+   * the list and list items.
+   * The prop is available to descendant components as the `dense` context.
+   */
+  dense: _propTypes.default.bool,
+
+  /**
+   * If `true`, vertical padding will be removed from the list.
+   */
+  disablePadding: _propTypes.default.bool,
+
+  /**
+   * The content of the subheader, normally `ListSubheader`.
+   */
+  subheader: _propTypes.default.node
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiList'
+})(List);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../styles/withStyles":81,"./ListContext":42,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],42:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+/**
+ * @ignore - internal component.
+ */
+var ListContext = React.createContext({});
+
+if (process.env.NODE_ENV !== 'production') {
+  ListContext.displayName = 'ListContext';
+}
+
+var _default = ListContext;
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"_process":199,"react":226}],43:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _List.default;
+  }
+});
+
+var _List = _interopRequireDefault(require("./List"));
+},{"./List":41,"@babel/runtime/helpers/interopRequireDefault":10}],44:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -2252,7 +3237,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../styles/withStyles":68,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"clsx":159,"prop-types":183,"react":206}],34:[function(require,module,exports){
+},{"../styles/withStyles":81,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"clsx":179,"prop-types":203,"react":226}],45:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2268,7 +3253,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _Paper = _interopRequireDefault(require("./Paper"));
-},{"./Paper":33,"@babel/runtime/helpers/interopRequireDefault":10}],35:[function(require,module,exports){
+},{"./Paper":44,"@babel/runtime/helpers/interopRequireDefault":10}],46:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -2394,7 +3379,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../Paper":34,"../styles/colorManipulator":49,"../styles/withStyles":68,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":179,"clsx":159,"prop-types":183,"react":206}],36:[function(require,module,exports){
+},{"../Paper":45,"../styles/colorManipulator":62,"../styles/withStyles":81,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],47:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2410,7 +3395,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _SnackbarContent = _interopRequireDefault(require("./SnackbarContent"));
-},{"./SnackbarContent":35,"@babel/runtime/helpers/interopRequireDefault":10}],37:[function(require,module,exports){
+},{"./SnackbarContent":46,"@babel/runtime/helpers/interopRequireDefault":10}],48:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -2840,7 +3825,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../ClickAwayListener":28,"../Grow":30,"../SnackbarContent":36,"../styles/transitions":66,"../styles/withStyles":68,"../utils/capitalize":72,"../utils/createChainedFunction":73,"../utils/useEventCallback":86,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":179,"clsx":159,"prop-types":183,"react":206}],38:[function(require,module,exports){
+},{"../ClickAwayListener":28,"../Grow":32,"../SnackbarContent":47,"../styles/transitions":79,"../styles/withStyles":81,"../utils/capitalize":85,"../utils/createChainedFunction":86,"../utils/useEventCallback":99,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],49:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2856,7 +3841,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _Snackbar = _interopRequireDefault(require("./Snackbar"));
-},{"./Snackbar":37,"@babel/runtime/helpers/interopRequireDefault":10}],39:[function(require,module,exports){
+},{"./Snackbar":48,"@babel/runtime/helpers/interopRequireDefault":10}],50:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -3043,7 +4028,7 @@ var _default = (0, _withStyles.default)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../styles/withStyles":68,"../utils/capitalize":72,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":179,"clsx":159,"prop-types":183,"react":206}],40:[function(require,module,exports){
+},{"../styles/withStyles":81,"../utils/capitalize":85,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],51:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3059,7 +4044,302 @@ Object.defineProperty(exports, "default", {
 });
 
 var _SvgIcon = _interopRequireDefault(require("./SvgIcon"));
-},{"./SvgIcon":39,"@babel/runtime/helpers/interopRequireDefault":10}],41:[function(require,module,exports){
+},{"./SvgIcon":50,"@babel/runtime/helpers/interopRequireDefault":10}],52:[function(require,module,exports){
+(function (process){(function (){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _capitalize = _interopRequireDefault(require("../utils/capitalize"));
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      margin: 0
+    },
+
+    /* Styles applied to the root element if `variant="body2"`. */
+    body2: theme.typography.body2,
+
+    /* Styles applied to the root element if `variant="body1"`. */
+    body1: theme.typography.body1,
+
+    /* Styles applied to the root element if `variant="caption"`. */
+    caption: theme.typography.caption,
+
+    /* Styles applied to the root element if `variant="button"`. */
+    button: theme.typography.button,
+
+    /* Styles applied to the root element if `variant="h1"`. */
+    h1: theme.typography.h1,
+
+    /* Styles applied to the root element if `variant="h2"`. */
+    h2: theme.typography.h2,
+
+    /* Styles applied to the root element if `variant="h3"`. */
+    h3: theme.typography.h3,
+
+    /* Styles applied to the root element if `variant="h4"`. */
+    h4: theme.typography.h4,
+
+    /* Styles applied to the root element if `variant="h5"`. */
+    h5: theme.typography.h5,
+
+    /* Styles applied to the root element if `variant="h6"`. */
+    h6: theme.typography.h6,
+
+    /* Styles applied to the root element if `variant="subtitle1"`. */
+    subtitle1: theme.typography.subtitle1,
+
+    /* Styles applied to the root element if `variant="subtitle2"`. */
+    subtitle2: theme.typography.subtitle2,
+
+    /* Styles applied to the root element if `variant="overline"`. */
+    overline: theme.typography.overline,
+
+    /* Styles applied to the root element if `variant="srOnly"`. Only accessible to screen readers. */
+    srOnly: {
+      position: 'absolute',
+      height: 1,
+      width: 1,
+      overflow: 'hidden'
+    },
+
+    /* Styles applied to the root element if `align="left"`. */
+    alignLeft: {
+      textAlign: 'left'
+    },
+
+    /* Styles applied to the root element if `align="center"`. */
+    alignCenter: {
+      textAlign: 'center'
+    },
+
+    /* Styles applied to the root element if `align="right"`. */
+    alignRight: {
+      textAlign: 'right'
+    },
+
+    /* Styles applied to the root element if `align="justify"`. */
+    alignJustify: {
+      textAlign: 'justify'
+    },
+
+    /* Styles applied to the root element if `nowrap={true}`. */
+    noWrap: {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    },
+
+    /* Styles applied to the root element if `gutterBottom={true}`. */
+    gutterBottom: {
+      marginBottom: '0.35em'
+    },
+
+    /* Styles applied to the root element if `paragraph={true}`. */
+    paragraph: {
+      marginBottom: 16
+    },
+
+    /* Styles applied to the root element if `color="inherit"`. */
+    colorInherit: {
+      color: 'inherit'
+    },
+
+    /* Styles applied to the root element if `color="primary"`. */
+    colorPrimary: {
+      color: theme.palette.primary.main
+    },
+
+    /* Styles applied to the root element if `color="secondary"`. */
+    colorSecondary: {
+      color: theme.palette.secondary.main
+    },
+
+    /* Styles applied to the root element if `color="textPrimary"`. */
+    colorTextPrimary: {
+      color: theme.palette.text.primary
+    },
+
+    /* Styles applied to the root element if `color="textSecondary"`. */
+    colorTextSecondary: {
+      color: theme.palette.text.secondary
+    },
+
+    /* Styles applied to the root element if `color="error"`. */
+    colorError: {
+      color: theme.palette.error.main
+    },
+
+    /* Styles applied to the root element if `display="inline"`. */
+    displayInline: {
+      display: 'inline'
+    },
+
+    /* Styles applied to the root element if `display="block"`. */
+    displayBlock: {
+      display: 'block'
+    }
+  };
+};
+
+exports.styles = styles;
+var defaultVariantMapping = {
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h6',
+  subtitle1: 'h6',
+  subtitle2: 'h6',
+  body1: 'p',
+  body2: 'p'
+};
+var Typography = /*#__PURE__*/React.forwardRef(function Typography(props, ref) {
+  var _props$align = props.align,
+      align = _props$align === void 0 ? 'inherit' : _props$align,
+      classes = props.classes,
+      className = props.className,
+      _props$color = props.color,
+      color = _props$color === void 0 ? 'initial' : _props$color,
+      component = props.component,
+      _props$display = props.display,
+      display = _props$display === void 0 ? 'initial' : _props$display,
+      _props$gutterBottom = props.gutterBottom,
+      gutterBottom = _props$gutterBottom === void 0 ? false : _props$gutterBottom,
+      _props$noWrap = props.noWrap,
+      noWrap = _props$noWrap === void 0 ? false : _props$noWrap,
+      _props$paragraph = props.paragraph,
+      paragraph = _props$paragraph === void 0 ? false : _props$paragraph,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'body1' : _props$variant,
+      _props$variantMapping = props.variantMapping,
+      variantMapping = _props$variantMapping === void 0 ? defaultVariantMapping : _props$variantMapping,
+      other = (0, _objectWithoutProperties2.default)(props, ["align", "classes", "className", "color", "component", "display", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"]);
+  var Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
+  return /*#__PURE__*/React.createElement(Component, (0, _extends2.default)({
+    className: (0, _clsx.default)(classes.root, className, variant !== 'inherit' && classes[variant], color !== 'initial' && classes["color".concat((0, _capitalize.default)(color))], noWrap && classes.noWrap, gutterBottom && classes.gutterBottom, paragraph && classes.paragraph, align !== 'inherit' && classes["align".concat((0, _capitalize.default)(align))], display !== 'initial' && classes["display".concat((0, _capitalize.default)(display))]),
+    ref: ref
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? Typography.propTypes = {
+  /**
+   * Set the text-align on the component.
+   */
+  align: _propTypes.default.oneOf(['inherit', 'left', 'center', 'right', 'justify']),
+
+  /**
+   * The content of the component.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   */
+  color: _propTypes.default.oneOf(['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']),
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   * Overrides the behavior of the `variantMapping` prop.
+   */
+  component: _propTypes.default
+  /* @typescript-to-proptypes-ignore */
+  .elementType,
+
+  /**
+   * Controls the display type
+   */
+  display: _propTypes.default.oneOf(['initial', 'block', 'inline']),
+
+  /**
+   * If `true`, the text will have a bottom margin.
+   */
+  gutterBottom: _propTypes.default.bool,
+
+  /**
+   * If `true`, the text will not wrap, but instead will truncate with a text overflow ellipsis.
+   *
+   * Note that text overflow can only happen with block or inline-block level elements
+   * (the element needs to have a width in order to overflow).
+   */
+  noWrap: _propTypes.default.bool,
+
+  /**
+   * If `true`, the text will have a bottom margin.
+   */
+  paragraph: _propTypes.default.bool,
+
+  /**
+   * Applies the theme typography styles.
+   */
+  variant: _propTypes.default.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit']),
+
+  /**
+   * The component maps the variant prop to a range of different HTML element types.
+   * For instance, subtitle1 to `<h6>`.
+   * If you wish to change that mapping, you can provide your own.
+   * Alternatively, you can use the `component` prop.
+   */
+  variantMapping: _propTypes.default.object
+} : void 0;
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiTypography'
+})(Typography);
+
+exports.default = _default;
+}).call(this)}).call(this,require('_process'))
+},{"../styles/withStyles":81,"../utils/capitalize":85,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"clsx":179,"prop-types":203,"react":226}],53:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _Typography.default;
+  }
+});
+
+var _Typography = _interopRequireDefault(require("./Typography"));
+},{"./Typography":52,"@babel/runtime/helpers/interopRequireDefault":10}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3084,7 +4364,7 @@ var blue = {
 };
 var _default = blue;
 exports.default = _default;
-},{}],42:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3097,7 +4377,7 @@ var common = {
 };
 var _default = common;
 exports.default = _default;
-},{}],43:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3122,7 +4402,7 @@ var green = {
 };
 var _default = green;
 exports.default = _default;
-},{}],44:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3147,7 +4427,7 @@ var grey = {
 };
 var _default = grey;
 exports.default = _default;
-},{}],45:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3172,7 +4452,7 @@ var indigo = {
 };
 var _default = indigo;
 exports.default = _default;
-},{}],46:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3197,7 +4477,7 @@ var orange = {
 };
 var _default = orange;
 exports.default = _default;
-},{}],47:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3222,7 +4502,7 @@ var pink = {
 };
 var _default = pink;
 exports.default = _default;
-},{}],48:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3247,7 +4527,7 @@ var red = {
 };
 var _default = red;
 exports.default = _default;
-},{}],49:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -3556,7 +4836,7 @@ function lighten(color, coefficient) {
   return recomposeColor(color);
 }
 }).call(this)}).call(this,require('_process'))
-},{"@material-ui/utils":156,"_process":179}],50:[function(require,module,exports){
+},{"@material-ui/utils":176,"_process":199}],63:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3638,7 +4918,7 @@ function createBreakpoints(breakpoints) {
     width: width
   }, other);
 }
-},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16}],51:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16}],64:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3691,7 +4971,7 @@ function createMixins(breakpoints, spacing, mixins) {
     }), _toolbar)
   }, mixins);
 }
-},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10}],52:[function(require,module,exports){
+},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10}],65:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3714,7 +4994,7 @@ function createMuiStrictModeTheme(options) {
     unstable_strictMode: true
   }, options)].concat(args));
 }
-},{"./createMuiTheme":53,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":156}],53:[function(require,module,exports){
+},{"./createMuiTheme":66,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":176}],66:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -3825,7 +5105,7 @@ function createMuiTheme() {
 var _default = createMuiTheme;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./createBreakpoints":50,"./createMixins":51,"./createPalette":54,"./createSpacing":55,"./createTypography":57,"./shadows":63,"./shape":64,"./transitions":66,"./zIndex":70,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179}],54:[function(require,module,exports){
+},{"./createBreakpoints":63,"./createMixins":64,"./createPalette":67,"./createSpacing":68,"./createTypography":70,"./shadows":76,"./shape":77,"./transitions":79,"./zIndex":83,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199}],67:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4080,7 +5360,7 @@ function createPalette(palette) {
   return paletteOutput;
 }
 }).call(this)}).call(this,require('_process'))
-},{"../colors/blue":41,"../colors/common":42,"../colors/green":43,"../colors/grey":44,"../colors/indigo":45,"../colors/orange":46,"../colors/pink":47,"../colors/red":48,"./colorManipulator":49,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179}],55:[function(require,module,exports){
+},{"../colors/blue":54,"../colors/common":55,"../colors/green":56,"../colors/grey":57,"../colors/indigo":58,"../colors/orange":59,"../colors/pink":60,"../colors/red":61,"./colorManipulator":62,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199}],68:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4155,7 +5435,7 @@ function createSpacing() {
   return spacing;
 }
 }).call(this)}).call(this,require('_process'))
-},{"@material-ui/system":137,"_process":179}],56:[function(require,module,exports){
+},{"@material-ui/system":157,"_process":199}],69:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4178,7 +5458,7 @@ function createStyles(styles) {
   // warnOnce = true;
   return (0, _styles.createStyles)(styles);
 }
-},{"@material-ui/styles":112}],57:[function(require,module,exports){
+},{"@material-ui/styles":132}],70:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4288,7 +5568,7 @@ function createTypography(palette, typography) {
   });
 }
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179}],58:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199}],71:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4435,7 +5715,7 @@ function responsiveProperty(_ref3) {
   });
   return output;
 }
-},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10}],59:[function(require,module,exports){
+},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10}],72:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4450,7 +5730,7 @@ var _createMuiTheme = _interopRequireDefault(require("./createMuiTheme"));
 var defaultTheme = (0, _createMuiTheme.default)();
 var _default = defaultTheme;
 exports.default = _default;
-},{"./createMuiTheme":53,"@babel/runtime/helpers/interopRequireDefault":10}],60:[function(require,module,exports){
+},{"./createMuiTheme":66,"@babel/runtime/helpers/interopRequireDefault":10}],73:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4611,7 +5891,7 @@ var _withStyles = _interopRequireDefault(require("./withStyles"));
 var _withTheme = _interopRequireDefault(require("./withTheme"));
 
 var _styles = require("@material-ui/styles");
-},{"./colorManipulator":49,"./createMuiStrictModeTheme":52,"./createMuiTheme":53,"./createStyles":56,"./makeStyles":61,"./responsiveFontSizes":62,"./styled":65,"./transitions":66,"./useTheme":67,"./withStyles":68,"./withTheme":69,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112}],61:[function(require,module,exports){
+},{"./colorManipulator":62,"./createMuiStrictModeTheme":65,"./createMuiTheme":66,"./createStyles":69,"./makeStyles":74,"./responsiveFontSizes":75,"./styled":78,"./transitions":79,"./useTheme":80,"./withStyles":81,"./withTheme":82,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132}],74:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4636,7 +5916,7 @@ function makeStyles(stylesOrCreator) {
 
 var _default = makeStyles;
 exports.default = _default;
-},{"./defaultTheme":59,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112}],62:[function(require,module,exports){
+},{"./defaultTheme":72,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132}],75:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4720,7 +6000,7 @@ function responsiveFontSizes(themeInput) {
   return theme;
 }
 }).call(this)}).call(this,require('_process'))
-},{"./cssUtils":58,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":156,"_process":179}],63:[function(require,module,exports){
+},{"./cssUtils":71,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":176,"_process":199}],76:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4739,7 +6019,7 @@ function createShadow() {
 var shadows = ['none', createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
 var _default = shadows;
 exports.default = _default;
-},{}],64:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4751,7 +6031,7 @@ var shape = {
 };
 var _default = shape;
 exports.default = _default;
-},{}],65:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4778,7 +6058,7 @@ var styled = function styled(Component) {
 
 var _default = styled;
 exports.default = _default;
-},{"./defaultTheme":59,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112}],66:[function(require,module,exports){
+},{"./defaultTheme":72,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132}],79:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4895,7 +6175,7 @@ var _default = {
 };
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":179}],67:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199}],80:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -4923,7 +6203,7 @@ function useTheme() {
   return theme;
 }
 }).call(this)}).call(this,require('_process'))
-},{"./defaultTheme":59,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112,"_process":179,"react":206}],68:[function(require,module,exports){
+},{"./defaultTheme":72,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132,"_process":199,"react":226}],81:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4947,7 +6227,7 @@ function withStyles(stylesOrCreator, options) {
 
 var _default = withStyles;
 exports.default = _default;
-},{"./defaultTheme":59,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112}],69:[function(require,module,exports){
+},{"./defaultTheme":72,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132}],82:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4966,7 +6246,7 @@ var withTheme = (0, _styles.withThemeCreator)({
 });
 var _default = withTheme;
 exports.default = _default;
-},{"./defaultTheme":59,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":112}],70:[function(require,module,exports){
+},{"./defaultTheme":72,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/styles":132}],83:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4986,7 +6266,7 @@ var zIndex = {
 };
 var _default = zIndex;
 exports.default = _default;
-},{}],71:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5010,7 +6290,7 @@ function getTransitionProps(props, options) {
     delay: style.transitionDelay
   };
 }
-},{}],72:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5033,7 +6313,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 }).call(this)}).call(this,require('_process'))
-},{"@material-ui/utils":156,"_process":179}],73:[function(require,module,exports){
+},{"@material-ui/utils":176,"_process":199}],86:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5078,7 +6358,7 @@ function createChainedFunction() {
   }, function () {});
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],74:[function(require,module,exports){
+},{"_process":199}],87:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5115,7 +6395,7 @@ function createSvgIcon(path, displayName) {
   return /*#__PURE__*/_react.default.memo( /*#__PURE__*/_react.default.forwardRef(Component));
 }
 }).call(this)}).call(this,require('_process'))
-},{"../SvgIcon":40,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179,"react":206}],75:[function(require,module,exports){
+},{"../SvgIcon":51,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199,"react":226}],88:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5151,7 +6431,7 @@ function debounce(func) {
 
   return debounced;
 }
-},{}],76:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5179,7 +6459,7 @@ function deprecatedPropType(validator, reason) {
   };
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],77:[function(require,module,exports){
+},{"_process":199}],90:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5315,7 +6595,7 @@ var _useForkRef = _interopRequireDefault(require("./useForkRef"));
 var _unstable_useId = _interopRequireDefault(require("./unstable_useId"));
 
 var _useIsFocusVisible = _interopRequireDefault(require("./useIsFocusVisible"));
-},{"./capitalize":72,"./createChainedFunction":73,"./createSvgIcon":74,"./debounce":75,"./deprecatedPropType":76,"./isMuiElement":78,"./ownerDocument":79,"./ownerWindow":80,"./requirePropFactory":81,"./setRef":82,"./unstable_useId":83,"./unsupportedProp":84,"./useControlled":85,"./useEventCallback":86,"./useForkRef":87,"./useIsFocusVisible":88,"@babel/runtime/helpers/interopRequireDefault":10}],78:[function(require,module,exports){
+},{"./capitalize":85,"./createChainedFunction":86,"./createSvgIcon":87,"./debounce":88,"./deprecatedPropType":89,"./isMuiElement":91,"./ownerDocument":92,"./ownerWindow":93,"./requirePropFactory":94,"./setRef":95,"./unstable_useId":96,"./unsupportedProp":97,"./useControlled":98,"./useEventCallback":99,"./useForkRef":100,"./useIsFocusVisible":101,"@babel/runtime/helpers/interopRequireDefault":10}],91:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -5330,7 +6610,7 @@ var React = _interopRequireWildcard(require("react"));
 function isMuiElement(element, muiNames) {
   return /*#__PURE__*/React.isValidElement(element) && muiNames.indexOf(element.type.muiName) !== -1;
 }
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":206}],79:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],92:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5341,7 +6621,7 @@ exports.default = ownerDocument;
 function ownerDocument(node) {
   return node && node.ownerDocument || document;
 }
-},{}],80:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5357,7 +6637,7 @@ function ownerWindow(node) {
   var doc = (0, _ownerDocument.default)(node);
   return doc.defaultView || window;
 }
-},{"./ownerDocument":79,"@babel/runtime/helpers/interopRequireDefault":10}],81:[function(require,module,exports){
+},{"./ownerDocument":92,"@babel/runtime/helpers/interopRequireDefault":10}],94:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5388,7 +6668,7 @@ function requirePropFactory(componentNameInError) {
   return requireProp;
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],82:[function(require,module,exports){
+},{"_process":199}],95:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5404,7 +6684,7 @@ function setRef(ref, value) {
     ref.current = value;
   }
 }
-},{}],83:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -5435,7 +6715,7 @@ function useId(idOverride) {
   }, [defaultId]);
   return id;
 }
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":206}],84:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],97:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5458,7 +6738,7 @@ function unsupportedProp(props, propName, componentName, location, propFullName)
   return null;
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],85:[function(require,module,exports){
+},{"_process":199}],98:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5513,7 +6793,7 @@ function useControlled(_ref) {
   return [value, setValueIfUncontrolled];
 }
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"_process":179,"react":206}],86:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"_process":199,"react":226}],99:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -5541,7 +6821,7 @@ function useEventCallback(fn) {
     return (0, ref.current).apply(void 0, arguments);
   }, []);
 }
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":206}],87:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],100:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5574,7 +6854,7 @@ function useForkRef(refA, refB) {
     };
   }, [refA, refB]);
 }
-},{"./setRef":82,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":206}],88:[function(require,module,exports){
+},{"./setRef":95,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],101:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -5745,7 +7025,147 @@ function useIsFocusVisible() {
   };
 }
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"_process":179,"react":206,"react-dom":190}],89:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"_process":199,"react":226,"react-dom":210}],102:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M19 18l2 1V3c0-1.1-.9-2-2-2H8.99C7.89 1 7 1.9 7 3h10c1.1 0 2 .9 2 2v13zM15 5H5c-1.1 0-2 .9-2 2v16l7-3 7 3V7c0-1.1-.9-2-2-2z"
+}), 'BookmarksRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],103:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M19 8h-1.81c-.45-.78-1.07-1.45-1.82-1.96l.93-.93c.39-.39.39-1.02 0-1.41a.9959.9959 0 00-1.41 0l-1.47 1.47C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L9.11 3.7a.9959.9959 0 00-1.41 0c-.39.39-.39 1.02 0 1.41l.92.93C7.88 6.55 7.26 7.22 6.81 8H5c-.55 0-1 .45-1 1s.45 1 1 1h1.09c-.05.33-.09.66-.09 1v1H5c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .34.04.67.09 1H5c-.55 0-1 .45-1 1s.45 1 1 1h1.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H19c.55 0 1-.45 1-1s-.45-1-1-1h-1.09c.05-.33.09-.66.09-1v-1h1c.55 0 1-.45 1-1s-.45-1-1-1h-1v-1c0-.34-.04-.67-.09-1H19c.55 0 1-.45 1-1s-.45-1-1-1zm-6 8h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1zm0-4h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1z"
+}), 'BugReportRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],104:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M10.79 16.29c.39.39 1.02.39 1.41 0l3.59-3.59c.39-.39.39-1.02 0-1.41L12.2 7.7a.9959.9959 0 00-1.41 0c-.39.39-.39 1.02 0 1.41L12.67 11H4c-.55 0-1 .45-1 1s.45 1 1 1h8.67l-1.88 1.88c-.39.39-.38 1.03 0 1.41zM19 3H5c-1.11 0-2 .9-2 2v3c0 .55.45 1 1 1s1-.45 1-1V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v12c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1v3c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+}), 'ExitToAppRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],105:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z"
+}), 'HomeRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],106:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"
+}), 'SettingsRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],107:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
+  d: "M23 8c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2zm0 0c0 1.1-.9 2-2 2-.18 0-.35-.02-.51-.07l-3.56 3.55c.05.16.07.34.07.52 0 1.1-.9 2-2 2s-2-.9-2-2c0-.18.02-.36.07-.52l-2.55-2.55c-.16.05-.34.07-.52.07s-.36-.02-.52-.07l-4.55 4.56c.05.16.07.33.07.51 0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2c.18 0 .35.02.51.07l4.56-4.55C8.02 9.36 8 9.18 8 9c0-1.1.9-2 2-2s2 .9 2 2c0 .18-.02.36-.07.52l2.55 2.55c.16-.05.34-.07.52-.07s.36.02.52.07l3.55-3.56C19.02 8.35 19 8.18 19 8c0-1.1.9-2 2-2s2 .9 2 2z"
+}), 'TimelineRounded');
+
+exports.default = _default;
+},{"./utils/createSvgIcon":108,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"react":226}],108:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _utils.createSvgIcon;
+  }
+});
+
+var _utils = require("@material-ui/core/utils");
+},{"@material-ui/core/utils":90}],109:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -6072,7 +7492,7 @@ var _default = (0, _styles.withStyles)(styles, {
 
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../internal/svg-icons/Close":91,"../internal/svg-icons/ErrorOutline":92,"../internal/svg-icons/InfoOutlined":93,"../internal/svg-icons/ReportProblemOutlined":94,"../internal/svg-icons/SuccessOutlined":95,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/core/IconButton":32,"@material-ui/core/Paper":34,"@material-ui/core/styles":60,"@material-ui/core/utils":77,"_process":179,"clsx":159,"prop-types":183,"react":206}],90:[function(require,module,exports){
+},{"../internal/svg-icons/Close":111,"../internal/svg-icons/ErrorOutline":112,"../internal/svg-icons/InfoOutlined":113,"../internal/svg-icons/ReportProblemOutlined":114,"../internal/svg-icons/SuccessOutlined":115,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/core/IconButton":34,"@material-ui/core/Paper":45,"@material-ui/core/styles":73,"@material-ui/core/utils":90,"_process":199,"clsx":179,"prop-types":203,"react":226}],110:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6088,7 +7508,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _Alert = _interopRequireDefault(require("./Alert"));
-},{"./Alert":89,"@babel/runtime/helpers/interopRequireDefault":10}],91:[function(require,module,exports){
+},{"./Alert":109,"@babel/runtime/helpers/interopRequireDefault":10}],111:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6110,7 +7530,7 @@ var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path
 }), 'Close');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":77,"react":206}],92:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":90,"react":226}],112:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6132,7 +7552,7 @@ var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path
 }), 'ErrorOutline');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":77,"react":206}],93:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":90,"react":226}],113:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6154,7 +7574,7 @@ var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path
 }), 'InfoOutlined');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":77,"react":206}],94:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":90,"react":226}],114:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6176,7 +7596,7 @@ var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path
 }), 'ReportProblemOutlined');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":77,"react":206}],95:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":90,"react":226}],115:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6198,7 +7618,7 @@ var _default = (0, _utils.createSvgIcon)( /*#__PURE__*/React.createElement("path
 }), 'SuccessOutlined');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":77,"react":206}],96:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/core/utils":90,"react":226}],116:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6265,7 +7685,7 @@ var ServerStyleSheets = /*#__PURE__*/function () {
 }();
 
 exports.default = ServerStyleSheets;
-},{"../StylesProvider":99,"../createGenerateClassName":104,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":6,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"jss":177,"react":206}],97:[function(require,module,exports){
+},{"../StylesProvider":119,"../createGenerateClassName":124,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":6,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"jss":197,"react":226}],117:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6281,7 +7701,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _ServerStyleSheets = _interopRequireDefault(require("./ServerStyleSheets"));
-},{"./ServerStyleSheets":96,"@babel/runtime/helpers/interopRequireDefault":10}],98:[function(require,module,exports){
+},{"./ServerStyleSheets":116,"@babel/runtime/helpers/interopRequireDefault":10}],118:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -6455,7 +7875,7 @@ if (process.env.NODE_ENV !== 'production') {
   process.env.NODE_ENV !== "production" ? StylesProvider.propTypes = (0, _utils.exactProp)(StylesProvider.propTypes) : void 0;
 }
 }).call(this)}).call(this,require('_process'))
-},{"../createGenerateClassName":104,"../jssPreset":113,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"jss":177,"prop-types":183,"react":206}],99:[function(require,module,exports){
+},{"../createGenerateClassName":124,"../jssPreset":133,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"jss":197,"prop-types":203,"react":226}],119:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -6483,7 +7903,7 @@ Object.keys(_StylesProvider).forEach(function (key) {
     }
   });
 });
-},{"./StylesProvider":98,"@babel/runtime/helpers/interopRequireWildcard":11}],100:[function(require,module,exports){
+},{"./StylesProvider":118,"@babel/runtime/helpers/interopRequireWildcard":11}],120:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -6576,7 +7996,7 @@ if (process.env.NODE_ENV !== 'production') {
 var _default = ThemeProvider;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../useTheme":124,"../useTheme/ThemeContext":123,"./nested":102,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":156,"_process":179,"prop-types":183,"react":206}],101:[function(require,module,exports){
+},{"../useTheme":144,"../useTheme/ThemeContext":143,"./nested":122,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":176,"_process":199,"prop-types":203,"react":226}],121:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6592,7 +8012,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _ThemeProvider = _interopRequireDefault(require("./ThemeProvider"));
-},{"./ThemeProvider":100,"@babel/runtime/helpers/interopRequireDefault":10}],102:[function(require,module,exports){
+},{"./ThemeProvider":120,"@babel/runtime/helpers/interopRequireDefault":10}],122:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6604,7 +8024,7 @@ var hasSymbol = typeof Symbol === 'function' && Symbol.for;
 var _default = hasSymbol ? Symbol.for('mui.nested') : '__THEME_NESTED__';
 
 exports.default = _default;
-},{}],103:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -6688,7 +8108,7 @@ function createGenerateClassName() {
   };
 }
 }).call(this)}).call(this,require('_process'))
-},{"../ThemeProvider/nested":102,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179}],104:[function(require,module,exports){
+},{"../ThemeProvider/nested":122,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199}],124:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6704,7 +8124,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _createGenerateClassName = _interopRequireDefault(require("./createGenerateClassName"));
-},{"./createGenerateClassName":103,"@babel/runtime/helpers/interopRequireDefault":10}],105:[function(require,module,exports){
+},{"./createGenerateClassName":123,"@babel/runtime/helpers/interopRequireDefault":10}],125:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6715,7 +8135,7 @@ exports.default = createStyles;
 function createStyles(styles) {
   return styles;
 }
-},{}],106:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6731,7 +8151,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _createStyles = _interopRequireDefault(require("./createStyles"));
-},{"./createStyles":105,"@babel/runtime/helpers/interopRequireDefault":10}],107:[function(require,module,exports){
+},{"./createStyles":125,"@babel/runtime/helpers/interopRequireDefault":10}],127:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -6797,7 +8217,7 @@ function getStylesCreator(stylesOrCreator) {
   };
 }
 }).call(this)}).call(this,require('_process'))
-},{"./noopTheme":109,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21,"@material-ui/utils":156,"_process":179}],108:[function(require,module,exports){
+},{"./noopTheme":129,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21,"@material-ui/utils":176,"_process":199}],128:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6813,7 +8233,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _getStylesCreator = _interopRequireDefault(require("./getStylesCreator"));
-},{"./getStylesCreator":107,"@babel/runtime/helpers/interopRequireDefault":10}],109:[function(require,module,exports){
+},{"./getStylesCreator":127,"@babel/runtime/helpers/interopRequireDefault":10}],129:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6824,7 +8244,7 @@ exports.default = void 0;
 var noopTheme = {};
 var _default = noopTheme;
 exports.default = _default;
-},{}],110:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6855,7 +8275,7 @@ function getThemeProps(params) {
 
   return props;
 }
-},{}],111:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6871,7 +8291,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _getThemeProps = _interopRequireDefault(require("./getThemeProps"));
-},{"./getThemeProps":110,"@babel/runtime/helpers/interopRequireDefault":10}],112:[function(require,module,exports){
+},{"./getThemeProps":130,"@babel/runtime/helpers/interopRequireDefault":10}],132:[function(require,module,exports){
 (function (process){(function (){
 /** @license Material-UI v4.11.3
  *
@@ -7163,7 +8583,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && 
   _utils.ponyfillGlobal['__@material-ui/styles-init__'] += 1;
 }
 }).call(this)}).call(this,require('_process'))
-},{"./ServerStyleSheets":97,"./StylesProvider":99,"./ThemeProvider":101,"./createGenerateClassName":104,"./createStyles":106,"./getThemeProps":111,"./jssPreset":113,"./makeStyles":115,"./mergeClasses":119,"./styled":121,"./useTheme":124,"./withStyles":126,"./withTheme":128,"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/utils":156,"_process":179}],113:[function(require,module,exports){
+},{"./ServerStyleSheets":117,"./StylesProvider":119,"./ThemeProvider":121,"./createGenerateClassName":124,"./createStyles":126,"./getThemeProps":131,"./jssPreset":133,"./makeStyles":135,"./mergeClasses":139,"./styled":141,"./useTheme":144,"./withStyles":146,"./withTheme":148,"@babel/runtime/helpers/interopRequireWildcard":11,"@material-ui/utils":176,"_process":199}],133:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7179,7 +8599,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _jssPreset = _interopRequireDefault(require("./jssPreset"));
-},{"./jssPreset":114,"@babel/runtime/helpers/interopRequireDefault":10}],114:[function(require,module,exports){
+},{"./jssPreset":134,"@babel/runtime/helpers/interopRequireDefault":10}],134:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7212,7 +8632,7 @@ function jssPreset() {
     typeof window === 'undefined' ? null : (0, _jssPluginVendorPrefixer.default)(), (0, _jssPluginPropsSort.default)()]
   };
 }
-},{"@babel/runtime/helpers/interopRequireDefault":10,"jss-plugin-camel-case":170,"jss-plugin-default-unit":171,"jss-plugin-global":172,"jss-plugin-nested":173,"jss-plugin-props-sort":174,"jss-plugin-rule-value-function":175,"jss-plugin-vendor-prefixer":176}],115:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"jss-plugin-camel-case":190,"jss-plugin-default-unit":191,"jss-plugin-global":192,"jss-plugin-nested":193,"jss-plugin-props-sort":194,"jss-plugin-rule-value-function":195,"jss-plugin-vendor-prefixer":196}],135:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7228,7 +8648,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _makeStyles = _interopRequireDefault(require("./makeStyles"));
-},{"./makeStyles":117,"@babel/runtime/helpers/interopRequireDefault":10}],116:[function(require,module,exports){
+},{"./makeStyles":137,"@babel/runtime/helpers/interopRequireDefault":10}],136:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7260,7 +8680,7 @@ function increment() {
   return indexCounter;
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],117:[function(require,module,exports){
+},{"_process":199}],137:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7548,7 +8968,7 @@ function makeStyles(stylesOrCreator) {
   return useStyles;
 }
 }).call(this)}).call(this,require('_process'))
-},{"../StylesProvider":99,"../getStylesCreator":108,"../getStylesCreator/noopTheme":109,"../mergeClasses":119,"../useTheme":124,"./indexCounter":116,"./multiKeyStore":118,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":179,"jss":177,"react":206}],118:[function(require,module,exports){
+},{"../StylesProvider":119,"../getStylesCreator":128,"../getStylesCreator/noopTheme":129,"../mergeClasses":139,"../useTheme":144,"./indexCounter":136,"./multiKeyStore":138,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"_process":199,"jss":197,"react":226}],138:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7578,7 +8998,7 @@ var multiKeyStore = {
 };
 var _default = multiKeyStore;
 exports.default = _default;
-},{}],119:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7594,7 +9014,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _mergeClasses = _interopRequireDefault(require("./mergeClasses"));
-},{"./mergeClasses":120,"@babel/runtime/helpers/interopRequireDefault":10}],120:[function(require,module,exports){
+},{"./mergeClasses":140,"@babel/runtime/helpers/interopRequireDefault":10}],140:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7646,7 +9066,7 @@ function mergeClasses() {
   return nextClasses;
 }
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":156,"_process":179}],121:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@material-ui/utils":176,"_process":199}],141:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7662,7 +9082,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _styled = _interopRequireDefault(require("./styled"));
-},{"./styled":122,"@babel/runtime/helpers/interopRequireDefault":10}],122:[function(require,module,exports){
+},{"./styled":142,"@babel/runtime/helpers/interopRequireDefault":10}],142:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7835,7 +9255,7 @@ function styled(Component) {
   return componentCreator;
 }
 }).call(this)}).call(this,require('_process'))
-},{"../makeStyles":115,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"clsx":159,"hoist-non-react-statics":164,"prop-types":183,"react":206}],123:[function(require,module,exports){
+},{"../makeStyles":135,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"clsx":179,"hoist-non-react-statics":184,"prop-types":203,"react":226}],143:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7857,7 +9277,7 @@ if (process.env.NODE_ENV !== 'production') {
 var _default = ThemeContext;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/interopRequireDefault":10,"_process":179,"react":206}],124:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"_process":199,"react":226}],144:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7873,7 +9293,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _useTheme = _interopRequireDefault(require("./useTheme"));
-},{"./useTheme":125,"@babel/runtime/helpers/interopRequireDefault":10}],125:[function(require,module,exports){
+},{"./useTheme":145,"@babel/runtime/helpers/interopRequireDefault":10}],145:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -7899,7 +9319,7 @@ function useTheme() {
   return theme;
 }
 }).call(this)}).call(this,require('_process'))
-},{"./ThemeContext":123,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179,"react":206}],126:[function(require,module,exports){
+},{"./ThemeContext":143,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199,"react":226}],146:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7915,7 +9335,7 @@ Object.defineProperty(exports, "default", {
 });
 
 var _withStyles = _interopRequireDefault(require("./withStyles"));
-},{"./withStyles":127,"@babel/runtime/helpers/interopRequireDefault":10}],127:[function(require,module,exports){
+},{"./withStyles":147,"@babel/runtime/helpers/interopRequireDefault":10}],147:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8061,7 +9481,7 @@ var withStyles = function withStyles(stylesOrCreator) {
 var _default = withStyles;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../getThemeProps":111,"../makeStyles":115,"../useTheme":124,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"hoist-non-react-statics":164,"prop-types":183,"react":206}],128:[function(require,module,exports){
+},{"../getThemeProps":131,"../makeStyles":135,"../useTheme":144,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"hoist-non-react-statics":184,"prop-types":203,"react":226}],148:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -8089,7 +9509,7 @@ Object.keys(_withTheme).forEach(function (key) {
     }
   });
 });
-},{"./withTheme":129,"@babel/runtime/helpers/interopRequireWildcard":11}],129:[function(require,module,exports){
+},{"./withTheme":149,"@babel/runtime/helpers/interopRequireWildcard":11}],149:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8174,7 +9594,7 @@ var withTheme = withThemeCreator();
 var _default = withTheme;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"../useTheme":124,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":156,"_process":179,"hoist-non-react-statics":164,"prop-types":183,"react":206}],130:[function(require,module,exports){
+},{"../useTheme":144,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/objectWithoutProperties":16,"@material-ui/utils":176,"_process":199,"hoist-non-react-statics":184,"prop-types":203,"react":226}],150:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8239,7 +9659,7 @@ exports.borderRadius = borderRadius;
 var borders = (0, _compose.default)(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius);
 var _default = borders;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],131:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],151:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8338,7 +9758,7 @@ function breakpoints(styleFunction) {
 var _default = breakpoints;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./merge":139,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/toConsumableArray":20,"@babel/runtime/helpers/typeof":21,"_process":179,"prop-types":183}],132:[function(require,module,exports){
+},{"./merge":159,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/toConsumableArray":20,"@babel/runtime/helpers/typeof":21,"_process":199,"prop-types":203}],152:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8397,7 +9817,7 @@ function compose() {
 var _default = compose;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./merge":139,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179}],133:[function(require,module,exports){
+},{"./merge":159,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199}],153:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8449,7 +9869,7 @@ function css(styleFunction) {
 var _default = css;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./merge":139,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/toConsumableArray":20,"_process":179,"prop-types":183}],134:[function(require,module,exports){
+},{"./merge":159,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/toConsumableArray":20,"_process":199,"prop-types":203}],154:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8499,7 +9919,7 @@ exports.whiteSpace = whiteSpace;
 var _default = (0, _compose.default)(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
 
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],135:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],155:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8568,7 +9988,7 @@ exports.justifySelf = justifySelf;
 var flexbox = (0, _compose.default)(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
 var _default = flexbox;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],136:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],156:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8633,7 +10053,7 @@ exports.gridArea = gridArea;
 var grid = (0, _compose.default)(gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea);
 var _default = grid;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],137:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],157:[function(require,module,exports){
 /** @license Material-UI v4.11.3
  *
  * This source code is licensed under the MIT license found in the
@@ -8864,7 +10284,7 @@ Object.keys(_typography).forEach(function (key) {
     }
   });
 });
-},{"./borders":130,"./breakpoints":131,"./compose":132,"./css":133,"./display":134,"./flexbox":135,"./grid":136,"./palette":140,"./positions":141,"./shadows":143,"./sizing":144,"./spacing":145,"./style":146,"./typography":147,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11}],138:[function(require,module,exports){
+},{"./borders":150,"./breakpoints":151,"./compose":152,"./css":153,"./display":154,"./flexbox":155,"./grid":156,"./palette":160,"./positions":161,"./shadows":163,"./sizing":164,"./spacing":165,"./style":166,"./typography":167,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11}],158:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8882,7 +10302,7 @@ function memoize(fn) {
     return cache[arg];
   };
 }
-},{}],139:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8905,7 +10325,7 @@ function merge(acc, item) {
 
 var _default = merge;
 exports.default = _default;
-},{"@material-ui/utils":156}],140:[function(require,module,exports){
+},{"@material-ui/utils":176}],160:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8933,7 +10353,7 @@ exports.bgcolor = bgcolor;
 var palette = (0, _compose.default)(color, bgcolor);
 var _default = palette;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],141:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],161:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8976,7 +10396,7 @@ exports.left = left;
 var _default = (0, _compose.default)(position, zIndex, top, right, bottom, left);
 
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],142:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],162:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -8993,7 +10413,7 @@ var responsivePropType = process.env.NODE_ENV !== 'production' ? _propTypes.defa
 var _default = responsivePropType;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/interopRequireDefault":10,"_process":179,"prop-types":183}],143:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"_process":199,"prop-types":203}],163:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9011,7 +10431,7 @@ var boxShadow = (0, _style.default)({
 });
 var _default = boxShadow;
 exports.default = _default;
-},{"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],144:[function(require,module,exports){
+},{"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],164:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9078,7 +10498,7 @@ exports.boxSizing = boxSizing;
 var sizing = (0, _compose.default)(width, maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
 var _default = sizing;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],145:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],165:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -9237,7 +10657,7 @@ spacing.filterProps = spacingKeys;
 var _default = spacing;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./breakpoints":131,"./memoize":138,"./merge":139,"./responsivePropType":142,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/slicedToArray":19,"_process":179}],146:[function(require,module,exports){
+},{"./breakpoints":151,"./memoize":158,"./merge":159,"./responsivePropType":162,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/slicedToArray":19,"_process":199}],166:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -9313,7 +10733,7 @@ function style(options) {
 var _default = style;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./breakpoints":131,"./responsivePropType":142,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179}],147:[function(require,module,exports){
+},{"./breakpoints":151,"./responsivePropType":162,"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199}],167:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9362,7 +10782,7 @@ exports.textAlign = textAlign;
 var typography = (0, _compose.default)(fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign);
 var _default = typography;
 exports.default = _default;
-},{"./compose":132,"./style":146,"@babel/runtime/helpers/interopRequireDefault":10}],148:[function(require,module,exports){
+},{"./compose":152,"./style":166,"@babel/runtime/helpers/interopRequireDefault":10}],168:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -9390,7 +10810,7 @@ function HTMLElementType(props, propName, componentName, location, propFullName)
   return null;
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],149:[function(require,module,exports){
+},{"_process":199}],169:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -9411,7 +10831,7 @@ function chainPropTypes(propType1, propType2) {
   };
 }
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],150:[function(require,module,exports){
+},{"_process":199}],170:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9453,7 +10873,7 @@ function deepmerge(target, source) {
 
   return output;
 }
-},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21}],151:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21}],171:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9509,7 +10929,7 @@ var elementAcceptingRef = (0, _chainPropTypes.default)(_propTypes.default.elemen
 elementAcceptingRef.isRequired = (0, _chainPropTypes.default)(_propTypes.default.element.isRequired, acceptingRef);
 var _default = elementAcceptingRef;
 exports.default = _default;
-},{"./chainPropTypes":149,"@babel/runtime/helpers/interopRequireDefault":10,"prop-types":183}],152:[function(require,module,exports){
+},{"./chainPropTypes":169,"@babel/runtime/helpers/interopRequireDefault":10,"prop-types":203}],172:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9565,7 +10985,7 @@ function elementTypeAcceptingRef(props, propName, componentName, location, propF
 var _default = (0, _chainPropTypes.default)(PropTypes.elementType, elementTypeAcceptingRef);
 
 exports.default = _default;
-},{"./chainPropTypes":149,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"prop-types":183}],153:[function(require,module,exports){
+},{"./chainPropTypes":169,"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/interopRequireWildcard":11,"prop-types":203}],173:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -9608,7 +11028,7 @@ function exactProp(propTypes) {
   }));
 }
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":179}],154:[function(require,module,exports){
+},{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/interopRequireDefault":10,"_process":199}],174:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9638,7 +11058,7 @@ function formatMuiErrorMessage(code) {
   return 'Minified Material-UI error #' + code + '; visit ' + url + ' for the full message.';
   /* eslint-enable prefer-template */
 }
-},{}],155:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9716,7 +11136,7 @@ function getDisplayName(Component) {
 
   return undefined;
 }
-},{"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21,"react-is":193}],156:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"@babel/runtime/helpers/typeof":21,"react-is":213}],176:[function(require,module,exports){
 /** @license Material-UI v4.11.2
  *
  * This source code is licensed under the MIT license found in the
@@ -9809,7 +11229,7 @@ var _HTMLElementType = _interopRequireDefault(require("./HTMLElementType"));
 var _ponyfillGlobal = _interopRequireDefault(require("./ponyfillGlobal"));
 
 var _refType = _interopRequireDefault(require("./refType"));
-},{"./HTMLElementType":148,"./chainPropTypes":149,"./deepmerge":150,"./elementAcceptingRef":151,"./elementTypeAcceptingRef":152,"./exactProp":153,"./formatMuiErrorMessage":154,"./getDisplayName":155,"./ponyfillGlobal":157,"./refType":158,"@babel/runtime/helpers/interopRequireDefault":10}],157:[function(require,module,exports){
+},{"./HTMLElementType":168,"./chainPropTypes":169,"./deepmerge":170,"./elementAcceptingRef":171,"./elementTypeAcceptingRef":172,"./exactProp":173,"./formatMuiErrorMessage":174,"./getDisplayName":175,"./ponyfillGlobal":177,"./refType":178,"@babel/runtime/helpers/interopRequireDefault":10}],177:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9822,7 +11242,7 @@ exports.default = void 0;
 var _default = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 
 exports.default = _default;
-},{}],158:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9838,7 +11258,7 @@ var refType = _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.
 
 var _default = refType;
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":10,"prop-types":183}],159:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":10,"prop-types":203}],179:[function(require,module,exports){
 function toVal(mix) {
 	var k, y, str='';
 
@@ -9880,7 +11300,7 @@ module.exports = function () {
 	return str;
 }
 
-},{}],160:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -10466,7 +11886,7 @@ exports.supportedProperty = supportedProperty;
 exports.supportedValue = supportedValue;
 
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/toConsumableArray":20,"_process":179,"is-in-browser":169}],161:[function(require,module,exports){
+},{"@babel/runtime/helpers/toConsumableArray":20,"_process":199,"is-in-browser":189}],181:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10481,7 +11901,7 @@ function addClass(element, className) {
 }
 
 module.exports = exports["default"];
-},{"./hasClass":162,"@babel/runtime/helpers/interopRequireDefault":10}],162:[function(require,module,exports){
+},{"./hasClass":182,"@babel/runtime/helpers/interopRequireDefault":10}],182:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -10493,7 +11913,7 @@ function hasClass(element, className) {
 }
 
 module.exports = exports["default"];
-},{}],163:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -10515,7 +11935,7 @@ function removeClass(element, className) {
 }
 
 module.exports = exports["default"];
-},{}],164:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 'use strict';
 
 var reactIs = require('react-is');
@@ -10620,7 +12040,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{"react-is":167}],165:[function(require,module,exports){
+},{"react-is":187}],185:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v16.13.1
  * react-is.development.js
@@ -10805,7 +12225,7 @@ exports.typeOf = typeOf;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],166:[function(require,module,exports){
+},{"_process":199}],186:[function(require,module,exports){
 /** @license React v16.13.1
  * react-is.production.min.js
  *
@@ -10822,7 +12242,7 @@ exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isAsyncMode=f
 exports.isMemo=function(a){return z(a)===r};exports.isPortal=function(a){return z(a)===d};exports.isProfiler=function(a){return z(a)===g};exports.isStrictMode=function(a){return z(a)===f};exports.isSuspense=function(a){return z(a)===p};
 exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===w||a.$$typeof===x||a.$$typeof===y||a.$$typeof===v)};exports.typeOf=z;
 
-},{}],167:[function(require,module,exports){
+},{}],187:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -10833,7 +12253,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react-is.development.js":165,"./cjs/react-is.production.min.js":166,"_process":179}],168:[function(require,module,exports){
+},{"./cjs/react-is.development.js":185,"./cjs/react-is.production.min.js":186,"_process":199}],188:[function(require,module,exports){
 'use strict';
 
 /* eslint-disable no-var, prefer-template */
@@ -10856,7 +12276,7 @@ function hyphenateStyleName(name) {
 
 module.exports = hyphenateStyleName;
 
-},{}],169:[function(require,module,exports){
+},{}],189:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10868,7 +12288,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var isBrowser = exports.isBrowser = (typeof window === "undefined" ? "undefined" : _typeof(window)) === "object" && (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' && document.nodeType === 9;
 
 exports.default = isBrowser;
-},{}],170:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -10942,7 +12362,7 @@ function camelCase() {
 
 exports.default = camelCase;
 
-},{"hyphenate-style-name":168}],171:[function(require,module,exports){
+},{"hyphenate-style-name":188}],191:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -11200,7 +12620,7 @@ function defaultUnit(options) {
 
 exports.default = defaultUnit;
 
-},{"jss":177}],172:[function(require,module,exports){
+},{"jss":197}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -11395,7 +12815,7 @@ function jssGlobal() {
 
 exports.default = jssGlobal;
 
-},{"@babel/runtime/helpers/extends":8,"jss":177}],173:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"jss":197}],193:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -11521,7 +12941,7 @@ function jssNested() {
 exports.default = jssNested;
 
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/extends":8,"_process":179,"tiny-warning":213}],174:[function(require,module,exports){
+},{"@babel/runtime/helpers/extends":8,"_process":199,"tiny-warning":233}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -11555,7 +12975,7 @@ function jssPropsSort() {
 
 exports.default = jssPropsSort;
 
-},{}],175:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -11635,7 +13055,7 @@ var functionPlugin = function functionPlugin() {
 exports.default = functionPlugin;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179,"jss":177,"tiny-warning":213}],176:[function(require,module,exports){
+},{"_process":199,"jss":197,"tiny-warning":233}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -11700,7 +13120,7 @@ function jssVendorPrefixer() {
 
 exports.default = jssVendorPrefixer;
 
-},{"css-vendor":160,"jss":177}],177:[function(require,module,exports){
+},{"css-vendor":180,"jss":197}],197:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -13980,7 +15400,7 @@ exports.sheets = registry;
 exports.toCssValue = toCssValue;
 
 }).call(this)}).call(this,require('_process'))
-},{"@babel/runtime/helpers/assertThisInitialized":4,"@babel/runtime/helpers/createClass":6,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/inheritsLoose":9,"@babel/runtime/helpers/objectWithoutPropertiesLoose":17,"_process":179,"is-in-browser":169,"tiny-warning":213}],178:[function(require,module,exports){
+},{"@babel/runtime/helpers/assertThisInitialized":4,"@babel/runtime/helpers/createClass":6,"@babel/runtime/helpers/extends":8,"@babel/runtime/helpers/inheritsLoose":9,"@babel/runtime/helpers/objectWithoutPropertiesLoose":17,"_process":199,"is-in-browser":189,"tiny-warning":233}],198:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -14072,7 +15492,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],179:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -14258,7 +15678,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],180:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 (function (process){(function (){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -14364,7 +15784,7 @@ checkPropTypes.resetWarningCache = function() {
 module.exports = checkPropTypes;
 
 }).call(this)}).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":184,"_process":179}],181:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":204,"_process":199}],201:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -14430,7 +15850,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":184}],182:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":204}],202:[function(require,module,exports){
 (function (process){(function (){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -15025,7 +16445,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this)}).call(this,require('_process'))
-},{"./checkPropTypes":180,"./lib/ReactPropTypesSecret":184,"_process":179,"object-assign":178,"react-is":187}],183:[function(require,module,exports){
+},{"./checkPropTypes":200,"./lib/ReactPropTypesSecret":204,"_process":199,"object-assign":198,"react-is":207}],203:[function(require,module,exports){
 (function (process){(function (){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -15048,7 +16468,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./factoryWithThrowingShims":181,"./factoryWithTypeCheckers":182,"_process":179,"react-is":187}],184:[function(require,module,exports){
+},{"./factoryWithThrowingShims":201,"./factoryWithTypeCheckers":202,"_process":199,"react-is":207}],204:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -15062,13 +16482,13 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],185:[function(require,module,exports){
-arguments[4][165][0].apply(exports,arguments)
-},{"_process":179,"dup":165}],186:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"dup":166}],187:[function(require,module,exports){
-arguments[4][167][0].apply(exports,arguments)
-},{"./cjs/react-is.development.js":185,"./cjs/react-is.production.min.js":186,"_process":179,"dup":167}],188:[function(require,module,exports){
+},{}],205:[function(require,module,exports){
+arguments[4][185][0].apply(exports,arguments)
+},{"_process":199,"dup":185}],206:[function(require,module,exports){
+arguments[4][186][0].apply(exports,arguments)
+},{"dup":186}],207:[function(require,module,exports){
+arguments[4][187][0].apply(exports,arguments)
+},{"./cjs/react-is.development.js":205,"./cjs/react-is.production.min.js":206,"_process":199,"dup":187}],208:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v17.0.1
  * react-dom.development.js
@@ -41334,7 +42754,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179,"object-assign":178,"react":206,"scheduler":211,"scheduler/tracing":212}],189:[function(require,module,exports){
+},{"_process":199,"object-assign":198,"react":226,"scheduler":231,"scheduler/tracing":232}],209:[function(require,module,exports){
 /** @license React v17.0.1
  * react-dom.production.min.js
  *
@@ -41633,7 +43053,7 @@ exports.findDOMNode=function(a){if(null==a)return null;if(1===a.nodeType)return 
 exports.render=function(a,b,c){if(!rk(b))throw Error(y(200));return tk(null,a,b,!1,c)};exports.unmountComponentAtNode=function(a){if(!rk(a))throw Error(y(40));return a._reactRootContainer?(Xj(function(){tk(null,null,a,!1,function(){a._reactRootContainer=null;a[ff]=null})}),!0):!1};exports.unstable_batchedUpdates=Wj;exports.unstable_createPortal=function(a,b){return uk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!rk(c))throw Error(y(200));if(null==a||void 0===a._reactInternals)throw Error(y(38));return tk(a,b,c,!1,d)};exports.version="17.0.1";
 
-},{"object-assign":178,"react":206,"scheduler":211}],190:[function(require,module,exports){
+},{"object-assign":198,"react":226,"scheduler":231}],210:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -41675,7 +43095,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":188,"./cjs/react-dom.production.min.js":189,"_process":179}],191:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":208,"./cjs/react-dom.production.min.js":209,"_process":199}],211:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v17.0.2
  * react-is.development.js
@@ -41905,7 +43325,7 @@ exports.typeOf = typeOf;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],192:[function(require,module,exports){
+},{"_process":199}],212:[function(require,module,exports){
 /** @license React v17.0.2
  * react-is.production.min.js
  *
@@ -41921,9 +43341,9 @@ exports.Suspense=I;exports.isAsyncMode=function(){return!1};exports.isConcurrent
 exports.isPortal=function(a){return y(a)===c};exports.isProfiler=function(a){return y(a)===f};exports.isStrictMode=function(a){return y(a)===e};exports.isSuspense=function(a){return y(a)===l};exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===d||a===f||a===v||a===e||a===l||a===m||a===w||"object"===typeof a&&null!==a&&(a.$$typeof===p||a.$$typeof===n||a.$$typeof===g||a.$$typeof===h||a.$$typeof===k||a.$$typeof===u||a.$$typeof===q||a[0]===r)?!0:!1};
 exports.typeOf=y;
 
-},{}],193:[function(require,module,exports){
-arguments[4][167][0].apply(exports,arguments)
-},{"./cjs/react-is.development.js":191,"./cjs/react-is.production.min.js":192,"_process":179,"dup":167}],194:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
+arguments[4][187][0].apply(exports,arguments)
+},{"./cjs/react-is.development.js":211,"./cjs/react-is.production.min.js":212,"_process":199,"dup":187}],214:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -42355,7 +43775,7 @@ var _default = CSSTransition;
 exports.default = _default;
 module.exports = exports.default;
 }).call(this)}).call(this,require('_process'))
-},{"./Transition":197,"./utils/PropTypes":203,"_process":179,"dom-helpers/addClass":161,"dom-helpers/removeClass":163,"prop-types":183,"react":206}],195:[function(require,module,exports){
+},{"./Transition":217,"./utils/PropTypes":223,"_process":199,"dom-helpers/addClass":181,"dom-helpers/removeClass":183,"prop-types":203,"react":226}],215:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -42510,7 +43930,7 @@ var _default = ReplaceTransition;
 exports.default = _default;
 module.exports = exports.default;
 }).call(this)}).call(this,require('_process'))
-},{"./TransitionGroup":198,"_process":179,"prop-types":183,"react":206,"react-dom":190}],196:[function(require,module,exports){
+},{"./TransitionGroup":218,"_process":199,"prop-types":203,"react":226,"react-dom":210}],216:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -42782,7 +44202,7 @@ SwitchTransition.defaultProps = {
 var _default = SwitchTransition;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./Transition":197,"./TransitionGroupContext":199,"_process":179,"prop-types":183,"react":206}],197:[function(require,module,exports){
+},{"./Transition":217,"./TransitionGroupContext":219,"_process":199,"prop-types":203,"react":226}],217:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -43420,7 +44840,7 @@ Transition.EXITING = EXITING;
 var _default = Transition;
 exports.default = _default;
 }).call(this)}).call(this,require('_process'))
-},{"./TransitionGroupContext":199,"./config":200,"./utils/PropTypes":203,"_process":179,"prop-types":183,"react":206,"react-dom":190}],198:[function(require,module,exports){
+},{"./TransitionGroupContext":219,"./config":220,"./utils/PropTypes":223,"_process":199,"prop-types":203,"react":226,"react-dom":210}],218:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -43628,7 +45048,7 @@ var _default = TransitionGroup;
 exports.default = _default;
 module.exports = exports.default;
 }).call(this)}).call(this,require('_process'))
-},{"./TransitionGroupContext":199,"./utils/ChildMapping":202,"_process":179,"prop-types":183,"react":206}],199:[function(require,module,exports){
+},{"./TransitionGroupContext":219,"./utils/ChildMapping":222,"_process":199,"prop-types":203,"react":226}],219:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -43642,7 +45062,7 @@ var _default = _react.default.createContext(null);
 
 exports.default = _default;
 module.exports = exports.default;
-},{"react":206}],200:[function(require,module,exports){
+},{"react":226}],220:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -43652,7 +45072,7 @@ var _default = {
 };
 exports.default = _default;
 module.exports = exports.default;
-},{}],201:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -43683,7 +45103,7 @@ var _config = _interopRequireDefault(require("./config"));
 exports.config = _config.default;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./CSSTransition":194,"./ReplaceTransition":195,"./SwitchTransition":196,"./Transition":197,"./TransitionGroup":198,"./config":200}],202:[function(require,module,exports){
+},{"./CSSTransition":214,"./ReplaceTransition":215,"./SwitchTransition":216,"./Transition":217,"./TransitionGroup":218,"./config":220}],222:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -43834,7 +45254,7 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
   });
   return children;
 }
-},{"react":206}],203:[function(require,module,exports){
+},{"react":226}],223:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 
@@ -43865,7 +45285,7 @@ var classNamesShape = process.env.NODE_ENV !== 'production' ? _propTypes.default
 })]) : null;
 exports.classNamesShape = classNamesShape;
 }).call(this)}).call(this,require('_process'))
-},{"_process":179,"prop-types":183}],204:[function(require,module,exports){
+},{"_process":199,"prop-types":203}],224:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v17.0.1
  * react.development.js
@@ -46202,7 +47622,7 @@ exports.version = ReactVersion;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179,"object-assign":178}],205:[function(require,module,exports){
+},{"_process":199,"object-assign":198}],225:[function(require,module,exports){
 /** @license React v17.0.1
  * react.production.min.js
  *
@@ -46227,7 +47647,7 @@ key:d,ref:k,props:e,_owner:h}};exports.createContext=function(a,b){void 0===b&&(
 exports.lazy=function(a){return{$$typeof:v,_payload:{_status:-1,_result:a},_init:Q}};exports.memo=function(a,b){return{$$typeof:u,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return S().useCallback(a,b)};exports.useContext=function(a,b){return S().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return S().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return S().useImperativeHandle(a,b,c)};
 exports.useLayoutEffect=function(a,b){return S().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return S().useMemo(a,b)};exports.useReducer=function(a,b,c){return S().useReducer(a,b,c)};exports.useRef=function(a){return S().useRef(a)};exports.useState=function(a){return S().useState(a)};exports.version="17.0.1";
 
-},{"object-assign":178}],206:[function(require,module,exports){
+},{"object-assign":198}],226:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -46238,7 +47658,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react.development.js":204,"./cjs/react.production.min.js":205,"_process":179}],207:[function(require,module,exports){
+},{"./cjs/react.development.js":224,"./cjs/react.production.min.js":225,"_process":199}],227:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v0.20.1
  * scheduler-tracing.development.js
@@ -46589,7 +48009,7 @@ exports.unstable_wrap = unstable_wrap;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],208:[function(require,module,exports){
+},{"_process":199}],228:[function(require,module,exports){
 /** @license React v0.20.1
  * scheduler-tracing.production.min.js
  *
@@ -46600,7 +48020,7 @@ exports.unstable_wrap = unstable_wrap;
  */
 'use strict';var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_subscribe=function(){};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_unsubscribe=function(){};exports.unstable_wrap=function(a){return a};
 
-},{}],209:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 (function (process){(function (){
 /** @license React v0.20.1
  * scheduler.development.js
@@ -47448,7 +48868,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],210:[function(require,module,exports){
+},{"_process":199}],230:[function(require,module,exports){
 /** @license React v0.20.1
  * scheduler.production.min.js
  *
@@ -47470,7 +48890,7 @@ exports.unstable_next=function(a){switch(P){case 1:case 2:case 3:var b=3;break;d
 exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"object"===typeof c&&null!==c?(c=c.delay,c="number"===typeof c&&0<c?d+c:d):c=d;switch(a){case 1:var e=-1;break;case 2:e=250;break;case 5:e=1073741823;break;case 4:e=1E4;break;default:e=5E3}e=c+e;a={id:N++,callback:b,priorityLevel:a,startTime:c,expirationTime:e,sortIndex:-1};c>d?(a.sortIndex=c,H(M,a),null===J(L)&&a===J(M)&&(S?h():S=!0,g(U,c-d))):(a.sortIndex=e,H(L,a),R||Q||(R=!0,f(V)));return a};
 exports.unstable_wrapCallback=function(a){var b=P;return function(){var c=P;P=b;try{return a.apply(this,arguments)}finally{P=c}}};
 
-},{}],211:[function(require,module,exports){
+},{}],231:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -47481,7 +48901,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":209,"./cjs/scheduler.production.min.js":210,"_process":179}],212:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":229,"./cjs/scheduler.production.min.js":230,"_process":199}],232:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -47492,7 +48912,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":207,"./cjs/scheduler-tracing.production.min.js":208,"_process":179}],213:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":227,"./cjs/scheduler-tracing.production.min.js":228,"_process":199}],233:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -47518,7 +48938,7 @@ function warning(condition, message) {
 module.exports = warning;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":179}],214:[function(require,module,exports){
+},{"_process":199}],234:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -47582,7 +49002,7 @@ var CustomSnackbar = /*#__PURE__*/function (_React$Component) {
         openSnackbar: false
       });
       setTimeout(function () {
-        ReactDOM.unmountComponentAtNode(document.querySelector("#snackbar-holder"));
+        ReactDOM.unmountComponentAtNode(document.querySelector("div.snackbar-holder"));
       }, 500);
     }
   }, {
@@ -47611,10 +49031,34 @@ var CustomSnackbar = /*#__PURE__*/function (_React$Component) {
 
 module.exports = CustomSnackbar;
 
-},{"@material-ui/core/Snackbar":38,"@material-ui/lab/Alert":90,"react":206,"react-dom":190}],215:[function(require,module,exports){
+},{"@material-ui/core/Snackbar":49,"@material-ui/lab/Alert":110,"react":226,"react-dom":210}],235:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var _BookmarksRounded = _interopRequireDefault(require("@material-ui/icons/BookmarksRounded"));
+
+var _HomeRounded = _interopRequireDefault(require("@material-ui/icons/HomeRounded"));
+
+var _TimelineRounded = _interopRequireDefault(require("@material-ui/icons/TimelineRounded"));
+
+var _SettingsRounded = _interopRequireDefault(require("@material-ui/icons/SettingsRounded"));
+
+var _ExitToAppRounded = _interopRequireDefault(require("@material-ui/icons/ExitToAppRounded"));
+
+var _BugReportRounded = _interopRequireDefault(require("@material-ui/icons/BugReportRounded"));
+
+var _ListItem = _interopRequireDefault(require("@material-ui/core/ListItem"));
+
+var _ListItemIcon = _interopRequireDefault(require("@material-ui/core/ListItemIcon"));
+
+var _ListItemText = _interopRequireDefault(require("@material-ui/core/ListItemText"));
+
+var _List = _interopRequireDefault(require("@material-ui/core/List"));
+
+var _Divider = _interopRequireDefault(require("@material-ui/core/Divider"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -47647,76 +49091,153 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(NavigationMenu);
 
-  function NavigationMenu() {
+  function NavigationMenu(props) {
+    var _this;
+
     _classCallCheck(this, NavigationMenu);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.state = {
+      open: false
+    };
+    _this.toggleDrawer = _this.toggleDrawer.bind(_assertThisInitialized(_this));
+    _this.navigateHome = _this.navigateHome.bind(_assertThisInitialized(_this));
+    _this.navigateCharts = _this.navigateCharts.bind(_assertThisInitialized(_this));
+    _this.navigateBookmarks = _this.navigateBookmarks.bind(_assertThisInitialized(_this));
+    _this.navigateSettings = _this.navigateSettings.bind(_assertThisInitialized(_this));
+    _this.logout = _this.logout.bind(_assertThisInitialized(_this));
+    _this.openGithubIssues = _this.openGithubIssues.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(NavigationMenu, [{
+    key: "toggleDrawer",
+    value: function toggleDrawer() {
+      this.setState({
+        open: !this.state.open
+      });
+    }
+  }, {
+    key: "navigateHome",
+    value: function navigateHome() {
+      window.location.href = "/start";
+    }
+  }, {
+    key: "navigateCharts",
+    value: function navigateCharts() {
+      window.location.href = "/charts";
+    }
+  }, {
+    key: "navigateBookmarks",
+    value: function navigateBookmarks() {
+      window.location.href = "/bookmarks";
+    }
+  }, {
+    key: "navigateSettings",
+    value: function navigateSettings() {
+      window.location.href = "/settings";
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+      localStorage.removeItem("session-token");
+      ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+        message: "U bent afgemeld",
+        severityStrength: "info"
+      }), document.querySelector("div.snackbar-holder"));
+    }
+  }, {
+    key: "openGithubIssues",
+    value: function openGithubIssues() {
+      window.open("https://github.com/SaleemTheKing/RWS-web-DD-OPER/issues/new?assignees=SaleemTheKing&labels=bug&template=bug_report.md&title=", "_blank");
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/React.createElement("div", {
         className: "menu"
-      }, /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "/start"
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/home-white-18dp.svg",
-        alt: "Grafieken"
-      }), /*#__PURE__*/React.createElement("p", null, "Home"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "/charts"
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/show_chart-white-18dp.svg",
-        alt: "Grafieken"
-      }), /*#__PURE__*/React.createElement("p", null, "Grafieken"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "/bookmarks"
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/bookmarks-white-18dp.svg",
-        alt: "Grafieken"
-      }), /*#__PURE__*/React.createElement("p", null, "Bladwijzers"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "/settings"
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/settings-white-18dp.svg",
-        alt: "Grafieken"
-      }), /*#__PURE__*/React.createElement("p", null, "Instellingen"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        href: "/",
-        onClick: logout
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/logout-white-18dp.svg",
-        alt: "Afmelden"
-      }), /*#__PURE__*/React.createElement("p", null, "Afmelden"))), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-        onClick: openGithubIssues
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "menu-icon",
-        src: "assets/images/bug_report_white_18dp.svg",
-        alt: "Rapporteer"
-      }), /*#__PURE__*/React.createElement("p", null, "Rapporteer")))));
+      }, /*#__PURE__*/React.createElement(_List["default"], null, /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.navigateHome,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_HomeRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Home"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.navigateCharts,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_TimelineRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Grafieken"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.navigateBookmarks,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_BookmarksRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Bladwijzers"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.navigateSettings,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_SettingsRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Instellingen"
+      })), /*#__PURE__*/React.createElement(_Divider["default"], null), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.logout,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_ExitToAppRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Afmelden"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.openGithubIssues,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_BugReportRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Rapporteer"
+      }))));
     }
   }]);
 
   return NavigationMenu;
 }(React.Component);
 
-function logout() {
-  localStorage.removeItem("session-token");
-  ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
-    message: "U bent afgemeld",
-    severityStrength: "info"
-  }), document.querySelector("div.snackbar-holder"));
-}
-
-function openGithubIssues() {
-  window.open("https://github.com/SaleemTheKing/RWS-web-DD-OPER/issues/new?assignees=SaleemTheKing&labels=bug&template=bug_report.md&title=", "_blank");
-}
-
 module.exports = NavigationMenu;
 
-},{"./CustomSnackbar.jsx":214,"react":206,"react-dom":190}],216:[function(require,module,exports){
+},{"./CustomSnackbar.jsx":234,"@material-ui/core/Divider":30,"@material-ui/core/List":43,"@material-ui/core/ListItem":40,"@material-ui/core/ListItemIcon":36,"@material-ui/core/ListItemText":38,"@material-ui/icons/BookmarksRounded":102,"@material-ui/icons/BugReportRounded":103,"@material-ui/icons/ExitToAppRounded":104,"@material-ui/icons/HomeRounded":105,"@material-ui/icons/SettingsRounded":106,"@material-ui/icons/TimelineRounded":107,"react":226,"react-dom":210}],236:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -47770,4 +49291,4 @@ menuBtn.addEventListener('click', function () {
   }
 });
 
-},{"./Components/NavigationMenu.jsx":215,"react":206,"react-dom":190}]},{},[216]);
+},{"./Components/NavigationMenu.jsx":235,"react":226,"react-dom":210}]},{},[236]);
