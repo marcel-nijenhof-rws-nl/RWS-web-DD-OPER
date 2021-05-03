@@ -10,13 +10,6 @@ public class HibernateUtil {
 
     static {
         try {
-
-            System.out.println(System.getenv("cloud.services.postgresql.credentials.username"));
-            System.out.println(System.getenv("cloud.services.postgresql.credentials"));
-            System.out.println(System.getenv("cloud.services.postgresql"));
-            System.out.println(System.getenv("cloud.services"));
-            System.out.println(System.getenv("cloud"));
-
             ObjectMapper mapper = new ObjectMapper();
             Configuration cfg = new Configuration();
             JsonNode envNode = mapper.readTree(System.getenv("VCAP_SERVICES"));
