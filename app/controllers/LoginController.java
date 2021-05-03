@@ -71,7 +71,6 @@ public class LoginController extends Controller {
                     .getSingleResult();
 
             em.close();
-            sessionFactory.close();
             if (userPassword.equals(hash)) {
                 return ok();
             } else {
