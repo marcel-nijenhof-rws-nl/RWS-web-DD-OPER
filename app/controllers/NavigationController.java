@@ -29,4 +29,6 @@ public class NavigationController extends Controller {
         return ok(views.html.start.render());
     }
 
+    public Result maps() { return ok(views.html.maps.render()); }
+
 }

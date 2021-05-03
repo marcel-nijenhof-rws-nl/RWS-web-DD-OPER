@@ -4,9 +4,10 @@ import TimeLineIcon from '@material-ui/icons/TimelineRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import BugReportRoundedIcon from '@material-ui/icons/BugReportRounded';
+import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon  from "@material-ui/core/ListItemIcon";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -28,6 +29,7 @@ class NavigationMenu extends React.Component {
         this.navigateCharts = this.navigateCharts.bind(this);
         this.navigateBookmarks = this.navigateBookmarks.bind(this);
         this.navigateSettings = this.navigateSettings.bind(this);
+        this.navigateMaps = this.navigateMaps.bind(this);
         this.logout = this.logout.bind(this);
         this.openGithubIssues = this.openGithubIssues.bind(this);
     }
@@ -52,10 +54,15 @@ class NavigationMenu extends React.Component {
         window.location.href = "/settings";
     }
 
+    navigateMaps() {
+        window.location.href = "/maps";
+    }
+
     logout() {
         localStorage.removeItem("session-token");
         ReactDOM.render(<CustomSnackbar message="U bent afgemeld"
                                         severityStrength="info"/>, document.querySelector("div.snackbar-holder"));
+        window.location.href = "/";
     }
 
     openGithubIssues() {
@@ -70,26 +77,36 @@ class NavigationMenu extends React.Component {
                     <ListItemText primary={"Home"}/>
                 </ListItem>
                 <ListItem onClick={this.navigateCharts} style={{cursor: "pointer"}}>
-                    <ListItemIcon><TimeLineIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemIcon><TimeLineIcon fontSize={"large"}
+                                                style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Grafieken"}/>
                 </ListItem>
+                <ListItem onClick={this.navigateMaps} style={{cursor: "pointer"}}>
+                    <ListItemIcon><ExploreRoundedIcon fontSize={"large"}
+                                                      style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemText primary={"Kaart"}/>
+                </ListItem>
                 <ListItem onClick={this.navigateBookmarks} style={{cursor: "pointer"}}>
-                    <ListItemIcon><BookmarksRoundedIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemIcon><BookmarksRoundedIcon fontSize={"large"}
+                                                        style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Bladwijzers"}/>
                 </ListItem>
                 <ListItem onClick={this.navigateSettings} style={{cursor: "pointer"}}>
-                    <ListItemIcon><SettingsRoundedIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemIcon><SettingsRoundedIcon fontSize={"large"}
+                                                       style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Instellingen"}/>
                 </ListItem>
 
                 <Divider/>
 
                 <ListItem onClick={this.logout} style={{cursor: "pointer"}}>
-                    <ListItemIcon><ExitToAppRoundedIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemIcon><ExitToAppRoundedIcon fontSize={"large"}
+                                                        style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Afmelden"}/>
                 </ListItem>
                 <ListItem onClick={this.openGithubIssues} style={{cursor: "pointer"}}>
-                    <ListItemIcon><BugReportRoundedIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemIcon><BugReportRoundedIcon fontSize={"large"}
+                                                        style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Rapporteer"}/>
                 </ListItem>
             </List>

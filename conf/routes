@@ -5,6 +5,7 @@ GET           /charts                                       controllers.Navigati
 GET           /register                                     controllers.NavigationController.register
 GET           /settings                                     controllers.NavigationController.settings
 GET           /start                                        controllers.NavigationController.start
+GET           /maps                                         controllers.NavigationController.maps
 
 # Charts
 GET           /charts/locations                             controllers.ChartController.GetLocations()
