@@ -19,7 +19,12 @@ div.container {
     width: 35vw;
     height: 100px;
     border-radius: 10px;
-    background-color: #F3F3F3
+    background-color: #F3F3F3;
+}
+
+.grid {
+    stroke: #00c853;
+    stroke-width: 10px;
 }
 
 

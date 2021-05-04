@@ -123,4 +123,24 @@ public class ChartController extends Controller {
         session.close();
         return ok(objectNode);
     }
+
+    public Result GetAverageWaterLevelPast24Hours(String location) {
+        Calendar calendar = Calendar.getInstance();
+        String endTime = calendar.getTime().toInstant().toString();
+        calendar.add(Calendar.DATE, -1);
+        String startTime = calendar.getTime().toInstant().toString();
+
+        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/locations/%s/quantities/waterlevel/timeseries?process=measurement&startTime=%s&endTime=%s",
+                location,
+                startTime,
+                endTime);
+
+        JsonNode node = HTTPSUtils.RequestJSON(url);
+
+        if (node != null) {
+            return ok(node);
+        } else {
+            return notFound();
+        }
+    }
 }
