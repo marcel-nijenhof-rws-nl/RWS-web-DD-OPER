@@ -1,9 +1,9 @@
 ---
 applications:
-  - name: RWS-web-DD-OPER
+  - name: RWS-web-DD-OPER-development
     stack: cflinuxfs3
     buildpacks:
       - java_buildpack_offline
     path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
     services:
-      - RWS-web-DD-OPER-db-development
+      - RWS-web-DD-OPER-db
