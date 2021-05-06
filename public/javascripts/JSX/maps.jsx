@@ -6,20 +6,13 @@ import * as L1 from 'leaflet.markercluster';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from "@material-ui/core/Typography";
+import LiquidChart from 'react-liquidchart';
 
 let worldMap;
 
 class MapLegend extends React.Component {
     constructor(props) {
         super(props);
-
-        // this.state = {
-        //     displayName: props.data.displayName,
-        //     displayNameGlobal: props.data.displayNameGlobal,
-        //     lat: props.data.lat,
-        //     long: props.data.long,
-        // }
-
     }
 
     render() {
@@ -32,10 +25,10 @@ class MapLegend extends React.Component {
             >
                 <div style={{marginLeft: '5px'}}>
                     <Typography
-                        variant={"subtitle1"}>{"Display naam: " + this.props.data.displayNameGlobal}</Typography>
+                        variant={"subtitle1"}>{"Locatie naam: " + this.props.data.displayNameGlobal}</Typography>
                 </div>
                 <div style={{marginLeft: '5px'}}>
-                    <Typography variant={"subtitle1"}>{"Locatie naam: " + this.props.data.displayName}</Typography>
+                    <Typography variant={"subtitle1"}>{"Sensor naam: " + this.props.data.displayName}</Typography>
                 </div>
                 <div style={{marginLeft: '5px'}}>
                     <Typography variant={"subtitle1"}>{"Breedtegraad: " + this.props.data.lat}</Typography>
@@ -56,26 +49,121 @@ class WaterLevelLegend extends React.Component {
     }
 
     render() {
+        const stops = [
+            <stop key={1} stopColor={'rgba(0,136,255,0.8)'} offset="0%"/>,
+        ];
+
         return <>
             <Paper elevation={0} style={{
                 backgroundColor: '#F3F3F3',
                 width: '35vw',
-                borderRadius: '10px'
+                borderRadius: '10px',
+                paddingBottom: '20px'
             }}
             >
-                <div style={{marginLeft: '5px'}}>
-                    <Typography
-                        variant={"h6"}>{"Waterhoogte"}</Typography>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '10px',
+                }}
+                >
+                    <Typography variant={"h4"}>{"Waterhoogte afgelopen 24 uur"}</Typography>
                 </div>
-                <div style={{marginLeft: '5px'}}>
-                    <Typography
-                        variant={"subtitle1"}>{"Gemiddelde waterhoogte: " + this.props.averageLevel + "cm"}</Typography>
-                </div>
-                <div style={{marginLeft: '5px'}}>
-                    <Typography variant={"subtitle1"}>{"Minimale hoogte: " + this.props.minLevel + "cm"}</Typography>
-                </div>
-                <div style={{marginLeft: '5px'}}>
-                    <Typography variant={"subtitle1"}>{"Maximale hoogte: " + this.props.maxLevel + "cm"}</Typography>
+                <div
+                    style={{
+                        height: '150px',
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        marginBottom: '10px'
+                    }}
+                >
+                    <div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}>
+                            <Typography variant={"subtitle1"}>{"Gemiddeld"}</Typography>
+                        </div>
+                        <LiquidChart
+                            responsive
+                            value={this.props.averageLevel}
+                            maxValue={this.props.maxLevel}
+                            showDecimal
+                            amplitude={4}
+                            frequency={2}
+                            animationTime={2000}
+                            animationWavesTime={2250}
+                            gradient={{
+                                type: 1,
+                                x1: 0,
+                                x2: 0,
+                                y1: 100,
+                                y2: 0,
+                                stops,
+                            }}
+                            postfix="cm"
+                        />
+                    </div>
+
+                    <div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}>
+                            <Typography variant={"subtitle1"}>{"Laagst"}</Typography>
+                        </div>
+                        <LiquidChart
+                            responsive
+                            value={this.props.minLevel}
+                            maxValue={this.props.maxLevel}
+                            showDecimal
+                            amplitude={4}
+                            frequency={2}
+                            animationTime={2000}
+                            animationWavesTime={2250}
+                            gradient={{
+                                type: 1,
+                                x1: 0,
+                                x2: 0,
+                                y1: 100,
+                                y2: 0,
+                                stops,
+                            }}
+                            postfix="cm"
+                        />
+                    </div>
+
+                    <div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}>
+                            <Typography variant={"subtitle1"}>{"Hoogst"}</Typography>
+                        </div>
+                        <LiquidChart
+                            responsive
+                            value={this.props.maxLevel}
+                            maxValue={this.props.maxLevel}
+                            showDecimal
+                            amplitude={4}
+                            frequency={2}
+                            animationTime={2000}
+                            animationWavesTime={2250}
+                            gradient={{
+                                type: 1,
+                                x1: 0,
+                                x2: 0,
+                                y1: 100,
+                                y2: 0,
+                                stops,
+                            }}
+                            postfix="cm"
+                        />
+                    </div>
+
                 </div>
             </Paper>
         </>
@@ -143,11 +231,30 @@ function showMarkerInfo(e) {
                                 sum += item.value;
                             });
 
-                            ReactDOM.render(<WaterLevelLegend
-                                    minLevel={Math.min(...values)}
-                                    maxLevel={Math.max(...values)}
-                                    averageLevel={(sum / f.results[0].events.length)}/>,
-                                document.querySelector("div.marker-waterlevel"));
+                            let minlevel = Math.min(...values);
+                            let maxlevel = Math.max(...values);
+                            let average = (sum / f.results[0].events.length);
+
+                            if (
+                                minlevel != null
+                                && maxlevel != null
+                                && average != null
+                                && !isNaN(minlevel)
+                                && !isNaN(maxlevel)
+                                && !isNaN(average)
+                                && minlevel !== Infinity
+                                && maxlevel !== Infinity
+                                && average !== Infinity
+                                && minlevel !== -Infinity
+                                && maxlevel !== -Infinity
+                                && average !== -Infinity
+                            ) {
+                                ReactDOM.render(<WaterLevelLegend
+                                        minLevel={minlevel}
+                                        maxLevel={maxlevel}
+                                        averageLevel={average}/>,
+                                    document.querySelector("div.marker-waterlevel"));
+                            }
                         },
                         error: () => {
                             ReactDOM.render(<CustomSnackbar
@@ -205,91 +312,6 @@ function drawMarkers() {
     });
 
 }
-
-// function drawMarkers2() {
-//     $.ajax({
-//         type: 'GET',
-//         url: 'charts/locations',
-//         success: (response) => {
-//             ReactDOM.render(<CustomSnackbar
-//                     message={"Locaties zijn succesvol geladen"}
-//                     severityStrength={"success"}/>,
-//                 document.querySelector("div.snackbar-holder"));
-//
-//             let markers = [];
-//             console.log(response.results[0]);
-//             response.results.forEach(location => {
-//                 if (location.geometry != null) {
-//                     let coordinate = {
-//                         lat: location.geometry?.coordinates[1],
-//                         long: location.geometry?.coordinates[0],
-//                         displayNameGlobal: location.properties.displayNameGlobal,
-//                         displayName: location.properties.locationName,
-//                     };
-//
-//                     markers.push(coordinate);
-//                 }
-//             });
-//
-//             let map = L
-//                 .map('map')
-//                 .setView([52.3727598, 4.8936041], 8);   // Amsterdam as center
-//
-//             L.tileLayer(
-//                 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//                     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-//                     minZoom: 6,
-//                 }).addTo(map);
-//
-//             L.svg().addTo(map);
-//
-//             d3.select("#map")
-//                 .select("svg")
-//                 .selectAll("myCircles")
-//                 .data(markers)
-//                 .enter()
-//                 .append("circle")
-//                 .attr("cx", function (d) {
-//                     return map.latLngToLayerPoint([d.lat, d.long]).x
-//                 })
-//                 .attr("cy", function (d) {
-//                     return map.latLngToLayerPoint([d.lat, d.long]).y
-//                 })
-//                 .attr("r", 14)
-//                 .style("fill", "red")
-//                 .attr("stroke", "red")
-//                 .attr("stroke-width", 2)
-//                 .attr("fill-opacity", .2)
-//                 .style("pointer-events", "all")
-//                 .on('mouseover', mouseover)
-//                 .on('click', drawChart)
-//
-//
-//             function update() {
-//                 d3.selectAll("circle")
-//                     .attr("cx", function (d) {
-//                         return map.latLngToLayerPoint([d.lat, d.long]).x
-//                     })
-//                     .attr("cy", function (d) {
-//                         return map.latLngToLayerPoint([d.lat, d.long]).y
-//                     })
-//             }
-//
-//
-//             map.on("moveend", update);
-//
-//
-//         },
-//         error: () => {
-//             ReactDOM.render(<CustomSnackbar
-//                     message={"Kaart kon niet worden geladen"}
-//                     severityStrength={"error"}/>,
-//                 document.querySelector("div.snackbar-holder"));
-//         }
-//
-//     })
-// }
-
 
 drawMap();
 drawMarkers();
