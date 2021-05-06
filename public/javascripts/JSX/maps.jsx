@@ -67,7 +67,20 @@ class WaterLevelLegend extends React.Component {
                     marginBottom: '10px',
                 }}
                 >
-                    <Typography variant={"h4"}>{"Waterhoogte afgelopen 24 uur"}</Typography>
+                    <div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
+                            <Typography variant={"h4"}>{"Waterhoogte afgelopen 24 uur"}</Typography>
+                        </div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
+                            <Typography variant={"h6"}>{this.props.location}</Typography>
+                        </div>
+                    </div>
                 </div>
                 <div
                     style={{
@@ -252,7 +265,8 @@ function showMarkerInfo(e) {
                                 ReactDOM.render(<WaterLevelLegend
                                         minLevel={minlevel}
                                         maxLevel={maxlevel}
-                                        averageLevel={average}/>,
+                                        averageLevel={average}
+                                        location={f.results[0].location.properties.displayNameGlobal}/>,
                                     document.querySelector("div.marker-waterlevel"));
                             }
                         },

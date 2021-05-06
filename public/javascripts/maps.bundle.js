@@ -80244,9 +80244,21 @@ var WaterLevelLegend = /*#__PURE__*/function (_React$Component2) {
           justifyContent: 'center',
           marginBottom: '10px'
         }
+      }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          justifyContent: 'center'
+        }
       }, /*#__PURE__*/React.createElement(_Typography["default"], {
         variant: "h4"
       }, "Waterhoogte afgelopen 24 uur")), /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          justifyContent: 'center'
+        }
+      }, /*#__PURE__*/React.createElement(_Typography["default"], {
+        variant: "h6"
+      }, this.props.location)))), /*#__PURE__*/React.createElement("div", {
         style: {
           height: '150px',
           display: 'flex',
@@ -80399,7 +80411,8 @@ function showMarkerInfo(e) {
                 _reactDom["default"].render( /*#__PURE__*/React.createElement(WaterLevelLegend, {
                   minLevel: minlevel,
                   maxLevel: maxlevel,
-                  averageLevel: average
+                  averageLevel: average,
+                  location: f.results[0].location.properties.displayNameGlobal
                 }), document.querySelector("div.marker-waterlevel"));
               }
             },
