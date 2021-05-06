@@ -21,3 +21,4 @@ conf/ci/rws-vars.yml
 conf/hibernate.cfg.xml
 /target
 conf/ci/rws-vars.yml
+conf/ci/rws-vars.yml

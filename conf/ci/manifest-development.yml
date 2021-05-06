@@ -6,4 +6,4 @@ applications:
       - java_buildpack_offline
     path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
     services:
-      - RWS-web-DD-OPER-db
+      - RWS-web-DD-OPER-db-development

@@ -13,8 +13,26 @@ jobs:
           NEXUS_PASSWORD: ((nexus_password))
       - put: cf-development
         params:
-          current_app_name: RWS-web-DD-OPER
-          manifest: git-src/conf/ci/manifest.yml
+          current_app_name: RWS-web-DD-OPER-development
+          manifest: git-src/conf/ci/manifest-development.yml
+          path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
+
+  - name: Deploy-to-acceptance
+    serial: true
+    plan:
+      - get: git-src
+        resource: git-src-acceptance
+        trigger: true
+      - task: buildapp
+        file: git-src/conf/ci/buildapp.yml
+        params:
+          NEXUS_URL: ((nexus_url))
+          NEXUS_USER: ((nexus_user))
+          NEXUS_PASSWORD: ((nexus_password))
+      - put: cf-acceptance
+        params:
+          current_app_name: RWS-web-DD-OPER-acceptance
+          manifest: git-src/conf/ci/manifest-acceptance.yml
           path: play-app/rws-web-dd-oper-1.0-SNAPSHOT.zip
 
 resources:
@@ -24,6 +42,14 @@ resources:
       uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER.git
       branch: master
 
+  - name: git-src-acceptance
+    type: git
+    source:
+      uri: https://github.com/SaleemTheKing/RWS-web-DD-OPER.git
+      branch: master
+      clean_tags: true
+      tag_filter: "Acc_*"
+
   - name: cf-development
     type: cf
     source:
@@ -32,3 +58,12 @@ resources:
       password: ((wm-concourse-integration.password))
       organization: WM
       space: DEV_WM_WEB
+
+  - name: cf-acceptance
+    type: cf
+    source:
+      api: https://api.system.cf-acc-am2.intranet.rws.nl
+      username: ((wm-concourse-integration.username))
+      password: ((wm-concourse-integration.password))
+      organization: WM
+      space: ACC_WM_WEB
