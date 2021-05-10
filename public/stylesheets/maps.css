@@ -1,0 +1,41 @@
+#map {
+    margin-top: 20px;
+    border-radius: 10px;
+    height: 85vh;
+    width: 60vw;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+div.marker {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+div.container {
+    display: flex;
+}
+
+.paper {
+    width: 35vw;
+    border-radius: 10px;
+    background-color: #F3F3F3;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+div.leaflet-div-icon {
+    background: none;
+    border: none;
+}
+
+.cluster {
+    background-color: #F9E11E;
+    border: 1px solid;
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+}

@@ -54,10 +54,6 @@ let latestDataSettings = {};
 let graphs = [];
 let latestResults;
 
-let dialog = document.querySelector('dialog');
-let showModalButton = document.querySelector('.show-modal');
-let showDialogModalButton = document.querySelector('#add-bookmark');
-
 function updateAxis() {
     if (myChart) {
         let firstSet = false;
@@ -146,6 +142,63 @@ function getYaxisType(observationType) {
     }
 }
 
+function encodeChart() {
+
+    jws.createSign({
+        header: {alg: 'HS256'},
+        payload: {
+            "token": graphs
+        },
+        secret: "_kW6zt0tgHJKmOVxcJRAGLo7A3c5BewP8v5drKA2JBU",
+    }).on('done', function (signature) {
+        let payload = signature.split(".")[1];
+
+        const handleClick = () => {
+            let item = document.querySelector("#share-link-field");
+            item.select();
+            document.execCommand("copy");
+        }
+
+        const handleClose = () => {
+            ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+        }
+
+        let dialog =
+            <Dialog open={true} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">
+                    <span>Deel Grafiek</span>
+                    <IconButton onClick={handleClose.bind(this)} style={{right: 8, top: 8, position: "absolute"}}>
+                        <CloseIcon/>
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Kopieer de onderstaande token om het te delen.
+                        Laat de andere gebruiker de grafiek inladen door op het laad knop te klikken op de grafieken
+                        pagina.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="share-link-field"
+                        label="Token"
+                        type="text"
+                        fullWidth
+                        defaultValue={payload}
+                        inputProps={{readOnly: true}}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClick.bind(this)} color="primary">
+                        Kopieer
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
+    });
+}
+
 class ChartMenu extends React.Component {
     constructor(props) {
         super(props)
@@ -193,14 +246,14 @@ class ChartMenu extends React.Component {
         }
     }
 
-    setValues() {
+    setValues(bookmark = null) {
         latestDataSettings = {
-            "location": this.state.location,
-            "quantity": this.state.quantity,
+            "location": bookmark != null ? bookmark.location : this.state.location,
+            "quantity": bookmark != null ? bookmark.quantity : this.state.quantity,
             "startTime": this.state.startTime,
             "endTime": this.state.endTime,
-            "interval": this.state.interval,
-            "aspectSet": this.state.aspectSet,
+            "interval": bookmark != null ? bookmark.interval : this.state.interval,
+            "aspectSet": bookmark != null ? bookmark.aspectSet : this.state.aspectSet,
             "type": this.state.type,
             "token": localStorage.getItem('session-token'),
         };
@@ -484,7 +537,6 @@ class ChartMenu extends React.Component {
         });
 
         updateAxis();
-        //updateDialog(provider.apiVersion, results.source.institution.name, results.source.process);
     }
 
     addNewDataset(dataset = null) {
@@ -497,7 +549,7 @@ class ChartMenu extends React.Component {
                 return;
             }
 
-            let parameters = this.setValues();
+            let parameters = this.setValues(dataset ? dataset : null);
 
             $.ajax({
                 type: "POST",
@@ -843,6 +895,7 @@ class ChartMenu extends React.Component {
                     noOptionsText={"Geen locatie gevonden"}
                     loadingText={"Locaties laden..."}
                     onChange={(e, value) => this.setLocation(value)}
+                    value={this.state.location}
                     renderInput={(params) =>
                         <TextField {...params}
                                    label="Locatie"
@@ -1059,6 +1112,33 @@ class ChartMenu extends React.Component {
             </div>
         </>;
     }
+
+    componentDidMount() {
+        if (localStorage.getItem('location') && localStorage.getItem('quantity')) {
+            this.setState({
+                location: localStorage.getItem('location'),
+                quantity: localStorage.getItem('quantity')
+            }, () => {
+                this.setLocation(localStorage.getItem('location'));
+                this.addNewDataset();
+                localStorage.removeItem('location');
+                localStorage.removeItem('quantity');
+            });
+        } else if (localStorage.getItem('bookmark')) {
+            let bookmarkGroup = JSON.parse(localStorage.getItem('bookmark'));
+            bookmarkGroup.bookmarks.forEach(bookmark => {
+                this.setState({
+                    location: bookmark.location,
+                    quantity: bookmark.quantity
+                }, () => {
+                    this.addNewDataset(bookmark);
+                });
+            });
+
+            localStorage.removeItem('bookmark');
+        }
+    }
+
 }
 
 $.ajax({
@@ -1087,160 +1167,3 @@ ReactDOM.render(<ChartComponent/>, document.querySelector('section div.chart-hol
 ReactDOM.render(<div style={{display: "flex", justifyContent: "center", margin: 10}}>
     <CircularProgress style={{color: '#F9E11E'}}/>
 </div>, document.querySelector('section div.chart-menu'));
-
-// date.setDate(date.getDate() - 1);
-// endDate.setDate(endDate.getDate());
-//
-// startTimePicker.value = date.toISOString().slice(0, 16);
-// endTimePicker.value = endDate.toISOString().slice(0, 16);
-//
-// reloadMenu();
-// document.querySelector("div.reload button").addEventListener('click', () => {
-//     reloadMenu();
-// });
-//
-// if (localStorage.getItem('bookmark') != null) {
-//     let node = JSON.parse(localStorage.getItem('bookmark'));
-//     console.log(Object.keys(node.bookmarks).length);
-//     localStorage.removeItem('bookmark');
-//
-//     node.bookmarks.forEach(bookmark => {
-//         addNewDataset(bookmark);
-//     });
-// }
-//
-// if (!dialog.showModal) {
-//     dialogPolyfill.registerDialog(dialog);
-// }
-//
-// showModalButton.addEventListener('click', function () {
-//     dialog.showModal();
-// });
-//
-// dialog.querySelector('.close').addEventListener('click', function () {
-//     dialog.close();
-// });
-//
-// if (!bookmarkDialog.showModal) {
-//     dialogPolyfill.registerDialog(bookmarkDialog);
-// }
-// showDialogModalButton.addEventListener('click', function () {
-//     setValues();
-//     document.querySelector(".bookmark-location").innerHTML = latestDataSettings.location;
-//     document.querySelector(".bookmark-quantity").innerHTML = latestDataSettings.quantity;
-//     document.querySelector(".bookmark-aspect").innerHTML = latestDataSettings.aspectSet;
-//     document.querySelector(".bookmark-startTime").innerHTML = latestDataSettings.startTime;
-//     document.querySelector(".bookmark-endTime").innerHTML = latestDataSettings.endTime;
-//     document.querySelector(".bookmark-interval").innerHTML = latestDataSettings.interval;
-//     bookmarkDialog.showModal();
-// });
-//
-// bookmarkDialog.querySelector('.close').addEventListener('click', function () {
-//     bookmarkDialog.close();
-// });
-//
-// bookmarkDialog.querySelector('.submit').addEventListener('click', function () {
-//     addBookmark();
-// });
-//
-// document.querySelector("#share-chart").addEventListener('click', () => {
-//     encodeChart();
-// });
-//
-// document.querySelector("#generate").addEventListener('click', () => {
-//     addNewDataset();
-//     drawBtn.parentElement.setAttribute('hidden', 'true');
-//     addSetBtn.parentElement.removeAttribute('hidden');
-// });
-//
-
-
-// document.querySelector("#bookmark-name").addEventListener('input', function () {
-//     if (document.querySelector("#bookmark-name").value !== "") {
-//         bookmarkDialog.querySelector(".submit").removeAttribute('disabled');
-//     } else {
-//         bookmarkDialog.querySelector(".submit").setAttribute('disabled', 'true');
-//     }
-// });
-
-
-// function addBookmark() {
-//
-//     let data = graphs;
-//     data[0].bookmarkName = document.querySelector("#bookmark-name").value;
-//
-//
-//     $.ajax({
-//         type: "POST",
-//         url: "/bookmarks/add",
-//         data: JSON.stringify(data),
-//         contentType: "application/json; charset=utf-8",
-//         error: function () {
-//             ReactDOM.render(<CustomSnackbar message="Bladwijzer kon niet worden toegevoegd"
-//                                             severityStrength="error"/>, document.querySelector("div.snackbar-holder"));
-//         },
-//         success: function () {
-//             ReactDOM.render(<CustomSnackbar message="Bladwijzer toegevoegd"
-//                                             severityStrength="success"/>, document.querySelector("div.snackbar-holder"));
-//             bookmarkDialog.close();
-//         }
-//     });
-// }
-
-function encodeChart() {
-
-    jws.createSign({
-        header: {alg: 'HS256'},
-        payload: {
-            "token": graphs
-        },
-        secret: "_kW6zt0tgHJKmOVxcJRAGLo7A3c5BewP8v5drKA2JBU",
-    }).on('done', function (signature) {
-        let payload = signature.split(".")[1];
-
-        const handleClick = () => {
-            let item = document.querySelector("#share-link-field");
-            item.select();
-            document.execCommand("copy");
-        }
-
-        const handleClose = () => {
-            ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
-        }
-
-        let dialog =
-            <Dialog open={true} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">
-                    <span>Deel Grafiek</span>
-                    <IconButton onClick={handleClose.bind(this)} style={{right: 8, top: 8, position: "absolute"}}>
-                        <CloseIcon/>
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Kopieer de onderstaande token om het te delen.
-                        Laat de andere gebruiker de grafiek inladen door op het laad knop te klikken op de grafieken
-                        pagina.
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="share-link-field"
-                        label="Token"
-                        type="text"
-                        fullWidth
-                        defaultValue={payload}
-                        inputProps={{readOnly: true}}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClick.bind(this)} color="primary">
-                        Kopieer
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
-        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
-    });
-}
-

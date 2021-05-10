@@ -5,6 +5,7 @@ GET           /charts                                       controllers.Navigati
 GET           /register                                     controllers.NavigationController.register
 GET           /settings                                     controllers.NavigationController.settings
 GET           /start                                        controllers.NavigationController.start
+GET           /maps                                         controllers.NavigationController.maps
 
 # Charts
 GET           /charts/locations                             controllers.ChartController.GetLocations()
@@ -13,6 +14,7 @@ GET           /charts/locations/:location                   controllers.ChartCon
 GET           /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
 GET           /charts/load/                                 controllers.NavigationController.charts
 GET           /charts/load/:shortcut                        controllers.ChartController.GetChartFromJSON(shortcut : String)
+GET           /charts/24hr/:location/:quantity              controllers.ChartController.GetPast24HourQuantityOfLocation(location: String, quantity: String)
 POST          /charts/bookmark                              controllers.ChartController.GetChartFromBookmark(bookmark: Request)
 POST          /charts/result                                controllers.ChartController.GetMeasurementChart(request: Request)
 
