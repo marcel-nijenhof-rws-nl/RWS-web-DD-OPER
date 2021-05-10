@@ -21,9 +21,21 @@ div.container {
     background-color: #F3F3F3;
 }
 
-.grid {
-    stroke: #00c853;
-    stroke-width: 10px;
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
+div.leaflet-div-icon {
+    background: none;
+    border: none;
+}
 
+.cluster {
+    background-color: #F9E11E;
+    border: 1px solid;
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+}

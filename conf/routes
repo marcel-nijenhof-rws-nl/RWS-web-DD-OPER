@@ -14,7 +14,7 @@ GET           /charts/locations/:location                   controllers.ChartCon
 GET           /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
 GET           /charts/load/                                 controllers.NavigationController.charts
 GET           /charts/load/:shortcut                        controllers.ChartController.GetChartFromJSON(shortcut : String)
-GET           /charts/waterlevel24h/:location               controllers.ChartController.GetAverageWaterLevelPast24Hours(location : String)
+GET           /charts/24hr/:location/:quantity              controllers.ChartController.GetPast24HourQuantityOfLocation(location: String, quantity: String)
 POST          /charts/bookmark                              controllers.ChartController.GetChartFromBookmark(bookmark: Request)
 POST          /charts/result                                controllers.ChartController.GetMeasurementChart(request: Request)
 

@@ -6,6 +6,7 @@ import * as L1 from 'leaflet.markercluster';
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
 import LocationLegend from "./Components/LocationLegend.jsx";
 import WaterLevelLegend from "./Components/WaterLevelLegend.jsx";
+import MapsChips from "./Components/MapsChips.jsx";
 
 let worldMap;
 
@@ -17,7 +18,7 @@ function mouseover(marker) {
 function drawMap() {
     let map = L
         .map('map')
-        .setView([52.3727598, 4.8936041], 8);   // Amsterdam as center
+        .setView([52.3727598, 4.8936041], 8);   // Amsterdam as center and Netherlands as zoom level
 
     L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -30,16 +31,26 @@ function drawMap() {
     worldMap = map;
 }
 
+function showQuantities(result, marker) {
+    ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-chips"));
+    ReactDOM.render(<MapsChips quantities={result.results}
+                               marker={marker}
+    />, document.querySelector("div.marker-chips"));
+}
+
 function showMarkerInfo(e) {
     $.ajax({
         type: 'GET',
         url: '/charts/locations/quantities/' + e.displayName,
         success: (res) => {
+            let hasWaterlevel = false;
+            showQuantities(res, e)
             res.results.forEach(quantity => {
                 if (quantity.includes("waterlevel")) {
+                    hasWaterlevel = true;
                     $.ajax({
                         type: 'GET',
-                        url: '/charts/waterlevel24h/' + e.displayName,
+                        url: '/charts/24hr/' + e.displayName + '/waterlevel',
                         success: (f) => {
                             let values = [];
                             let sum = 0;
@@ -83,6 +94,9 @@ function showMarkerInfo(e) {
                     });
                 }
             });
+            if (!hasWaterlevel) {
+                ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
+            }
         }
     });
 }
@@ -99,6 +113,11 @@ function drawMarkers() {
 
             let markers = new L1.MarkerClusterGroup({
                 showCoverageOnHover: false,
+                iconCreateFunction: (cluster) => {
+                    return L.divIcon({
+                        html: '<div class="center cluster"><b style="margin: auto">' + cluster.getChildCount() + '</b></div>'
+                    });
+                }
             });
 
             response.results.forEach(location => {

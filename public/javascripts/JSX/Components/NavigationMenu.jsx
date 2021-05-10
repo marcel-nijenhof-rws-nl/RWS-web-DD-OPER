@@ -43,6 +43,8 @@ class NavigationMenu extends React.Component {
     }
 
     navigateCharts() {
+        localStorage.removeItem('location');
+        localStorage.removeItem('quantity');
         window.location.href = "/charts";
     }
 
