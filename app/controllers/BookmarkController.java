@@ -24,7 +24,7 @@ public class BookmarkController extends Controller {
         JsonNode node = request.body().asJson();
 
         if (node == null) {
-            return noContent();
+            return status(422);
         }
 
         String email = HTTPSUtils.GetEmailFromToken(node.get(0).get("token").textValue());

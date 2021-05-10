@@ -242,7 +242,10 @@ class ChartMenu extends React.Component {
             this.addPreloadedData = this.addPreloadedData.bind(this);
             this.removeDataset = this.removeDataset.bind(this);
             this.openChartWithToken = this.openChartWithToken.bind(this);
-            this.showInfo = this.showInfo.bind(this);
+            this.showDatasetInfo = this.showDatasetInfo.bind(this);
+            this.openBookmarkDialog = this.openBookmarkDialog.bind(this);
+            this.saveBookmark = this.saveBookmark.bind(this);
+            this.closeDialog = this.closeDialog.bind(this);
         }
     }
 
@@ -797,7 +800,7 @@ class ChartMenu extends React.Component {
                     type: "GET",
                     url: "/charts/load/" + token,
                     contentType: "application/json; charset=utf-8",
-                    error: function (e) {
+                    error: (e) => {
                         ReactDOM.render(<CustomSnackbar message={"Er is iets mis gegaan, STATUS: " + e.status}
                                                         severityStrength="error"/>,
                             document.querySelector("div.snackbar-holder"));
@@ -850,7 +853,7 @@ class ChartMenu extends React.Component {
         ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
 
-    showInfo(event) {
+    showDatasetInfo(event) {
         const handleClose = () => {
             ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
         }
@@ -883,6 +886,77 @@ class ChartMenu extends React.Component {
 
         ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
 
+    }
+
+    closeDialog() {
+        ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+    }
+
+    saveBookmark() {
+        graphs[0].bookmarkName = document.querySelector("#save-bookmark-field").value;
+        this.setState({graphs: graphs}, () => {
+            if (this.state.graphs.bookmarkName !== "" && this.state.graphs.bookmarkName !== null) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/bookmarks/add',
+                    data: JSON.stringify(this.state.graphs),
+                    contentType: 'application/json; charset=utf-8',
+                    success: () => {
+                        ReactDOM.render(<CustomSnackbar
+                                message={"Bladwijzer opgeslagen"}
+                                severityStrength={"success"}/>,
+                            document.querySelector("div.snackbar-holder"));
+                        this.closeDialog();
+
+                    },
+                    error: () => {
+                        ReactDOM.render(<CustomSnackbar
+                                message={"De bladwijzer kon niet worden opgeslagen."}
+                                severityStrength={"error"}/>,
+                            document.querySelector("div.snackbar-holder"));
+                    }
+
+                });
+            } else {
+                ReactDOM.render(<CustomSnackbar
+                        message={"Geef een titel voor de bladwijzer"}
+                        severityStrength={"warning"}/>,
+                    document.querySelector("div.snackbar-holder"));
+            }
+        });
+    }
+
+    openBookmarkDialog() {
+
+        let dialog =
+            <Dialog open={true} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">
+                    <span>{"Bladwijzer Opslaan"}</span>
+                    <IconButton onClick={this.closeDialog} style={{right: 8, top: 8, position: "absolute"}}>
+                        <CloseIcon/>
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {"Geef een naam aan de bladwijzer"}
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="save-bookmark-field"
+                        label="Bladwijzer naam"
+                        type="text"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.saveBookmark} color="primary">
+                        {"Opslaan"}
+                    </Button>
+                </DialogActions>
+            </Dialog>;
+
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
 
     render() {
@@ -1069,23 +1143,35 @@ class ChartMenu extends React.Component {
                 </Select>
             </FormControl>
 
-            {myChart
+            {this.state.graphs.length > 0
                 ?
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
                     <ButtonGroup>
                         <Button color={"primary"} variant={"contained"}
-                                onClick={() => this.addNewDataset()}>Toevoegen</Button>
+                                onClick={() => this.addNewDataset()}>
+                            {"Toevoegen"}
+                        </Button>
                         <Button color={"primary"} variant={"contained"}
-                                onClick={() => encodeChart()}>Delen</Button>
+                                onClick={() => encodeChart()}>
+                            {"Delen"}
+                        </Button>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => this.openBookmarkDialog()}>
+                            {"Bladwijzer Opslaan"}
+                        </Button>
                     </ButtonGroup>
                 </div>
                 :
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
                     <ButtonGroup>
                         <Button color={"primary"} variant={"contained"}
-                                onClick={() => this.addNewDataset()}>Teken</Button>
+                                onClick={() => this.addNewDataset()}>
+                            {"Teken"}
+                        </Button>
                         <Button color={"primary"} variant={"contained"}
-                                onClick={() => this.openChartWithToken()}>Open</Button>
+                                onClick={() => this.openChartWithToken()}>
+                            {"Open"}
+                        </Button>
                     </ButtonGroup>
                 </div>
             }
@@ -1100,7 +1186,7 @@ class ChartMenu extends React.Component {
                             </Typography>
                         }
                         clickable
-                        onClick={() => this.showInfo(item)}
+                        onClick={() => this.showDatasetInfo(item)}
                         onDelete={() => this.removeDataset(this.state.graphs.indexOf(item))}
                         style={{
                             margin: 10,

@@ -115528,7 +115528,10 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       _this.addPreloadedData = _this.addPreloadedData.bind(_assertThisInitialized(_this));
       _this.removeDataset = _this.removeDataset.bind(_assertThisInitialized(_this));
       _this.openChartWithToken = _this.openChartWithToken.bind(_assertThisInitialized(_this));
-      _this.showInfo = _this.showInfo.bind(_assertThisInitialized(_this));
+      _this.showDatasetInfo = _this.showDatasetInfo.bind(_assertThisInitialized(_this));
+      _this.openBookmarkDialog = _this.openBookmarkDialog.bind(_assertThisInitialized(_this));
+      _this.saveBookmark = _this.saveBookmark.bind(_assertThisInitialized(_this));
+      _this.closeDialog = _this.closeDialog.bind(_assertThisInitialized(_this));
     }
     return _this;
   }
@@ -116229,8 +116232,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
   }, {
-    key: "showInfo",
-    value: function showInfo(event) {
+    key: "showDatasetInfo",
+    value: function showDatasetInfo(event) {
       var handleClose = function handleClose() {
         ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
       };
@@ -116248,9 +116251,80 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
   }, {
+    key: "closeDialog",
+    value: function closeDialog() {
+      ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
+    }
+  }, {
+    key: "saveBookmark",
+    value: function saveBookmark() {
+      var _this7 = this;
+
+      graphs[0].bookmarkName = document.querySelector("#save-bookmark-field").value;
+      this.setState({
+        graphs: graphs
+      }, function () {
+        if (_this7.state.graphs.bookmarkName !== "" && _this7.state.graphs.bookmarkName !== null) {
+          $.ajax({
+            type: 'POST',
+            url: '/bookmarks/add',
+            data: JSON.stringify(_this7.state.graphs),
+            contentType: 'application/json; charset=utf-8',
+            success: function success() {
+              ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+                message: "Bladwijzer opgeslagen",
+                severityStrength: "success"
+              }), document.querySelector("div.snackbar-holder"));
+
+              _this7.closeDialog();
+            },
+            error: function error() {
+              ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+                message: "De bladwijzer kon niet worden opgeslagen.",
+                severityStrength: "error"
+              }), document.querySelector("div.snackbar-holder"));
+            }
+          });
+        } else {
+          ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+            message: "Geef een titel voor de bladwijzer",
+            severityStrength: "warning"
+          }), document.querySelector("div.snackbar-holder"));
+        }
+      });
+    }
+  }, {
+    key: "openBookmarkDialog",
+    value: function openBookmarkDialog() {
+      var dialog = /*#__PURE__*/React.createElement(Dialog, {
+        open: true,
+        "aria-labelledby": "form-dialog-title"
+      }, /*#__PURE__*/React.createElement(DialogTitle, {
+        id: "form-dialog-title"
+      }, /*#__PURE__*/React.createElement("span", null, "Bladwijzer Opslaan"), /*#__PURE__*/React.createElement(IconButton, {
+        onClick: this.closeDialog,
+        style: {
+          right: 8,
+          top: 8,
+          position: "absolute"
+        }
+      }, /*#__PURE__*/React.createElement(CloseIcon, null))), /*#__PURE__*/React.createElement(DialogContent, null, /*#__PURE__*/React.createElement(DialogContentText, null, "Geef een naam aan de bladwijzer"), /*#__PURE__*/React.createElement(TextField, {
+        autoFocus: true,
+        margin: "dense",
+        id: "save-bookmark-field",
+        label: "Bladwijzer naam",
+        type: "text",
+        fullWidth: true
+      })), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
+        onClick: this.saveBookmark,
+        color: "primary"
+      }, "Opslaan")));
+      ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this7 = this;
+      var _this8 = this;
 
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormControl, {
         className: "formControl",
@@ -116264,7 +116338,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         noOptionsText: "Geen locatie gevonden",
         loadingText: "Locaties laden...",
         onChange: function onChange(e, value) {
-          return _this7.setLocation(value);
+          return _this8.setLocation(value);
         },
         value: this.state.location,
         renderInput: function renderInput(params) {
@@ -116297,7 +116371,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.quantity,
         label: "Kwantiteit",
         onChange: function onChange(e) {
-          return _this7.setQuantity(e.target.value);
+          return _this8.setQuantity(e.target.value);
         }
       }, this.state.quantities.map(function (quantity) {
         return /*#__PURE__*/React.createElement(MenuItem, {
@@ -116318,7 +116392,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.type,
         label: "Type Data",
         onChange: function onChange(e) {
-          return _this7.setDataType(e.target.value);
+          return _this8.setDataType(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         selected: true,
@@ -116344,7 +116418,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.aspectSet,
         label: "Aspect Set",
         onChange: function onChange(e) {
-          return _this7.setAspectSet(e.target.value);
+          return _this8.setAspectSet(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         key: "minimum",
@@ -116420,7 +116494,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.interval,
         label: "Interval",
         onChange: function onChange(e) {
-          return _this7.setInterval(e.target.value);
+          return _this8.setInterval(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         key: "1min",
@@ -116443,7 +116517,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.chlorosity,
         label: "Chlorisity",
         onChange: function onChange(e) {
-          return _this7.setChlorosity(e.target.value);
+          return _this8.setChlorosity(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         selected: true,
@@ -116469,7 +116543,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.option,
         label: "Opties",
         onChange: function onChange(e) {
-          return _this7.setExtraOption(e.target.value);
+          return _this8.setExtraOption(e.target.value);
         }
       }, this.state.options.map(function (option) {
         return /*#__PURE__*/React.createElement(MenuItem, {
@@ -116490,14 +116564,14 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.option,
         label: "Diepte",
         onChange: function onChange(e) {
-          return _this7.setDepthOption(e.target.value);
+          return _this8.setDepthOption(e.target.value);
         }
       }, this.state.options.map(function (option) {
         return /*#__PURE__*/React.createElement(MenuItem, {
           key: option.name,
           value: option.name
         }, option.name, " meter");
-      }))), myChart ? /*#__PURE__*/React.createElement("div", {
+      }))), this.state.graphs.length > 0 ? /*#__PURE__*/React.createElement("div", {
         style: {
           display: "flex",
           justifyContent: "center",
@@ -116507,7 +116581,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this7.addNewDataset();
+          return _this8.addNewDataset();
         }
       }, "Toevoegen"), /*#__PURE__*/React.createElement(Button, {
         color: "primary",
@@ -116515,7 +116589,13 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return encodeChart();
         }
-      }, "Delen"))) : /*#__PURE__*/React.createElement("div", {
+      }, "Delen"), /*#__PURE__*/React.createElement(Button, {
+        color: "primary",
+        variant: "contained",
+        onClick: function onClick() {
+          return _this8.openBookmarkDialog();
+        }
+      }, "Bladwijzer Opslaan"))) : /*#__PURE__*/React.createElement("div", {
         style: {
           display: "flex",
           justifyContent: "center",
@@ -116525,13 +116605,13 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this7.addNewDataset();
+          return _this8.addNewDataset();
         }
       }, "Teken"), /*#__PURE__*/React.createElement(Button, {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this7.openChartWithToken();
+          return _this8.openChartWithToken();
         }
       }, "Open"))), /*#__PURE__*/React.createElement("div", {
         hidden: this.state.graphs.length === 0
@@ -116550,14 +116630,14 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
           }, item.location + " - " + item.quantity + " (" + item.type + ")"),
           clickable: true,
           onClick: function onClick() {
-            return _this7.showInfo(item);
+            return _this8.showDatasetInfo(item);
           },
           onDelete: function onDelete() {
-            return _this7.removeDataset(_this7.state.graphs.indexOf(item));
+            return _this8.removeDataset(_this8.state.graphs.indexOf(item));
           },
           style: {
             margin: 10,
-            backgroundColor: colors.borderColor[_this7.state.graphs.indexOf(item)],
+            backgroundColor: colors.borderColor[_this8.state.graphs.indexOf(item)],
             height: '100%'
           }
         });
@@ -116566,16 +116646,16 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (localStorage.getItem('location') && localStorage.getItem('quantity')) {
         this.setState({
           location: localStorage.getItem('location'),
           quantity: localStorage.getItem('quantity')
         }, function () {
-          _this8.setLocation(localStorage.getItem('location'));
+          _this9.setLocation(localStorage.getItem('location'));
 
-          _this8.addNewDataset();
+          _this9.addNewDataset();
 
           localStorage.removeItem('location');
           localStorage.removeItem('quantity');
@@ -116583,11 +116663,11 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       } else if (localStorage.getItem('bookmark')) {
         var bookmarkGroup = JSON.parse(localStorage.getItem('bookmark'));
         bookmarkGroup.bookmarks.forEach(function (bookmark) {
-          _this8.setState({
+          _this9.setState({
             location: bookmark.location,
             quantity: bookmark.quantity
           }, function () {
-            _this8.addNewDataset(bookmark);
+            _this9.addNewDataset(bookmark);
           });
         });
         localStorage.removeItem('bookmark');
