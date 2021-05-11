@@ -116007,7 +116007,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
 
               for (var i = 0; i < results.events[0].points.length; i++) {
                 _optionsList.push({
-                  name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
+                  name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]",
+                  value: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
                 });
               }
             }
@@ -116057,8 +116058,31 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       var data = [];
       var index = 0;
       this.setState({
-        option: option
+        option: option.toString()
       });
+
+      if (option.toString().includes("Sensor")) {
+        var coordinates = option.toString().split('[')[1].split(']')[0];
+        var lat = Number(coordinates.split(',')[0].replace(/[^0-9\.]+/g, ""));
+
+        var _long = Number(coordinates.split(',')[1].replace(/[^0-9\.]+/g, ""));
+
+        latestResults.events.forEach(function (event) {
+          event.points.forEach(function (point) {
+            if (point.coordinates[0] === lat && point.coordinates[1] === _long) {
+              data.push({
+                "x": event.timeStamp,
+                "y": point.value,
+                "quality": point.quality,
+                "additionalInfo": point.additionalInfo
+              });
+            }
+          });
+        });
+        myChart.data.datasets.pop();
+        this.addPreloadedData(data);
+        return;
+      }
 
       switch (this.state.quantity) {
         case "waterchlorosity":

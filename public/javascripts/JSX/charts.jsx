@@ -655,7 +655,8 @@ class ChartMenu extends React.Component {
                         optionsList = [];
                         for (let i = 0; i < results.events[0].points.length; i++) {
                             optionsList.push({
-                                name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
+                                name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]",
+                                value: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
                             });
                         }
                     }
@@ -684,7 +685,29 @@ class ChartMenu extends React.Component {
     setDepthOption(option) {
         let data = [];
         let index = 0;
-        this.setState({option: option})
+        this.setState({option: option.toString()})
+
+        if (option.toString().includes("Sensor")) {
+            let coordinates = option.toString().split('[')[1].split(']')[0];
+            let lat = Number(coordinates.split(',')[0].replace(/[^0-9\.]+/g,""));
+            let long = Number(coordinates.split(',')[1].replace(/[^0-9\.]+/g,""));
+            latestResults.events.forEach(event => {
+                event.points.forEach(point => {
+                    if (point.coordinates[0] === lat && point.coordinates[1] === long) {
+                        data.push({
+                           "x": event.timeStamp,
+                           "y": point.value,
+                           "quality": point.quality,
+                           "additionalInfo": point.additionalInfo,
+                        });
+                    }
+                });
+            });
+            myChart.data.datasets.pop();
+            this.addPreloadedData(data);
+            return;
+        }
+
         switch (this.state.quantity) {
             case "waterchlorosity":
                 latestResults.events.forEach(aspect => {
@@ -733,7 +756,7 @@ class ChartMenu extends React.Component {
                     });
                 });
                 myChart.data.datasets.pop();
-                this.addPreloadedData(data)
+                this.addPreloadedData(data);
                 break;
         }
 
