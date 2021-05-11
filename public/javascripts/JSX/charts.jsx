@@ -597,12 +597,11 @@ class ChartMenu extends React.Component {
     }
 
     getResultsData(results) {
-        console.log(results);
         latestResults = results;
         let data = []
 
         if (latestResults.events[0]?.value != null) {
-            this.setState({option: false});
+            this.setState({option: false, extraOption: false, depthOption: false});
             latestResults.events.forEach(item => {
                 data.push({
                     "x": item.timeStamp,
@@ -614,7 +613,7 @@ class ChartMenu extends React.Component {
             return data;
 
         } else if (this.state.quantity === "waterchlorosity") {
-            this.setState({option: false});
+            this.setState({option: false, extraOption: false, depthOption: false});
             latestResults.events.forEach(event => {
                 event.aspects.forEach(aspect => {
                     if (aspect.name === this.state.chlorosity) {
@@ -639,7 +638,7 @@ class ChartMenu extends React.Component {
             if (results[0].hasOwnProperty("points")) {
                 let optionsList = [];
                 results[0].points.forEach(point => {
-                    optionsList.push({name: point.coordinates[2]});
+                    optionsList.push({name: point.coordinates[2] + " meter", value: point.coordinates[2]});
                 });
 
                 this.setState({extraOption: false, depthOption: true, options: optionsList});
@@ -649,8 +648,17 @@ class ChartMenu extends React.Component {
                 if (results.events[0]?.points[0]?.hasOwnProperty("coordinates")) {
                     let optionsList = [];
                     results.events[0].points.forEach(point => {
-                        optionsList.push({name: point.coordinates[2]});
+                        optionsList.push({name: point.coordinates[2] + " meter", value: point.coordinates[2]});
                     });
+
+                    if (optionsList.every((item) => item.name === optionsList[0].name)) {
+                        optionsList = [];
+                        for (let i = 0; i < results.events[0].points.length; i++) {
+                            optionsList.push({
+                                name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
+                            });
+                        }
+                    }
 
                     this.setState({extraOption: false, depthOption: true, options: optionsList});
                 } else {
@@ -667,7 +675,7 @@ class ChartMenu extends React.Component {
                     this.setState({extraOption: true, depthOption: false, options: results.events[0].aspects});
                 }
             } else {
-                this.setState({extraOption: false});
+                this.setState({extraOption: false, depthOption: false});
                 alert("There are extra options but they are not ready, contact the administrator");
             }
         }
@@ -681,9 +689,9 @@ class ChartMenu extends React.Component {
             case "waterchlorosity":
                 latestResults.events.forEach(aspect => {
                     aspect.aspects.forEach(x => {
-                        if (x.name === this.state.chlorosity) {
+                        if (x.name == this.state.chlorosity) {
                             x.points.forEach(item => {
-                                if (item.coordinates[2] == this.state.option) {
+                                if (item.coordinates[2] == option) {
                                     data.push({
                                         "x": aspect.timeStamp,
                                         "y": item.value,
@@ -706,7 +714,9 @@ class ChartMenu extends React.Component {
                         index = 2;
                         break;
                 }
-                myChart.data.datasets.pop();
+                if (myChart.data.datasets.length > 0) {
+                    myChart.data.datasets.pop();
+                }
                 this.addPreloadedData(data, index);
                 break;
             default:
@@ -808,7 +818,6 @@ class ChartMenu extends React.Component {
                     success: (e) => {
                         ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
                         for (let i = 0; i < Object.keys(e).length; i++) {
-                            console.log(graphs);
                             this.setState({location: e[i].location, quantity: e[i].quantity, type: e[i].type});
                             this.addNewDataset(e[i]);
                         }
@@ -965,7 +974,12 @@ class ChartMenu extends React.Component {
                 <Autocomplete
                     id="location-select"
                     options={this.props.locations}
-                    getOptionLabel={(option) => option.toString()}
+                    getOptionLabel={(option) => option}
+                    renderOption={(option) => (
+                        <React.Fragment key={option}>
+                            <Typography variant={"subtitle1"}>{option}</Typography>
+                        </React.Fragment>
+                    )}
                     noOptionsText={"Geen locatie gevonden"}
                     loadingText={"Locaties laden..."}
                     onChange={(e, value) => this.setLocation(value)}
@@ -1138,7 +1152,7 @@ class ChartMenu extends React.Component {
                         onChange={(e) => this.setDepthOption(e.target.value)}
                 >
                     {this.state.options.map(option => (
-                        <MenuItem key={option.name} value={option.name}>{option.name} meter</MenuItem>
+                        <MenuItem key={option.name} value={option.value}>{option.name}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
@@ -1231,7 +1245,6 @@ $.ajax({
     type: "GET",
     url: "/charts/locations",
     success: (e) => {
-        console.log(e);
         let locations = [];
         e.results.forEach(x => {
             locations.push(x.properties.locationName);
