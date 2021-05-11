@@ -115925,13 +115925,14 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       var _latestResults$events,
           _this4 = this;
 
-      console.log(results);
       latestResults = results;
       var data = [];
 
       if (((_latestResults$events = latestResults.events[0]) === null || _latestResults$events === void 0 ? void 0 : _latestResults$events.value) != null) {
         this.setState({
-          option: false
+          option: false,
+          extraOption: false,
+          depthOption: false
         });
         latestResults.events.forEach(function (item) {
           data.push({
@@ -115944,7 +115945,9 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         return data;
       } else if (this.state.quantity === "waterchlorosity") {
         this.setState({
-          option: false
+          option: false,
+          extraOption: false,
+          depthOption: false
         });
         latestResults.events.forEach(function (event) {
           event.aspects.forEach(function (aspect) {
@@ -115972,7 +115975,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
           var optionsList = [];
           results[0].points.forEach(function (point) {
             optionsList.push({
-              name: point.coordinates[2]
+              name: point.coordinates[2] + " meter",
+              value: point.coordinates[2]
             });
           });
           this.setState({
@@ -115991,9 +115995,23 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
             var _optionsList = [];
             results.events[0].points.forEach(function (point) {
               _optionsList.push({
-                name: point.coordinates[2]
+                name: point.coordinates[2] + " meter",
+                value: point.coordinates[2]
               });
             });
+
+            if (_optionsList.every(function (item) {
+              return item.name === _optionsList[0].name;
+            })) {
+              _optionsList = [];
+
+              for (var i = 0; i < results.events[0].points.length; i++) {
+                _optionsList.push({
+                  name: "Sensor " + i + " - [" + results.events[0].points[i].coordinates[0] + ", " + results.events[0].points[i].coordinates[1] + "]"
+                });
+              }
+            }
+
             this.setState({
               extraOption: false,
               depthOption: true,
@@ -116024,7 +116042,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
           }
         } else {
           this.setState({
-            extraOption: false
+            extraOption: false,
+            depthOption: false
           });
           alert("There are extra options but they are not ready, contact the administrator");
         }
@@ -116045,9 +116064,9 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         case "waterchlorosity":
           latestResults.events.forEach(function (aspect) {
             aspect.aspects.forEach(function (x) {
-              if (x.name === _this5.state.chlorosity) {
+              if (x.name == _this5.state.chlorosity) {
                 x.points.forEach(function (item) {
-                  if (item.coordinates[2] == _this5.state.option) {
+                  if (item.coordinates[2] == option) {
                     data.push({
                       "x": aspect.timeStamp,
                       "y": item.value,
@@ -116074,7 +116093,10 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
               break;
           }
 
-          myChart.data.datasets.pop();
+          if (myChart.data.datasets.length > 0) {
+            myChart.data.datasets.pop();
+          }
+
           this.addPreloadedData(data, index);
           break;
 
@@ -116183,8 +116205,6 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
               ReactDOM.unmountComponentAtNode(document.querySelector("div.dialog-holder"));
 
               for (var i = 0; i < Object.keys(e).length; i++) {
-                console.log(graphs);
-
                 _this6.setState({
                   location: e[i].location,
                   quantity: e[i].quantity,
@@ -116333,7 +116353,14 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         id: "location-select",
         options: this.props.locations,
         getOptionLabel: function getOptionLabel(option) {
-          return option.toString();
+          return option;
+        },
+        renderOption: function renderOption(option) {
+          return /*#__PURE__*/React.createElement(React.Fragment, {
+            key: option
+          }, /*#__PURE__*/React.createElement(Typography, {
+            variant: "subtitle1"
+          }, option));
         },
         noOptionsText: "Geen locatie gevonden",
         loadingText: "Locaties laden...",
@@ -116569,8 +116596,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       }, this.state.options.map(function (option) {
         return /*#__PURE__*/React.createElement(MenuItem, {
           key: option.name,
-          value: option.name
-        }, option.name, " meter");
+          value: option.value
+        }, option.name);
       }))), this.state.graphs.length > 0 ? /*#__PURE__*/React.createElement("div", {
         style: {
           display: "flex",
@@ -116682,7 +116709,6 @@ $.ajax({
   type: "GET",
   url: "/charts/locations",
   success: function success(e) {
-    console.log(e);
     var locations = [];
     e.results.forEach(function (x) {
       locations.push(x.properties.locationName);
