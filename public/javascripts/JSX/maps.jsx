@@ -4,14 +4,13 @@ import * as L from 'leaflet';
 import * as L1 from 'leaflet.markercluster';
 
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
-import LocationLegend from "./Components/LocationLegend.jsx";
 import WaterLevelLegend from "./Components/WaterLevelLegend.jsx";
 import MapsChips from "./Components/MapsChips.jsx";
 
 let worldMap;
 
 function mouseover(marker) {
-    ReactDOM.render(<LocationLegend data={marker}/>, document.querySelector("div.marker-info"));
+    //ReactDOM.render(<LocationLegend data={marker}/>, document.querySelector("div.marker-info"));
 }
 
 
@@ -31,11 +30,23 @@ function drawMap() {
     worldMap = map;
 }
 
-function showQuantities(result, marker) {
+function showQuantities() {
     ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-chips"));
-    ReactDOM.render(<MapsChips quantities={result.results}
-                               marker={marker}
-    />, document.querySelector("div.marker-chips"));
+
+    $.ajax({
+        type: 'GET',
+        url: '/charts/locations/quantities',
+        success: (e) => {
+            ReactDOM.render(<MapsChips quantities={e.results}/>, document.querySelector("div.marker-chips"));
+        },
+        error: () => {
+            ReactDOM.render(<CustomSnackbar
+                    message={"Kwantiteiten paneel kon niet worden geladen"}
+                    severityStrength={"error"}/>,
+                document.querySelector("div.snackbar-holder"));
+        }
+    });
+
 }
 
 function showMarkerInfo(e) {
@@ -44,7 +55,6 @@ function showMarkerInfo(e) {
         url: '/charts/locations/quantities/' + e.displayName,
         success: (res) => {
             let hasWaterlevel = false;
-            showQuantities(res, e)
             res.results.forEach(quantity => {
                 if (quantity.includes("waterlevel")) {
                     hasWaterlevel = true;
@@ -101,10 +111,20 @@ function showMarkerInfo(e) {
     });
 }
 
-function drawMarkers() {
+export function drawMarkers(quantity = null) {
+
+    if (worldMap) {
+        worldMap.eachLayer((layer) => {
+            console.log(layer);
+            if (layer._leaflet_id !== 26) {
+                worldMap.removeLayer(layer);
+            }
+        });
+    }
+
     $.ajax({
         type: 'GET',
-        url: 'charts/locations',
+        url: quantity == null ? 'charts/locations' : '/charts/quantities/' + quantity,
         success: (response) => {
             ReactDOM.render(<CustomSnackbar
                     message={"Locaties zijn succesvol geladen"}
@@ -129,6 +149,16 @@ function drawMarkers() {
                         displayName: location.properties.locationName,
                     };
                     let marker = L.marker([coordinate.lat, coordinate.long])
+                        .bindTooltip('<p>' +
+                            coordinate.displayNameGlobal + '<br>' +
+                            coordinate.displayName + '<br>' +
+                            coordinate.lat + ', ' + coordinate.long
+                            + '</p>',
+                            {
+                                direction: 'auto',
+                                className: 'tooltip'
+                            })
+                        .openTooltip()
                         .on('click', () => showMarkerInfo(coordinate))
                         .on('mouseover', () => mouseover(coordinate));
 
@@ -150,3 +180,4 @@ function drawMarkers() {
 
 drawMap();
 drawMarkers();
+showQuantities();

@@ -32,6 +32,13 @@ public class ChartController extends Controller {
         else return status(404);
     }
 
+    public Result GetLocationsWithQuantity(String quantity) {
+        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/quantities/%s/locations", quantity);
+        JsonNode node = HTTPSUtils.RequestJSON(url);
+        if (node != null) return ok(node);
+        else return status(404);
+    }
+
     public Result GetLocationInfo(String location) {
 
         if (location.equals("quantities")) {
