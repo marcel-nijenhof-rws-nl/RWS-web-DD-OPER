@@ -140,7 +140,7 @@ public class BookmarkController extends Controller {
         }
     }
 
-    public Result GetBookmarks(String token, String name) {
+    public Result GetBookmarksWithName(String token, String name) {
         String email = HTTPSUtils.GetEmailFromToken(token);
 
         if (!Strings.isNullOrEmpty(email)) {

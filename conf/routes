@@ -21,7 +21,7 @@ POST          /charts/result                                controllers.ChartCon
 
 # Bookmarks
 GET           /bookmarks/:token                             controllers.BookmarkController.GetBookmarks(token: String)
-GET           /bookmarks/:token/:name                       controllers.BookmarkController.GetBookmarks(token: String, name: String)
+GET           /bookmarks/:token/:name                       controllers.BookmarkController.GetBookmarksWithName(token: String, name: String)
 POST          /bookmarks/add                                controllers.BookmarkController.AddBookmark(request: Request)
 PUT           /bookmarks/save                               controllers.BookmarkController.EditBookmarkGroupName(request: Request)
 DELETE        /bookmarks/delete/:id                         controllers.BookmarkController.DeleteBookmarkGroup(id : Long)
