@@ -16,9 +16,10 @@ div.container {
 }
 
 .paper {
-    width: 35vw;
     border-radius: 10px;
     background-color: #F3F3F3;
+    padding-bottom: 10px;
+    width: 35vw;
 }
 
 .center {
@@ -38,4 +39,18 @@ div.leaflet-div-icon {
     border-radius: 100%;
     width: 35px;
     height: 35px;
+}
+
+.leaflet-tooltip.tooltip {
+    background: #F3F3F3;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: #222222;
+    transition: opacity ease-in-out 0.2s;
+}
+.leaflet-tooltip-left.tooltip::before {
+    border-left-color: white;
+}
+.leaflet-tooltip-right.tooltip::before {
+    border-right-color: white;
 }

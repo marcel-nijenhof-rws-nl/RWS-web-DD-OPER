@@ -140,6 +140,52 @@ public class BookmarkController extends Controller {
         }
     }
 
+    public Result GetBookmarks(String token, String name) {
+        String email = HTTPSUtils.GetEmailFromToken(token);
+
+        if (!Strings.isNullOrEmpty(email)) {
+            SessionFactory sessionFactory = HibernateUtil.getSession();
+            Session session = sessionFactory.getCurrentSession();
+            EntityManager em = sessionFactory.createEntityManager();
+            session.beginTransaction();
+            em.getTransaction().begin();
+
+            UserProfile userProfile = em.createQuery("select g from UserProfile g where email = :email", UserProfile.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+
+            List<BookmarkGroup> bookmarkGroups = em.createQuery("select b from BookmarkGroup b where b.userprofile_id = :userId", BookmarkGroup.class)
+                    .setParameter("userId", userProfile.getId())
+                    .getResultList();
+
+            List<List> bookmarksList = new ArrayList<>();
+            for (BookmarkGroup groupItem : bookmarkGroups) {
+                List bookmarks = em.createQuery("from Bookmark b left join BookmarkGroup bg on b.bookmarkGroup_id = bg.id where bg.userprofile_id = :userId and bg.id = :groupId and bg.name = :name")
+                        .setParameter("userId", userProfile.getId())
+                        .setParameter("groupId", groupItem.getId())
+                        .setParameter("name", name)
+                        .getResultList();
+
+                if (!bookmarks.isEmpty()) {
+                    bookmarksList.add(bookmarks);
+                }
+            }
+
+            em.close();
+            session.close();
+
+            JsonNode node = HTTPSUtils.ConvertToJsonNode(bookmarksList);
+            if (node != null) {
+                return ok(node);
+            } else {
+                return status(422);
+            }
+
+        } else {
+            return forbidden("Login session expired, please log in");
+        }
+    }
+
     public Result EditBookmarkGroupName(Http.Request request) {
         JsonNode node = request.body().asJson();
         if (node == null) {

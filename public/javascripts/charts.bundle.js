@@ -115508,7 +115508,9 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         options: [""],
         option: "",
         type: "measurement",
-        graphs: []
+        graphs: [],
+        bookmarks: [],
+        bookmark: ""
       };
       _this.setLocation = _this.setLocation.bind(_assertThisInitialized(_this));
       _this.setQuantity = _this.setQuantity.bind(_assertThisInitialized(_this));
@@ -115532,6 +115534,9 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       _this.openBookmarkDialog = _this.openBookmarkDialog.bind(_assertThisInitialized(_this));
       _this.saveBookmark = _this.saveBookmark.bind(_assertThisInitialized(_this));
       _this.closeDialog = _this.closeDialog.bind(_assertThisInitialized(_this));
+      _this.selectBookmark = _this.selectBookmark.bind(_assertThisInitialized(_this));
+      _this.clearDatasets = _this.clearDatasets.bind(_assertThisInitialized(_this));
+      _this.loadBookmarks = _this.loadBookmarks.bind(_assertThisInitialized(_this));
     }
     return _this;
   }
@@ -115892,9 +115897,11 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
             if (myChart) {
               var _e$results$0$location, _e$results$0$location2, _e$results$0$observat, _e$provider;
 
-              _this3.setState({
-                colorIndex: _this3.state.colorIndex + 1
-              });
+              if (myChart.data.datasets.length > 0) {
+                _this3.setState({
+                  colorIndex: _this3.state.colorIndex + 1
+                });
+              }
 
               var _dataset = {
                 yAxisID: getYaxisType(e.results[0].observationType.aspectSet.aspects[0].unit),
@@ -116202,6 +116209,21 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       updateAxis();
     }
   }, {
+    key: "clearDatasets",
+    value: function clearDatasets() {
+      graphs = [];
+      this.setState({
+        colorIndex: 0,
+        graphs: graphs
+      }, function () {
+        if (myChart) {
+          myChart.data.datasets = [];
+        }
+
+        updateAxis();
+      });
+    }
+  }, {
     key: "openChartWithToken",
     value: function openChartWithToken() {
       var _this6 = this;
@@ -116320,6 +116342,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
                 severityStrength: "success"
               }), document.querySelector("div.snackbar-holder"));
 
+              _this7.loadBookmarks();
+
               _this7.closeDialog();
             },
             error: function error() {
@@ -116366,11 +116390,98 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "loadBookmarks",
+    value: function loadBookmarks() {
       var _this8 = this;
 
+      $.ajax({
+        type: 'GET',
+        url: 'bookmarks/' + localStorage.getItem('session-token'),
+        success: function success(e) {
+          var bookmarks = [];
+          e.forEach(function (item) {
+            bookmarks.push(item[0][1].name);
+          });
+
+          _this8.setState({
+            bookmarks: bookmarks
+          });
+        },
+        error: function error() {
+          ReactDOM.render( /*#__PURE__*/React.createElement(CustomSnackbar, {
+            message: "Bladwijzers konden niet worden geladen",
+            severityStrength: "error"
+          }), document.querySelector("div.snackbar-holder"));
+        }
+      });
+    }
+  }, {
+    key: "selectBookmark",
+    value: function selectBookmark(e) {
+      var _this9 = this;
+
+      this.setState({
+        bookmark: e
+      }, function () {
+        _this9.clearDatasets();
+
+        $.ajax({
+          type: 'GET',
+          url: '/bookmarks/' + localStorage.getItem("session-token") + "/" + e,
+          success: function success(bookmarkGroup) {
+            bookmarkGroup.forEach(function (bookmark) {
+              bookmark.forEach(function (dataset) {
+                _this9.addNewDataset(dataset[0]);
+              });
+            });
+          }
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this10 = this;
+
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(FormControl, {
+        className: "formControl",
+        variant: "outlined"
+      }, /*#__PURE__*/React.createElement(Autocomplete, {
+        id: "bookmarks-select",
+        options: this.state.bookmarks,
+        getOptionLabel: function getOptionLabel(option) {
+          return option;
+        },
+        renderOption: function renderOption(option) {
+          return /*#__PURE__*/React.createElement(React.Fragment, {
+            key: option
+          }, /*#__PURE__*/React.createElement(Typography, {
+            variant: "subtitle1"
+          }, option));
+        },
+        noOptionsText: "Geen bladwijzers gevonden",
+        loadingText: "Bladwijzers laden...",
+        onChange: function onChange(e, value) {
+          return _this10.selectBookmark(value);
+        },
+        value: this.state.bookmark,
+        renderInput: function renderInput(params) {
+          return /*#__PURE__*/React.createElement(TextField, _extends({}, params, {
+            label: "Bladwijzer",
+            variant: "outlined",
+            InputProps: _objectSpread(_objectSpread({}, params.InputProps), {}, {
+              style: {
+                color: "white"
+              }
+            }),
+            InputLabelProps: {
+              style: {
+                color: "white"
+              }
+            }
+          }));
+        }
+      })), /*#__PURE__*/React.createElement(FormControl, {
         className: "formControl",
         variant: "outlined"
       }, /*#__PURE__*/React.createElement(Autocomplete, {
@@ -116389,7 +116500,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         noOptionsText: "Geen locatie gevonden",
         loadingText: "Locaties laden...",
         onChange: function onChange(e, value) {
-          return _this8.setLocation(value);
+          return _this10.setLocation(value);
         },
         value: this.state.location,
         renderInput: function renderInput(params) {
@@ -116422,7 +116533,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.quantity,
         label: "Kwantiteit",
         onChange: function onChange(e) {
-          return _this8.setQuantity(e.target.value);
+          return _this10.setQuantity(e.target.value);
         }
       }, this.state.quantities.map(function (quantity) {
         return /*#__PURE__*/React.createElement(MenuItem, {
@@ -116443,7 +116554,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.type,
         label: "Type Data",
         onChange: function onChange(e) {
-          return _this8.setDataType(e.target.value);
+          return _this10.setDataType(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         selected: true,
@@ -116469,7 +116580,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.aspectSet,
         label: "Aspect Set",
         onChange: function onChange(e) {
-          return _this8.setAspectSet(e.target.value);
+          return _this10.setAspectSet(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         key: "minimum",
@@ -116545,7 +116656,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.interval,
         label: "Interval",
         onChange: function onChange(e) {
-          return _this8.setInterval(e.target.value);
+          return _this10.setInterval(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         key: "1min",
@@ -116568,7 +116679,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.chlorosity,
         label: "Chlorisity",
         onChange: function onChange(e) {
-          return _this8.setChlorosity(e.target.value);
+          return _this10.setChlorosity(e.target.value);
         }
       }, /*#__PURE__*/React.createElement(MenuItem, {
         selected: true,
@@ -116594,7 +116705,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.option,
         label: "Opties",
         onChange: function onChange(e) {
-          return _this8.setExtraOption(e.target.value);
+          return _this10.setExtraOption(e.target.value);
         }
       }, this.state.options.map(function (option) {
         return /*#__PURE__*/React.createElement(MenuItem, {
@@ -116615,7 +116726,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         value: this.state.option,
         label: "Diepte",
         onChange: function onChange(e) {
-          return _this8.setDepthOption(e.target.value);
+          return _this10.setDepthOption(e.target.value);
         }
       }, this.state.options.map(function (option) {
         return /*#__PURE__*/React.createElement(MenuItem, {
@@ -116632,7 +116743,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this8.addNewDataset();
+          return _this10.addNewDataset();
         }
       }, "Toevoegen"), /*#__PURE__*/React.createElement(Button, {
         color: "primary",
@@ -116644,7 +116755,7 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this8.openBookmarkDialog();
+          return _this10.openBookmarkDialog();
         }
       }, "Bladwijzer Opslaan"))) : /*#__PURE__*/React.createElement("div", {
         style: {
@@ -116656,13 +116767,13 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this8.addNewDataset();
+          return _this10.addNewDataset();
         }
       }, "Teken"), /*#__PURE__*/React.createElement(Button, {
         color: "primary",
         variant: "contained",
         onClick: function onClick() {
-          return _this8.openChartWithToken();
+          return _this10.openChartWithToken();
         }
       }, "Open"))), /*#__PURE__*/React.createElement("div", {
         hidden: this.state.graphs.length === 0
@@ -116681,14 +116792,14 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
           }, item.location + " - " + item.quantity + " (" + item.type + ")"),
           clickable: true,
           onClick: function onClick() {
-            return _this8.showDatasetInfo(item);
+            return _this10.showDatasetInfo(item);
           },
           onDelete: function onDelete() {
-            return _this8.removeDataset(_this8.state.graphs.indexOf(item));
+            return _this10.removeDataset(_this10.state.graphs.indexOf(item));
           },
           style: {
             margin: 10,
-            backgroundColor: colors.borderColor[_this8.state.graphs.indexOf(item)],
+            backgroundColor: colors.borderColor[_this10.state.graphs.indexOf(item)],
             height: '100%'
           }
         });
@@ -116697,16 +116808,18 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this9 = this;
+      var _this11 = this;
+
+      this.loadBookmarks();
 
       if (localStorage.getItem('location') && localStorage.getItem('quantity')) {
         this.setState({
           location: localStorage.getItem('location'),
           quantity: localStorage.getItem('quantity')
         }, function () {
-          _this9.setLocation(localStorage.getItem('location'));
+          _this11.setLocation(localStorage.getItem('location'));
 
-          _this9.addNewDataset();
+          _this11.addNewDataset();
 
           localStorage.removeItem('location');
           localStorage.removeItem('quantity');
@@ -116714,11 +116827,11 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
       } else if (localStorage.getItem('bookmark')) {
         var bookmarkGroup = JSON.parse(localStorage.getItem('bookmark'));
         bookmarkGroup.bookmarks.forEach(function (bookmark) {
-          _this9.setState({
+          _this11.setState({
             location: bookmark.location,
             quantity: bookmark.quantity
           }, function () {
-            _this9.addNewDataset(bookmark);
+            _this11.addNewDataset(bookmark);
           });
         });
         localStorage.removeItem('bookmark');

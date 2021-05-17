@@ -14,12 +14,7 @@ export default class WaterLevelLegend extends React.Component {
         ];
 
         return <>
-            <Paper elevation={0} style={{
-                backgroundColor: '#F3F3F3',
-                width: '35vw',
-                borderRadius: '10px',
-                paddingBottom: '20px'
-            }}>
+            <Paper elevation={0} className={"paper paper-container"}>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -30,7 +25,7 @@ export default class WaterLevelLegend extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                         }}>
-                            <Typography variant={"h5"}>{"Waterhoogte afgelopen 24 uur"}</Typography>
+                            <Typography variant={"h5"}>{"Waterhoogte afgelopen 24 uur (NAP)"}</Typography>
                         </div>
                         <div style={{
                             display: 'flex',

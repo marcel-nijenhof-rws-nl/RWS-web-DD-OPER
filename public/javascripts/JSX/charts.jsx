@@ -222,6 +222,8 @@ class ChartMenu extends React.Component {
                 option: "",
                 type: "measurement",
                 graphs: [],
+                bookmarks: [],
+                bookmark: ""
             }
 
             this.setLocation = this.setLocation.bind(this);
@@ -246,6 +248,9 @@ class ChartMenu extends React.Component {
             this.openBookmarkDialog = this.openBookmarkDialog.bind(this);
             this.saveBookmark = this.saveBookmark.bind(this);
             this.closeDialog = this.closeDialog.bind(this);
+            this.selectBookmark = this.selectBookmark.bind(this);
+            this.clearDatasets = this.clearDatasets.bind(this);
+            this.loadBookmarks = this.loadBookmarks.bind(this);
         }
     }
 
@@ -569,7 +574,9 @@ class ChartMenu extends React.Component {
                 },
                 success: (e) => {
                     if (myChart) {
-                        this.setState({colorIndex: this.state.colorIndex + 1});
+                        if (myChart.data.datasets.length > 0) {
+                            this.setState({colorIndex: this.state.colorIndex + 1});
+                        }
                         let dataset = {
                             yAxisID: getYaxisType(e.results[0].observationType.aspectSet.aspects[0].unit),
                             label: e.results[0].location?.properties?.displayNameGlobal
@@ -689,16 +696,16 @@ class ChartMenu extends React.Component {
 
         if (option.toString().includes("Sensor")) {
             let coordinates = option.toString().split('[')[1].split(']')[0];
-            let lat = Number(coordinates.split(',')[0].replace(/[^0-9\.]+/g,""));
-            let long = Number(coordinates.split(',')[1].replace(/[^0-9\.]+/g,""));
+            let lat = Number(coordinates.split(',')[0].replace(/[^0-9\.]+/g, ""));
+            let long = Number(coordinates.split(',')[1].replace(/[^0-9\.]+/g, ""));
             latestResults.events.forEach(event => {
                 event.points.forEach(point => {
                     if (point.coordinates[0] === lat && point.coordinates[1] === long) {
                         data.push({
-                           "x": event.timeStamp,
-                           "y": point.value,
-                           "quality": point.quality,
-                           "additionalInfo": point.additionalInfo,
+                            "x": event.timeStamp,
+                            "y": point.value,
+                            "quality": point.quality,
+                            "additionalInfo": point.additionalInfo,
                         });
                     }
                 });
@@ -816,6 +823,17 @@ class ChartMenu extends React.Component {
         }
 
         updateAxis();
+    }
+
+    clearDatasets() {
+        graphs = [];
+        this.setState({colorIndex: 0, graphs: graphs}, () => {
+            if (myChart) {
+                myChart.data.datasets = [];
+            }
+
+            updateAxis();
+        });
     }
 
     openChartWithToken() {
@@ -938,8 +956,8 @@ class ChartMenu extends React.Component {
                                 message={"Bladwijzer opgeslagen"}
                                 severityStrength={"success"}/>,
                             document.querySelector("div.snackbar-holder"));
+                        this.loadBookmarks();
                         this.closeDialog();
-
                     },
                     error: () => {
                         ReactDOM.render(<CustomSnackbar
@@ -991,8 +1009,77 @@ class ChartMenu extends React.Component {
         ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
     }
 
+    loadBookmarks() {
+        $.ajax({
+            type: 'GET',
+            url: 'bookmarks/' + localStorage.getItem('session-token'),
+            success: (e) => {
+                let bookmarks = [];
+                e.forEach(item => {
+                    bookmarks.push(item[0][1].name)
+                })
+                this.setState({bookmarks: bookmarks});
+            },
+            error: () => {
+                ReactDOM.render(<CustomSnackbar message={"Bladwijzers konden niet worden geladen"}
+                                                severityStrength={"error"}/>,
+                    document.querySelector("div.snackbar-holder"));
+            }
+        });
+    }
+
+    selectBookmark(e) {
+        this.setState({bookmark: e}, () => {
+            this.clearDatasets();
+            $.ajax({
+                type: 'GET',
+                url: '/bookmarks/' + localStorage.getItem("session-token") + "/" + e,
+                success: (bookmarkGroup) => {
+                    bookmarkGroup.forEach(bookmark => {
+                        bookmark.forEach(dataset => {
+                            this.addNewDataset(dataset[0]);
+                        });
+                    });
+                }
+            });
+        });
+    }
+
     render() {
         return <>
+            <FormControl className={"formControl"} variant={"outlined"}>
+                <Autocomplete
+                    id="bookmarks-select"
+                    options={this.state.bookmarks}
+                    getOptionLabel={(option) => option}
+                    renderOption={(option) => (
+                        <React.Fragment key={option}>
+                            <Typography variant={"subtitle1"}>{option}</Typography>
+                        </React.Fragment>
+                    )}
+                    noOptionsText={"Geen bladwijzers gevonden"}
+                    loadingText={"Bladwijzers laden..."}
+                    onChange={(e, value) => this.selectBookmark(value)}
+                    value={this.state.bookmark}
+                    renderInput={(params) =>
+                        <TextField {...params}
+                                   label="Bladwijzer"
+                                   variant="outlined"
+                                   InputProps={{
+                                       ...params.InputProps,
+                                       style: {
+                                           color: "white"
+                                       }
+                                   }}
+                                   InputLabelProps={{
+                                       style: {
+                                           color: "white"
+                                       }
+                                   }}
+                        />}
+                />
+            </FormControl>
+
             <FormControl className={"formControl"} variant={"outlined"}>
                 <Autocomplete
                     id="location-select"
@@ -1237,6 +1324,8 @@ class ChartMenu extends React.Component {
     }
 
     componentDidMount() {
+        this.loadBookmarks();
+
         if (localStorage.getItem('location') && localStorage.getItem('quantity')) {
             this.setState({
                 location: localStorage.getItem('location'),
