@@ -6,13 +6,9 @@ import * as L1 from 'leaflet.markercluster';
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
 import WaterLevelLegend from "./Components/WaterLevelLegend.jsx";
 import MapsChips from "./Components/MapsChips.jsx";
+import Chart3D from "./Components/3DChart.jsx";
 
 let worldMap;
-
-function mouseover(marker) {
-    //ReactDOM.render(<LocationLegend data={marker}/>, document.querySelector("div.marker-info"));
-}
-
 
 function drawMap() {
     let map = L
@@ -54,10 +50,29 @@ function showMarkerInfo(e) {
         type: 'GET',
         url: '/charts/locations/quantities/' + e.displayName,
         success: (res) => {
-            let hasWaterlevel = false;
             res.results.forEach(quantity => {
+                if (quantity.includes("waveenergy") || quantity.includes("waterflowspeed") || quantity.includes("wavedirection")) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/charts/24hr/' + e.displayName + '/' + quantity,
+                        success: (f) => {
+                            ReactDOM.render(<Chart3D
+                                    provider={f.provider}
+                                    results={f.results[0]}
+                                />,
+                                document.querySelector("div.marker-3dchart"));
+                        },
+                        error: () => {
+                            ReactDOM.render(<CustomSnackbar
+                                    message={"Data kon niet worden geladen"}
+                                    severityStrength={"error"}/>,
+                                document.querySelector("div.snackbar-holder"));
+                        }
+                    });
+                } else {
+                    ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
+                }
                 if (quantity.includes("waterlevel")) {
-                    hasWaterlevel = true;
                     $.ajax({
                         type: 'GET',
                         url: '/charts/24hr/' + e.displayName + '/waterlevel',
@@ -102,11 +117,10 @@ function showMarkerInfo(e) {
                                 document.querySelector("div.snackbar-holder"));
                         }
                     });
+                } else {
+                    ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
                 }
             });
-            if (!hasWaterlevel) {
-                ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
-            }
         }
     });
 }
@@ -115,7 +129,6 @@ export function drawMarkers(quantity = null) {
 
     if (worldMap) {
         worldMap.eachLayer((layer) => {
-            console.log(layer);
             if (layer._leaflet_id !== 26) {
                 worldMap.removeLayer(layer);
             }
@@ -159,8 +172,7 @@ export function drawMarkers(quantity = null) {
                                 className: 'tooltip'
                             })
                         .openTooltip()
-                        .on('click', () => showMarkerInfo(coordinate))
-                        .on('mouseover', () => mouseover(coordinate));
+                        .on('click', () => showMarkerInfo(coordinate));
 
                     markers.addLayer(marker);
                 }
