@@ -2,6 +2,7 @@ import React from 'react';
 import Paper from "@material-ui/core/Paper";
 import Chip from '@material-ui/core/Chip';
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import {drawMarkers} from "../maps.jsx";
 
 export default class MapsChips extends React.Component {
@@ -10,45 +11,32 @@ export default class MapsChips extends React.Component {
 
         this.state = {
             selected: '',
+            searchString: '',
         }
 
         this.selectQuantity = this.selectQuantity.bind(this);
+        this.searchLocations = this.searchLocations.bind(this);
     }
 
     selectQuantity(e) {
-
         if (e === this.state.selected) {
             this.setState({selected: ''});
             localStorage.removeItem('quantity');
-            drawMarkers();
+            drawMarkers(null, this.state.searchString);
         } else {
             this.setState({selected: e});
             localStorage.setItem('quantity', e);
-            drawMarkers(e);
+            drawMarkers(e, this.state.searchString);
         }
+    }
 
-
-        // localStorage.setItem('location', this.props.marker.displayName);
-        // ReactDOM.render(<>
-        //         <Paper elevation={0} style={{
-        //             backgroundColor: '#F3F3F3',
-        //             width: '35vw',
-        //             borderRadius: '10px'
-        //         }}>
-        //             <div style={{display: 'flex'}}>
-        //                 <Typography
-        //                     style={{
-        //                         margin: 'auto auto auto 10px'
-        //                     }}
-        //                     variant={'subtitle1'}>{"Open grafiek: " + this.props.marker.displayNameGlobal + " - " + e}
-        //                 </Typography>
-        //                 <IconButton onClick={() => window.open("/charts", "_blank")}>
-        //                     <LaunchRounded/>
-        //                 </IconButton>
-        //             </div>
-        //         </Paper>
-        //     </>,
-        //     document.querySelector("div.marker-launch-chart"))
+    searchLocations(e) {
+        if (e === '') {
+            e = null;
+        }
+        this.setState({searchString: e}, () => {
+            drawMarkers(this.state.selected !== '' ? this.state.selected : null, e);
+        });
     }
 
 
@@ -60,6 +48,36 @@ export default class MapsChips extends React.Component {
                         <div className={"center"}>
                             <Typography variant={'h5'}>{"Kwantiteiten"}</Typography>
                         </div>
+                    </div>
+
+                    <div className={"center"}
+                         style={{marginBottom: '5px'}}
+                    >
+                        <TextField id="location-search"
+                                   label="Zoek locatie"
+                                   type="search"
+                                   variant="outlined"
+                                   onKeyPress={(e) => {
+                                       if (e.code === "Enter") {
+                                           this.searchLocations(e.target.value);
+                                       }
+                                   }}
+                                   onChange={(e) => {
+                                       if (e.target.value === '') {
+                                           this.searchLocations(e.target.value);
+                                       }
+                                   }}
+                                   InputProps={{
+                                       style: {
+                                           borderRadius: 50,
+                                           width: '95%'
+                                       }
+                                   }}
+                                   style={{
+                                       width: '95%',
+                                       marginLeft: 'auto'
+                                   }}
+                        />
                     </div>
 
                     <div style={{

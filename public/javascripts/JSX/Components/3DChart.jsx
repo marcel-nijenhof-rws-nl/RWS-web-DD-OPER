@@ -1,34 +1,46 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Plotly from 'plotly.js-dist';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from "@material-ui/core/Typography";
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
+import CustomSnackbar from './CustomSnackbar.jsx';
 
 export default class Chart3D extends React.Component {
 
     constructor(props) {
         super(props);
 
+        let quantities = [];
+        if (this.props.hasWaveEnergy) quantities.push("waveenergy");
+        if (this.props.hasWaterflowspeed) quantities.push("waterflowspeed");
+        if (this.props.hasWaveDirection) quantities.push("wavedirection");
+
         this.state = {
+            results: this.props.results,
             chartReady: false,
-            showProgress: true,
+            currentQuantity: quantities[0],
+            availableQuantities: quantities,
         }
 
         this.draw3D = this.draw3D.bind(this);
+        this.changeQuantity = this.changeQuantity.bind(this);
 
     }
 
     draw3D() {
-        console.log(this.props.results);
+        console.log(this.state.results);
         let dates = [];
         let sensors = [];
         let valuesMatrix = [];
 
-        switch (this.props.results.observationType.quantityName) {
+        switch (this.state.currentQuantity) {
             case "waveenergy":
             case "wavedirection":
 
-                this.props.results.events.forEach(event => {
+                this.state.results.events.forEach(event => {
                     dates.push(event.timeStamp);
                     event.aspects.forEach(aspect => {
                         if (!sensors.includes(aspect.name)) {
@@ -39,7 +51,7 @@ export default class Chart3D extends React.Component {
 
                 for (let i = 0; i < sensors.length; i++) {
                     let values = [];
-                    this.props.results.events.forEach(event => {
+                    this.state.results.events.forEach(event => {
                         event.aspects.forEach(aspect => {
                             if (aspect.name === sensors[i]) {
                                 if (aspect.value === 99999 || aspect.value === -99999) {
@@ -52,7 +64,6 @@ export default class Chart3D extends React.Component {
                     valuesMatrix.push(values);
                 }
 
-                console.log(dates, sensors, valuesMatrix);
                 break;
         }
 
@@ -72,6 +83,8 @@ export default class Chart3D extends React.Component {
         }
 
         let layout = {
+            autosize: true,
+            height: screen.height > 1080 ? (screen.height / 100) * 35 : (screen.height / 100) * 20,
             font: {
                 family: "Roboto",
                 size: 11,
@@ -95,17 +108,23 @@ export default class Chart3D extends React.Component {
                     title: {
                         text: "Tijd",
                     },
+                    showgrid: false,
+                    spikecolor: "#ff3c00",
                 },
                 yaxis: {
                     title: {
                         text: "Sensor",
                     },
+                    showgrid: false,
+                    spikecolor: "#ff3c00",
                 },
                 zaxis: {
                     title: {
-                        text: this.props.results.observationType.aspectSet.aspects[0].unit,
+                        text: this.state.results.observationType.aspectSet.aspects[0].unit,
                     },
+                    spikecolor: "#ff3c00",
                 },
+                borderradius: 15,
             },
             legend: {}
         };
@@ -114,8 +133,31 @@ export default class Chart3D extends React.Component {
             responsive: true
         }
 
-        this.setState({chartReady: true, showProgress: false}, () => {
+        this.setState({chartReady: true}, () => {
             Plotly.react("chart3d", traces, layout, config);
+        });
+    }
+
+    changeQuantity(e) {
+        this.setState({chartReady: false}, () => {
+            $.ajax({
+                type: 'GET',
+                url: '/charts/24hr/' + this.state.results.location.properties.locationName + '/' + e,
+                success: (response) => {
+                    this.setState({
+                        currentQuantity: e,
+                        results: response.results[0]
+                    }, () => {
+                        this.draw3D();
+                    });
+                },
+                error: () => {
+                    ReactDOM.render(<CustomSnackbar
+                            message={"Kwantiteit " + e + " kon niet worden geladen"}
+                            severityStrength={"error"}/>,
+                        document.querySelector("div.snackbar-holder"));
+                }
+            });
         });
     }
 
@@ -126,16 +168,49 @@ export default class Chart3D extends React.Component {
     render() {
         return <>
             <Paper elevation={0} className={"paper"}>
-                <div hidden={!this.state.showProgress} className={"center"}>
-                    <CircularProgress/>
-                </div>
                 <div>
                     <div className={"center"}>
                         <Typography
-                            variant={"h6"}>{this.props.results.location.properties.displayNameGlobal + " - " + this.props.results.observationType.quantityName}</Typography>
+                            variant={"h6"}>
+                            {this.state.results.location.properties.displayNameGlobal + " - " + this.state.currentQuantity}
+                        </Typography>
                     </div>
-                    <div hidden={!this.state.chartReady} id={"chart3d"}/>
+                    {
+                        this.state.chartReady
+                            ?
+                            <div>
+                                <div id={"chart3d"}/>
+                            </div>
+                            :
+                            <div className={"center"}>
+                                <CircularProgress/>
+                            </div>
+                    }
                 </div>
+                {
+                    this.state.availableQuantities.length > 1
+                        ?
+                        <div className={"center"}
+                             style={{
+                                 marginTop: '10px',
+                             }}
+                        >
+                            <ButtonGroup>
+                                {this.state.availableQuantities.map(quantity => (
+                                    <Button key={quantity}
+                                            variant={'contained'}
+                                            color={"primary"}
+                                            disabled={this.state.currentQuantity === quantity}
+                                            disableElevation
+                                            onClick={() => this.changeQuantity(quantity)}>
+                                        {quantity}
+                                    </Button>
+                                ))}
+                            </ButtonGroup>
+                        </div>
+                        :
+                        <></>
+                }
             </Paper>
         </>
     }

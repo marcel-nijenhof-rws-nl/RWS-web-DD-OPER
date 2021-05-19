@@ -14,11 +14,14 @@ export default class WaterLevelLegend extends React.Component {
         ];
 
         return <>
-            <Paper elevation={0} className={"paper paper-container"}>
+            <Paper elevation={0}
+                   className={"paper paper-container"}
+                   style={{paddingBottom: '10px'}}
+            >
                 <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    marginBottom: '10px'
+                    paddingBottom: '10px'
                 }}>
                     <div>
                         <div style={{
