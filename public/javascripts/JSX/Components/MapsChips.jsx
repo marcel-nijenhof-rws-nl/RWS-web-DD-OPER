@@ -2,8 +2,13 @@ import React from 'react';
 import Paper from "@material-ui/core/Paper";
 import Chip from '@material-ui/core/Chip';
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import {drawMarkers} from "../maps.jsx";
+import FormControl from "@material-ui/core/FormControl";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import InputLabel from "@material-ui/core/InputLabel";
+import SearchRounded from "@material-ui/icons/SearchRounded";
+import IconButton from "@material-ui/core/IconButton";
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 export default class MapsChips extends React.Component {
     constructor(props) {
@@ -16,6 +21,7 @@ export default class MapsChips extends React.Component {
 
         this.selectQuantity = this.selectQuantity.bind(this);
         this.searchLocations = this.searchLocations.bind(this);
+        this.updateSearchString = this.updateSearchString.bind(this);
     }
 
     selectQuantity(e) {
@@ -39,6 +45,10 @@ export default class MapsChips extends React.Component {
         });
     }
 
+    updateSearchString(e) {
+        this.setState({searchString: e});
+    }
+
 
     render() {
         return <>
@@ -53,31 +63,37 @@ export default class MapsChips extends React.Component {
                     <div className={"center"}
                          style={{marginBottom: '5px'}}
                     >
-                        <TextField id="location-search"
-                                   label="Zoek locatie"
-                                   type="search"
-                                   variant="outlined"
-                                   onKeyPress={(e) => {
-                                       if (e.code === "Enter") {
-                                           this.searchLocations(e.target.value);
-                                       }
-                                   }}
-                                   onChange={(e) => {
-                                       if (e.target.value === '') {
-                                           this.searchLocations(e.target.value);
-                                       }
-                                   }}
-                                   InputProps={{
-                                       style: {
-                                           borderRadius: 50,
-                                           width: '95%'
-                                       }
-                                   }}
-                                   style={{
-                                       width: '95%',
-                                       marginLeft: 'auto'
-                                   }}
-                        />
+                        <FormControl variant={"outlined"}>
+                            <InputLabel htmlFor={"location-search"}>{"Locatie zoeken"}</InputLabel>
+                            <OutlinedInput
+                                label={"Locatie zoeken"}
+                                id={"location-search"}
+                                type={"text"}
+                                onChange={(e) => {
+                                    if (e.target.value === '') {
+                                        this.searchLocations(e.target.value);
+                                    } else {
+                                        this.updateSearchString(e.target.value);
+                                    }
+                                }}
+                                onKeyPress={(e) => {
+                                    if (e.code === "Enter") {
+                                        this.searchLocations(this.state.searchString);
+                                    }
+                                }}
+                                endAdornment={
+                                    <InputAdornment position={"end"}>
+                                        <IconButton onClick={() => this.searchLocations(this.state.searchString)}>
+                                            <SearchRounded/>
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                style={{
+                                    borderRadius: '25px',
+                                    width: 'auto',
+                                }}
+                            />
+                        </FormControl>
                     </div>
 
                     <div style={{

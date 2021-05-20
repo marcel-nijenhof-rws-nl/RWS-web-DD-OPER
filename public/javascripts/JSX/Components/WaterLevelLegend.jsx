@@ -78,6 +78,34 @@ export default class WaterLevelLegend extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                         }}>
+                            <Typography variant={"subtitle1"}>{"Mediaan"}</Typography>
+                        </div>
+                        <LiquidChart
+                            responsive
+                            value={this.props.median}
+                            maxValue={this.props.maxLevel}
+                            showDecimal
+                            amplitude={4}
+                            frequency={2}
+                            animationTime={2000}
+                            animationWavesTime={2250}
+                            gradient={{
+                                type: 1,
+                                x1: 0,
+                                x2: 0,
+                                y1: 100,
+                                y2: 0,
+                                stops,
+                            }}
+                            postfix="cm"
+                        />
+                    </div>
+
+                    <div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
                             <Typography variant={"subtitle1"}>{"Laagst"}</Typography>
                         </div>
                         <LiquidChart

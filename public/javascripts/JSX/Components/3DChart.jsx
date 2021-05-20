@@ -21,6 +21,7 @@ export default class Chart3D extends React.Component {
         this.state = {
             results: this.props.results,
             chartReady: false,
+            noData: false,
             currentQuantity: quantities[0],
             availableQuantities: quantities,
         }
@@ -70,21 +71,23 @@ export default class Chart3D extends React.Component {
         let traces = [];
 
         for (let i = 0; i < sensors.length; i++) {
-            let trace = {
-                x: dates,
-                y: sensors,
-                z: valuesMatrix,
-                type: 'surface',
-                colorscale: "YIGnBu",
-                showscale: false,
-                name: ''
+            if (valuesMatrix[i].every(value => value != null)) {
+                let trace = {
+                    x: dates,
+                    y: sensors,
+                    z: valuesMatrix,
+                    type: 'surface',
+                    colorscale: "YIGnBu",
+                    showscale: false,
+                    name: ''
+                }
+                traces.push(trace);
             }
-            traces.push(trace);
         }
 
         let layout = {
             autosize: true,
-            height: screen.height > 1080 ? (screen.height / 100) * 35 : (screen.height / 100) * 20,
+            height: screen.height > 1080 ? (screen.height / 100) * 35 : (screen.height / 100) * 15,
             font: {
                 family: "Roboto",
                 size: 11,
@@ -133,9 +136,13 @@ export default class Chart3D extends React.Component {
             responsive: true
         }
 
-        this.setState({chartReady: true}, () => {
-            Plotly.react("chart3d", traces, layout, config);
-        });
+        if (traces.length > 1) {
+            this.setState({chartReady: true, noData: false}, () => {
+                Plotly.react("chart3d", traces, layout, config);
+            });
+        } else {
+            this.setState({noData: true});
+        }
     }
 
     changeQuantity(e) {
@@ -182,9 +189,18 @@ export default class Chart3D extends React.Component {
                                 <div id={"chart3d"}/>
                             </div>
                             :
-                            <div className={"center"}>
-                                <CircularProgress/>
-                            </div>
+                            (
+                                this.state.noData
+                                    ?
+                                    <div className={"center"}>
+                                        <Typography variant={"subtitle1"}>{"Geen data beschikbaar"}</Typography>
+                                    </div>
+                                    :
+                                    <div className={"center"}>
+                                        <CircularProgress/>
+                                    </div>
+
+                            )
                     }
                 </div>
                 {

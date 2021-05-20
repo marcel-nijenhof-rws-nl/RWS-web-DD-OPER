@@ -98,24 +98,36 @@ function showMarkerInfo(e) {
                         let maxlevel = Math.max(...values);
                         let average = (sum / f.results[0].events.length);
 
+                        let valuesSorted = values.sort((a, b) => a-b);
+                        let middleIndex = Math.ceil(valuesSorted.length / 2);
+                        let median = valuesSorted % 2 === 0
+                            ? ((valuesSorted[middleIndex] + valuesSorted[middleIndex - 1]) / 2)
+                            : valuesSorted[middleIndex - 1];
+
+
                         if (
                             minlevel != null
                             && maxlevel != null
                             && average != null
+                            && median != null
                             && !isNaN(minlevel)
                             && !isNaN(maxlevel)
                             && !isNaN(average)
+                            && !isNaN(median)
                             && minlevel !== Infinity
                             && maxlevel !== Infinity
                             && average !== Infinity
+                            && median !== Infinity
                             && minlevel !== -Infinity
                             && maxlevel !== -Infinity
                             && average !== -Infinity
+                            && median !== -Infinity
                         ) {
                             ReactDOM.render(<WaterLevelLegend
                                     minLevel={minlevel}
                                     maxLevel={maxlevel}
                                     averageLevel={average}
+                                    median={median}
                                     location={f.results[0].location.properties.displayNameGlobal}/>,
                                 document.querySelector("div.marker-waterlevel"));
                         }
