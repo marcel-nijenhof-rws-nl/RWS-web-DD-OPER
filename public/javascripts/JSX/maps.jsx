@@ -6,13 +6,9 @@ import * as L1 from 'leaflet.markercluster';
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
 import WaterLevelLegend from "./Components/WaterLevelLegend.jsx";
 import MapsChips from "./Components/MapsChips.jsx";
+import Chart3D from "./Components/3DChart.jsx";
 
 let worldMap;
-
-function mouseover(marker) {
-    //ReactDOM.render(<LocationLegend data={marker}/>, document.querySelector("div.marker-info"));
-}
-
 
 function drawMap() {
     let map = L
@@ -31,8 +27,6 @@ function drawMap() {
 }
 
 function showQuantities() {
-    ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-chips"));
-
     $.ajax({
         type: 'GET',
         url: '/charts/locations/quantities',
@@ -46,7 +40,6 @@ function showQuantities() {
                 document.querySelector("div.snackbar-holder"));
         }
     });
-
 }
 
 function showMarkerInfo(e) {
@@ -54,68 +47,110 @@ function showMarkerInfo(e) {
         type: 'GET',
         url: '/charts/locations/quantities/' + e.displayName,
         success: (res) => {
-            let hasWaterlevel = false;
-            res.results.forEach(quantity => {
-                if (quantity.includes("waterlevel")) {
-                    hasWaterlevel = true;
-                    $.ajax({
-                        type: 'GET',
-                        url: '/charts/24hr/' + e.displayName + '/waterlevel',
-                        success: (f) => {
-                            let values = [];
-                            let sum = 0;
-                            f.results[0].events.forEach(item => {
-                                values.push(item.value);
-                                sum += item.value;
-                            });
-
-                            let minlevel = Math.min(...values);
-                            let maxlevel = Math.max(...values);
-                            let average = (sum / f.results[0].events.length);
-
-                            if (
-                                minlevel != null
-                                && maxlevel != null
-                                && average != null
-                                && !isNaN(minlevel)
-                                && !isNaN(maxlevel)
-                                && !isNaN(average)
-                                && minlevel !== Infinity
-                                && maxlevel !== Infinity
-                                && average !== Infinity
-                                && minlevel !== -Infinity
-                                && maxlevel !== -Infinity
-                                && average !== -Infinity
-                            ) {
-                                ReactDOM.render(<WaterLevelLegend
-                                        minLevel={minlevel}
-                                        maxLevel={maxlevel}
-                                        averageLevel={average}
-                                        location={f.results[0].location.properties.displayNameGlobal}/>,
-                                    document.querySelector("div.marker-waterlevel"));
-                            }
-                        },
-                        error: () => {
-                            ReactDOM.render(<CustomSnackbar
-                                    message={"Data kon niet worden geladen"}
-                                    severityStrength={"error"}/>,
-                                document.querySelector("div.snackbar-holder"));
-                        }
-                    });
+            if (res.results.includes("waveenergy") || res.results.includes("waterflowspeed") || res.results.includes("wavedirection")) {
+                let quantity;
+                if (res.results.includes("waveenergy")) {
+                    quantity = "waveenergy";
+                } else if (res.results.includes("waterflowspeed")) {
+                    quantity = "waterflowspeed";
+                } else if (res.results.includes("wavedirection")) {
+                    quantity = "wavedirection";
                 }
-            });
-            if (!hasWaterlevel) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/charts/24hr/' + e.displayName + '/' + quantity,
+                    success: (f) => {
+                        ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
+                        ReactDOM.render(<Chart3D
+                                provider={f.provider}
+                                results={f.results[0]}
+                                hasWaveEnergy={res.results.includes("waveenergy")}
+                                hasWaveDirection={res.results.includes("wavedirection")}
+                                hasWaterflowspeed={res.results.includes("waterflowspeed")}
+                            />,
+                            document.querySelector("div.marker-3dchart"));
+                    },
+                    error: () => {
+                        ReactDOM.render(<CustomSnackbar
+                                message={"Data kon niet worden geladen"}
+                                severityStrength={"error"}/>,
+                            document.querySelector("div.snackbar-holder"));
+                        ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
+                    }
+                });
+            } else {
+                ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
+            }
+            if (res.results.includes("waterlevel")) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/charts/24hr/' + e.displayName + '/waterlevel',
+                    success: (f) => {
+                        let values = [];
+                        let sum = 0;
+                        f.results[0].events.forEach(item => {
+                            values.push(item.value);
+                            sum += item.value;
+                        });
+
+                        let minlevel = Math.min(...values);
+                        let maxlevel = Math.max(...values);
+                        let average = (sum / f.results[0].events.length);
+
+                        let valuesSorted = values.sort((a, b) => a-b);
+                        let middleIndex = Math.ceil(valuesSorted.length / 2);
+                        let median = valuesSorted % 2 === 0
+                            ? ((valuesSorted[middleIndex] + valuesSorted[middleIndex - 1]) / 2)
+                            : valuesSorted[middleIndex - 1];
+
+
+                        if (
+                            minlevel != null
+                            && maxlevel != null
+                            && average != null
+                            && median != null
+                            && !isNaN(minlevel)
+                            && !isNaN(maxlevel)
+                            && !isNaN(average)
+                            && !isNaN(median)
+                            && minlevel !== Infinity
+                            && maxlevel !== Infinity
+                            && average !== Infinity
+                            && median !== Infinity
+                            && minlevel !== -Infinity
+                            && maxlevel !== -Infinity
+                            && average !== -Infinity
+                            && median !== -Infinity
+                        ) {
+                            ReactDOM.render(<WaterLevelLegend
+                                    minLevel={minlevel}
+                                    maxLevel={maxlevel}
+                                    averageLevel={average}
+                                    median={median}
+                                    location={f.results[0].location.properties.displayNameGlobal}/>,
+                                document.querySelector("div.marker-waterlevel"));
+                        }
+                    },
+                    error: () => {
+                        ReactDOM.render(<CustomSnackbar
+                                message={"Data kon niet worden geladen"}
+                                severityStrength={"error"}/>,
+                            document.querySelector("div.snackbar-holder"));
+                        ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
+                    }
+                });
+            } else {
                 ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
             }
         }
     });
 }
 
-export function drawMarkers(quantity = null) {
+export function drawMarkers(quantity = null, searchString = null) {
 
     if (worldMap) {
         worldMap.eachLayer((layer) => {
-            console.log(layer);
             if (layer._leaflet_id !== 26) {
                 worldMap.removeLayer(layer);
             }
@@ -132,7 +167,7 @@ export function drawMarkers(quantity = null) {
                 document.querySelector("div.snackbar-holder"));
 
             let markers = new L1.MarkerClusterGroup({
-                showCoverageOnHover: false,
+                showCoverageOnHover: true,
                 iconCreateFunction: (cluster) => {
                     return L.divIcon({
                         html: '<div class="center cluster"><b style="margin: auto">' + cluster.getChildCount() + '</b></div>'
@@ -142,27 +177,41 @@ export function drawMarkers(quantity = null) {
 
             response.results.forEach(location => {
                 if (location.geometry != null) {
-                    let coordinate = {
-                        lat: location.geometry?.coordinates[1],
-                        long: location.geometry?.coordinates[0],
-                        displayNameGlobal: location.properties.displayNameGlobal,
-                        displayName: location.properties.locationName,
-                    };
-                    let marker = L.marker([coordinate.lat, coordinate.long])
-                        .bindTooltip('<p>' +
-                            coordinate.displayNameGlobal + '<br>' +
-                            coordinate.displayName + '<br>' +
-                            coordinate.lat + ', ' + coordinate.long
-                            + '</p>',
-                            {
-                                direction: 'auto',
-                                className: 'tooltip'
-                            })
-                        .openTooltip()
-                        .on('click', () => showMarkerInfo(coordinate))
-                        .on('mouseover', () => mouseover(coordinate));
+                    let coordinate;
+                    if (searchString != null) {
+                        if (location.properties.locationName.includes(searchString)) {
+                            coordinate = {
+                                lat: location.geometry?.coordinates[1],
+                                long: location.geometry?.coordinates[0],
+                                displayNameGlobal: location.properties.displayNameGlobal,
+                                displayName: location.properties.locationName,
+                            };
+                        }
+                    } else {
+                        coordinate = {
+                            lat: location.geometry?.coordinates[1],
+                            long: location.geometry?.coordinates[0],
+                            displayNameGlobal: location.properties.displayNameGlobal,
+                            displayName: location.properties.locationName,
+                        };
+                    }
 
-                    markers.addLayer(marker);
+                    if (coordinate) {
+                        let marker = L.marker([coordinate.lat, coordinate.long])
+                            .bindTooltip('<p>' +
+                                coordinate.displayNameGlobal + '<br>' +
+                                coordinate.displayName + '<br>' +
+                                coordinate.lat + ', ' + coordinate.long
+                                + '</p>',
+                                {
+                                    direction: 'auto',
+                                    className: 'tooltip'
+                                })
+                            .openTooltip()
+                            .on('click', () => showMarkerInfo(coordinate));
+
+                        markers.addLayer(marker);
+                    }
                 }
 
                 worldMap.addLayer(markers);
