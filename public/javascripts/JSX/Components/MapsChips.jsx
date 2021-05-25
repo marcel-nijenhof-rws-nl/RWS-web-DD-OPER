@@ -27,11 +27,9 @@ export default class MapsChips extends React.Component {
     selectQuantity(e) {
         if (e === this.state.selected) {
             this.setState({selected: ''});
-            localStorage.removeItem('quantity');
             drawMarkers(null, this.state.searchString);
         } else {
             this.setState({selected: e});
-            localStorage.setItem('quantity', e);
             drawMarkers(e, this.state.searchString);
         }
     }
@@ -77,7 +75,7 @@ export default class MapsChips extends React.Component {
                                     }
                                 }}
                                 onKeyPress={(e) => {
-                                    if (e.code === "Enter") {
+                                    if (e.code === "Enter" && this.state.searchString !== '') {
                                         this.searchLocations(this.state.searchString);
                                     }
                                 }}
@@ -115,7 +113,7 @@ export default class MapsChips extends React.Component {
                                       }
                                       style={{
                                           margin: '5px 10px',
-                                          backgroundColor: this.state.selected === quantity ? '#F9E11E' : '#e0e0e0'
+                                          backgroundColor: this.state.selected === quantity ? '#4caf50' : '#e0e0e0'
                                       }}
                                       key={quantity}
                                 />
