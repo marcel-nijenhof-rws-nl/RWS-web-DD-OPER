@@ -9,28 +9,47 @@ import InputLabel from "@material-ui/core/InputLabel";
 import SearchRounded from "@material-ui/icons/SearchRounded";
 import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Chart3D from "./3DChart.jsx";
 
 export default class MapsChips extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            selected: '',
+            selected: [],
             searchString: '',
         }
 
         this.selectQuantity = this.selectQuantity.bind(this);
         this.searchLocations = this.searchLocations.bind(this);
         this.updateSearchString = this.updateSearchString.bind(this);
+        this.setQuantityStorage = this.setQuantityStorage.bind(this);
     }
 
     selectQuantity(e) {
-        if (e === this.state.selected) {
-            this.setState({selected: ''});
-            drawMarkers(null, this.state.searchString);
+        if (this.state.selected.includes(e)) {
+            let newArr = this.state.selected.filter(item => item !== e)
+            this.setState({selected: newArr}, () => {
+                if (this.state.selected.length > 0) {
+                    drawMarkers(this.state.selected, this.state.searchString);
+                } else {
+                    drawMarkers(null, this.state.searchString);
+                }
+                this.setQuantityStorage();
+            });
         } else {
-            this.setState({selected: e});
-            drawMarkers(e, this.state.searchString);
+            this.setState({selected: this.state.selected.concat(e)}, () => {
+                drawMarkers(this.state.selected, this.state.searchString);
+                this.setQuantityStorage();
+            });
+        }
+    }
+
+    setQuantityStorage() {
+        if (this.state.selected.length === 2) {
+            localStorage.setItem('quantities', this.state.selected);
+        } else {
+            localStorage.removeItem('quantities');
         }
     }
 
@@ -39,7 +58,7 @@ export default class MapsChips extends React.Component {
             e = null;
         }
         this.setState({searchString: e}, () => {
-            drawMarkers(this.state.selected !== '' ? this.state.selected : null, e);
+            drawMarkers(this.state.selected !== [] ? this.state.selected : null, this.state.searchString);
         });
     }
 
@@ -47,20 +66,36 @@ export default class MapsChips extends React.Component {
         this.setState({searchString: e});
     }
 
-
     render() {
         return <>
             <Paper elevation={0} className={"paper"}>
-                <div>
-                    <div style={{marginBottom: '10px'}}>
-                        <div className={"center"}>
-                            <Typography variant={'h5'}>{"Kwantiteiten"}</Typography>
-                        </div>
+                <div style={{
+                    display: 'flex',
+                }}>
+
+                    <div className={"quantity-chips"}>
+                        {this.props.quantities.map(quantity => (
+                            <Chip clickable
+                                  onClick={() => {
+                                      this.selectQuantity(quantity);
+                                  }}
+                                  label={
+                                      <Typography variant={"subtitle1"} style={{whiteSpace: 'normal'}}>
+                                          {quantity}
+                                      </Typography>
+                                  }
+                                  style={{
+                                      margin: '5px 10px',
+                                      backgroundColor: [...this.state.selected].includes(quantity) ? '#4caf50' : '#e0e0e0'
+
+                                  }}
+                                  disabled={!this.state.selected.includes(quantity) && this.state.selected.length === 2}
+                                  key={quantity}
+                            />
+                        ))}
                     </div>
 
-                    <div className={"center"}
-                         style={{marginBottom: '5px'}}
-                    >
+                    <div>
                         <FormControl variant={"outlined"}>
                             <InputLabel htmlFor={"location-search"}>{"Locatie zoeken"}</InputLabel>
                             <OutlinedInput
@@ -88,38 +123,12 @@ export default class MapsChips extends React.Component {
                                 }
                                 style={{
                                     borderRadius: '25px',
-                                    width: 'auto',
+                                    width: '400px',
                                 }}
                             />
                         </FormControl>
                     </div>
 
-                    <div style={{
-                        display: 'block'
-                    }}>
-                        <div className={"center"}
-                             style={{
-                                 flexWrap: 'wrap'
-                             }}>
-                            {this.props.quantities.map(quantity => (
-                                <Chip clickable
-                                      onClick={() => {
-                                          this.selectQuantity(quantity);
-                                      }}
-                                      label={
-                                          <Typography variant={"subtitle1"} style={{whiteSpace: 'normal'}}>
-                                              {quantity}
-                                          </Typography>
-                                      }
-                                      style={{
-                                          margin: '5px 10px',
-                                          backgroundColor: this.state.selected === quantity ? '#4caf50' : '#e0e0e0'
-                                      }}
-                                      key={quantity}
-                                />
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </Paper>
         </>

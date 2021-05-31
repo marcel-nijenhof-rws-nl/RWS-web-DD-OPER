@@ -80,6 +80,8 @@ NOTE: Make sure you are in the correct directory of your .pfx file.
 Example with keytool from Java:<br>
 `keytool -importkeystore -srckeystore example.pfx -srcstoretype pkcs12 -destkeystore certificate.jks -deststoretype JKS`
 
+Your console will prompt you to enter a password. You need to enter the same password of the `example.pfx` certificate. Then set the password of the certificate in the `certification.properties` file under the property `password`
+
 ### certification.properties
 
 ```

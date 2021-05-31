@@ -80,7 +80,7 @@ if (token) {
         url: "/login/" + token,
         contentType: "application/json; charset=utf-8",
         success: () => {
-            window.location.href = "/start";
+            window.location.href = "/maps";
         },
         error: () => {
             ReactDOM.render(<CustomSnackbar message="Kon niet automatisch inloggen"
@@ -137,7 +137,7 @@ function login() {
                     },
                     success: () => {
                         localStorage.setItem('session-token', signature);
-                        window.location.href = "/start";
+                        window.location.href = "/maps";
                     }
                 });
             });

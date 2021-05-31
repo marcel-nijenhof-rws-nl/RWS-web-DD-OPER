@@ -1,5 +1,4 @@
 import BookmarksRoundedIcon from '@material-ui/icons/BookmarksRounded';
-import HomeIcon from '@material-ui/icons/HomeRounded';
 import TimeLineIcon from '@material-ui/icons/TimelineRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
@@ -74,10 +73,6 @@ class NavigationMenu extends React.Component {
     render() {
         return <div className="menu">
             <List>
-                <ListItem onClick={this.navigateHome} style={{cursor: "pointer"}}>
-                    <ListItemIcon><HomeIcon fontSize={"large"} style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
-                    <ListItemText primary={"Home"}/>
-                </ListItem>
                 <ListItem onClick={this.navigateCharts} style={{cursor: "pointer"}}>
                     <ListItemIcon><TimeLineIcon fontSize={"large"}
                                                 style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>

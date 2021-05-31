@@ -17,12 +17,6 @@ export default class Chart3D extends React.Component {
     constructor(props) {
         super(props);
 
-        let quantities = [];
-        if (this.props.hasWaveEnergy) quantities.push("waveenergy");
-        if (this.props.hasWaterflowspeed) quantities.push("waterflowspeed");
-        if (this.props.hasWaveDirection) quantities.push("wavedirection");
-
-
         this.state = {
             results: this.props.results,
             chartReady: false,
@@ -45,8 +39,9 @@ export default class Chart3D extends React.Component {
         let traces = [];
 
         let layout = {
-            autosize: true,
-            height: screen.height > 1080 ? (screen.height / 100) * 35 : (screen.height / 100) * 15,
+            autosize: false,
+            width: '100%',
+            height: '100%',
             font: {
                 family: "Roboto",
                 size: 11,
@@ -146,7 +141,6 @@ export default class Chart3D extends React.Component {
 
         let layout = {
             autosize: true,
-            height: screen.height > 1080 ? (screen.height / 100) * 35 : (screen.height / 100) * 15,
             font: {
                 family: "Roboto",
                 size: 11,
@@ -241,7 +235,15 @@ export default class Chart3D extends React.Component {
                         currentQuantity: e,
                         results: response.results[0]
                     }, () => {
-                        this.state.twoDimensional ? this.draw2D() : this.draw3D();
+                        switch (this.state.currentQuantity) {
+                            case "waveenergy":
+                            case "wavedirection":
+                                this.state.twoDimensional ? this.draw2D() : this.draw3D();
+                                break;
+                            default:
+                                this.draw2D();
+                                break;
+                        }
                     });
                 },
                 error: () => {
@@ -295,6 +297,7 @@ export default class Chart3D extends React.Component {
                         <div className={"center"}
                              style={{
                                  marginTop: '10px',
+                                 paddingBottom: 'auto',
                              }}
                         >
                             <ButtonGroup>
@@ -309,7 +312,7 @@ export default class Chart3D extends React.Component {
                                     </Button>
                                 ))}
                                 <Button color={"primary"} onClick={this.switchDimension}>
-                                    {this.state.twoDimensional ? "2D" : "3D"}
+                                    {this.state.twoDimensional ? "3D" : "2D"}
                                 </Button>
                             </ButtonGroup>
                         </div>
@@ -317,11 +320,12 @@ export default class Chart3D extends React.Component {
                         <div className={"center"}
                              style={{
                                  marginTop: '10px',
+                                 paddingBottom: 'auto',
                              }}
                         >
                             <ButtonGroup>
                                 <Button color={"primary"} onClick={this.switchDimension}>
-                                    {this.state.twoDimensional ? "2D" : "3D"}
+                                    {this.state.twoDimensional ? "3D" : "2D"}
                                 </Button>
                             </ButtonGroup>
                         </div>

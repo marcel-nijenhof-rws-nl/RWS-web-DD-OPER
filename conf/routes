@@ -4,14 +4,13 @@ GET           /bookmarks                                    controllers.Navigati
 GET           /charts                                       controllers.NavigationController.charts
 GET           /register                                     controllers.NavigationController.register
 GET           /settings                                     controllers.NavigationController.settings
-GET           /start                                        controllers.NavigationController.start
 GET           /maps                                         controllers.NavigationController.maps
 
 # Charts
 GET           /charts/locations                             controllers.ChartController.GetLocations()
-GET           /charts/locations/quantities                  controllers.ChartController.GetQuantities()
 GET           /charts/locations/:location                   controllers.ChartController.GetLocationInfo(location: String)
 GET           /charts/locations/quantities/:location        controllers.ChartController.GetQuantitiesOfLocation(location: String)
+GET           /charts/quantities                            controllers.ChartController.GetQuantities()
 GET           /charts/quantities/:quantity                  controllers.ChartController.GetLocationsWithQuantity(quantity : String)
 GET           /charts/load/                                 controllers.NavigationController.charts
 GET           /charts/load/:shortcut                        controllers.ChartController.GetChartFromJSON(shortcut : String)

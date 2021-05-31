@@ -1,31 +1,29 @@
-const IconButton = require("@material-ui/core/IconButton").default;
-const MenuItem = require("@material-ui/core/MenuItem").default;
-const Typography = require("@material-ui/core/TypoGraphy").default;
-const FormControl = require("@material-ui/core/FormControl").default;
-const InputLabel = require("@material-ui/core/InputLabel").default;
-const Select = require("@material-ui/core/Select").default;
-const Autocomplete = require("@material-ui/lab/Autocomplete").default;
-
-const Button = require('@material-ui/core/Button').default;
-const ButtonGroup = require('@material-ui/core/ButtonGroup').default;
-const Chip = require('@material-ui/core/Chip').default;
-const Dialog = require('@material-ui/core/Dialog').default;
-const DialogActions = require('@material-ui/core/DialogActions').default;
-const DialogContent = require('@material-ui/core/DialogContent').default;
-const DialogContentText = require('@material-ui/core/DialogContentText').default;
-const DialogTitle = require('@material-ui/core/DialogTitle').default;
-const TextField = require('@material-ui/core/TextField').default;
-const CircularProgress = require('@material-ui/core/CircularProgress').default;
-
-const CloseIcon = require('@material-ui/icons/Close').default;
-const InfoIcon = require('@material-ui/icons/Info').default;
-
-const React = require('react');
-const ReactDOM = require('react-dom');
-const jws = require('jws');
-const ChartComponent = require('./Components/Chart.jsx');
-const CustomSnackbar = require('./Components/CustomSnackbar.jsx');
-const Chart = require('chart.js');
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/TypoGraphy";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import CloseIcon from '@material-ui/icons/Close';
+import InfoIcon from '@material-ui/icons/Info';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import jws from 'jws';
+import ChartComponent from './Components/Chart.jsx';
+import CustomSnackbar from './Components/CustomSnackbar.jsx';
+import SunburstZoomable from "./Components/SunburstZoomable.jsx";
+import Chart from 'chart.js';
 
 let colors = {
     backgroundColor: [
@@ -54,7 +52,7 @@ let latestDataSettings = {};
 let graphs = [];
 let latestResults;
 
-function updateAxis() {
+export function updateAxis() {
     if (myChart) {
         let firstSet = false;
 
@@ -115,7 +113,7 @@ function updateAxis() {
     }
 }
 
-function getYaxisType(observationType) {
+export function getYaxisType(observationType) {
     switch (observationType) {
         case "cm":
             return 'level'
@@ -199,7 +197,7 @@ function encodeChart() {
     });
 }
 
-class ChartMenu extends React.Component {
+export default class ChartMenu extends React.Component {
     constructor(props) {
         super(props)
         {
@@ -251,6 +249,7 @@ class ChartMenu extends React.Component {
             this.selectBookmark = this.selectBookmark.bind(this);
             this.clearDatasets = this.clearDatasets.bind(this);
             this.loadBookmarks = this.loadBookmarks.bind(this);
+            this.openSunburstDialog = this.openSunburstDialog.bind(this);
         }
     }
 
@@ -1045,6 +1044,19 @@ class ChartMenu extends React.Component {
         });
     }
 
+    openSunburstDialog() {
+        let dialog = <>
+            <Dialog open={true} onClose={this.closeDialog}>
+                <DialogTitle>{"Sunburst Diagram"}</DialogTitle>
+                <DialogContent>
+                    <SunburstZoomable/>
+                </DialogContent>
+            </Dialog>
+        </>;
+
+        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
+    }
+
     render() {
         return <>
             <FormControl className={"formControl"} variant={"outlined"}>
@@ -1270,7 +1282,7 @@ class ChartMenu extends React.Component {
             {this.state.graphs.length > 0
                 ?
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
-                    <ButtonGroup>
+                    <ButtonGroup orientaion={"vertical"}>
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.addNewDataset()}>
                             {"Toevoegen"}
@@ -1287,7 +1299,7 @@ class ChartMenu extends React.Component {
                 </div>
                 :
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
-                    <ButtonGroup>
+                    <ButtonGroup orientation={"vertical"}>
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.addNewDataset()}>
                             {"Teken"}
@@ -1295,6 +1307,10 @@ class ChartMenu extends React.Component {
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.openChartWithToken()}>
                             {"Open"}
+                        </Button>
+                        <Button color={"primary"} variant={"contained"}
+                                onClick={() => this.openSunburstDialog()}>
+                            {"Sunburst"}
                         </Button>
                     </ButtonGroup>
                 </div>
