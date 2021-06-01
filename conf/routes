@@ -32,6 +32,8 @@ POST          /register                                     controllers.LoginCon
 POST          /session/:token                               controllers.LoginController.validateSession(token : String)
 
 # Settings
+GET           /settings/user/db/:token                      controllers.LoginController.GetDatabaseURL(token: String)
+POST          /settings/user/db                             controllers.LoginController.SetDatabaseURL(request: Request)
 GET           /settings/user/:token                         controllers.LoginController.GetUserInfo(token: String)
 PUT           /settings/user                                controllers.LoginController.UpdateUserInfo(request: Request)
 

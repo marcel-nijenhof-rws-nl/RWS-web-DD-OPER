@@ -16,6 +16,7 @@ public class UserProfile {
         this.setLastname(lastname);
         this.setEmail(email);
         this.setPassword(password);
+        this.setDatabaseUrl("https://ddapi.rws.nl");
     }
 
 
@@ -27,6 +28,7 @@ public class UserProfile {
     private String password;
     private String firstname;
     private String lastname;
+    private String databaseUrl;
 
     public String getFirstname() {
         return this.firstname;
@@ -67,4 +69,8 @@ public class UserProfile {
     public Long getId() {
         return this.id;
     }
+
+    public void setDatabaseUrl(String url) { this.databaseUrl = url; }
+
+    public String getDatabaseUrl() { return this.databaseUrl; }
 }

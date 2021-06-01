@@ -26,7 +26,7 @@ div.grid-container {
     display: grid;
     height: 90vh;
     grid-gap: .2rem;
-    grid-template-columns: 1fr .4fr .01fr .7fr;
+    grid-template-columns: 1fr .4fr .01fr .6fr;
     grid-template-rows: .1fr 1fr .7fr;
     /*grid-template-areas:*/
     /*        "grid-header grid-header grid-header"*/
@@ -48,25 +48,31 @@ div.grid-container {
 div.grid-header {
     /*grid-area: grid-header;*/
     margin-top: 0.2rem;
-    background-color: #00c853;
+    /*background-color: #00c853;*/
     grid-column: 1 / -1;
     grid-row: 1;
     order: 0;
 }
 
 div.grid-map {
-    background-color: red;
+    /*background-color: red;*/
     order: 3;
+    width: 100%;
+    border-radius: 5px;
 }
 
 div.grid-chart {
-    background-color: purple;
+    /*background-color: purple;*/
     order: 3;
+    width: 30vw;
+    border-radius: 5px;
 }
 
 div.grid-waterlevel {
-    background-color: yellow;
+    /*background-color: yellow;*/
     order: 3;
+    width: 100%;
+    border-radius: 5px;
 }
 
 div.grid-button-switch {
@@ -79,6 +85,10 @@ div.grid-button-switch {
     order: 1;
     grid-column: 1 / 3;
     grid-row: 2 / 4;
+}
+
+div.grid-chart.full-row {
+    width: 100%;
 }
 
 .quantity-chips {

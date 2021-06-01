@@ -9,7 +9,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import SearchRounded from "@material-ui/icons/SearchRounded";
 import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Chart3D from "./3DChart.jsx";
 
 export default class MapsChips extends React.Component {
     constructor(props) {
@@ -46,11 +45,7 @@ export default class MapsChips extends React.Component {
     }
 
     setQuantityStorage() {
-        if (this.state.selected.length === 2) {
-            localStorage.setItem('quantities', this.state.selected);
-        } else {
-            localStorage.removeItem('quantities');
-        }
+        localStorage.setItem('quantities', this.state.selected);
     }
 
     searchLocations(e) {
@@ -64,6 +59,10 @@ export default class MapsChips extends React.Component {
 
     updateSearchString(e) {
         this.setState({searchString: e});
+    }
+
+    componentDidMount() {
+        localStorage.removeItem('quantities');
     }
 
     render() {
@@ -86,7 +85,7 @@ export default class MapsChips extends React.Component {
                                   }
                                   style={{
                                       margin: '5px 10px',
-                                      backgroundColor: [...this.state.selected].includes(quantity) ? '#4caf50' : '#e0e0e0'
+                                      backgroundColor: [...this.state.selected].includes(quantity) ? '#F9E11E' : '#e0e0e0'
 
                                   }}
                                   disabled={!this.state.selected.includes(quantity) && this.state.selected.length === 2}

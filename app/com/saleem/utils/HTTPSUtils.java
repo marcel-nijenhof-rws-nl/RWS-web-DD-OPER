@@ -22,6 +22,8 @@ public class HTTPSUtils {
 
     @Singleton
     final static Properties properties = new Properties();
+    @Singleton
+    static String databaseUrl = "https://ddapi.rws.nl/dd-oper/2.0/";
     final static String currentPath = System.getProperty("user.dir");
 
     public static void InitializeProperties() {
@@ -61,7 +63,7 @@ public class HTTPSUtils {
 
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
-            URL url = new URL(urlString);
+            URL url = new URL(HTTPSUtils.databaseUrl.concat(urlString));
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
@@ -85,8 +87,8 @@ public class HTTPSUtils {
     }
 
     public static Boolean IsSessionValid(String token) {
-
         if (!token.contains(".")) return false;
+        CreateDatabaseURL(token);
         String email = null;
         String[] parts = token.split("\\.");
         String payload = parts[1];
@@ -158,9 +160,35 @@ public class HTTPSUtils {
         if (token.contains(".")) {
             String[] parts = token.split("\\.");
             return ConvertToJsonNode(new String(decoder.decode(parts[1])));
-        }
-        else {
+        } else {
             return ConvertToJsonNode(new String(decoder.decode(token)));
+        }
+    }
+
+    public static String GetBaseDatabaseURL(String token) {
+        String databaseUrl;
+        String email = GetEmailFromToken(token);
+
+        SessionFactory sessionFactory = HibernateUtil.getSession();
+        EntityManager em = sessionFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        databaseUrl = em.createQuery("select u.databaseUrl from UserProfile u where email = :email", String.class)
+                .setParameter("email", email)
+                .getSingleResult();
+
+        em.getTransaction().commit();
+        em.close();
+
+        return databaseUrl;
+    }
+
+    public static void CreateDatabaseURL(String token) {
+        String urlPostfix = "/dd-oper/2.0/";
+        String databaseUrl = GetBaseDatabaseURL(token);
+
+        if (databaseUrl != null) {
+            HTTPSUtils.databaseUrl = databaseUrl.concat(urlPostfix);
         }
     }
 

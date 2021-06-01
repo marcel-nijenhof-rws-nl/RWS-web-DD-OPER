@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Plotly from 'plotly.js-dist';
 
@@ -22,6 +23,9 @@ export default class Chart3D2Q extends React.Component {
             async: false,
             success: (response) => {
                 result = response;
+            },
+            error: () => {
+                ReactDOM.unmountComponentAtNode(document.querySelector("div.grid-chart"));
             }
         });
 

@@ -22,7 +22,6 @@ import ReactDOM from 'react-dom';
 import jws from 'jws';
 import ChartComponent from './Components/Chart.jsx';
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
-import SunburstZoomable from "./Components/SunburstZoomable.jsx";
 import Chart from 'chart.js';
 
 let colors = {
@@ -388,7 +387,8 @@ export default class ChartMenu extends React.Component {
                     position: 'bottom',
                 },
                 scales: {
-                    yAxes: [{
+                    yAxes: [
+                        {
                         stacked: false,
                         display: false,
                         id: 'level',

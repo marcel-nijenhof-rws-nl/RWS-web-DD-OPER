@@ -21,19 +21,19 @@ import java.util.Objects;
 public class ChartController extends Controller {
 
     public Result GetLocations() {
-        JsonNode node = HTTPSUtils.RequestJSON("https://ddapi.rws.nl/dd-oper/2.0/locations");
+        JsonNode node = HTTPSUtils.RequestJSON("locations");
         if (node != null) return ok(node);
         else return status(404);
     }
 
     public Result GetQuantities() {
-        JsonNode node = HTTPSUtils.RequestJSON("https://ddapi.rws.nl/dd-oper/2.0/quantities");
+        JsonNode node = HTTPSUtils.RequestJSON("quantities");
         if (node != null) return ok(node);
         else return status(404);
     }
 
     public Result GetLocationsWithQuantity(String quantity) {
-        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/quantities/%s/locations", quantity);
+        String url = String.format("quantities/%s/locations", quantity);
         JsonNode node = HTTPSUtils.RequestJSON(url);
         if (node != null) return ok(node);
         else return status(404);
@@ -45,14 +45,14 @@ public class ChartController extends Controller {
             return GetQuantities();
         }
 
-        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/locations/%s/", location);
+        String url = String.format("locations/%s/", location);
         JsonNode node = HTTPSUtils.RequestJSON(url);
         if (node != null) return ok(node);
         else return status(404);
     }
 
     public Result GetQuantitiesOfLocation(String location) {
-        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/locations/%s/quantities", location);
+        String url = String.format("locations/%s/quantities", location);
         JsonNode node = HTTPSUtils.RequestJSON(url);
         if (node != null) return ok(node);
         else return status(404);
@@ -77,7 +77,7 @@ public class ChartController extends Controller {
             endTime = node.get("endTime").textValue() + ":00.0Z";
         }
 
-        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/locations/%s/quantities/%s/timeseries?process=measurement&startTime=%s&endTime=%s&intervalLength=%s&aspectSet=%s",
+        String url = String.format("locations/%s/quantities/%s/timeseries?process=measurement&startTime=%s&endTime=%s&intervalLength=%s&aspectSet=%s",
                 location,
                 quantity,
                 startTime,
@@ -137,7 +137,7 @@ public class ChartController extends Controller {
         calendar.add(Calendar.DATE, -1);
         String startTime = calendar.getTime().toInstant().toString();
 
-        String url = String.format("https://ddapi.rws.nl/dd-oper/2.0/locations/%s/quantities/%s/timeseries?process=measurement&startTime=%s&endTime=%s",
+        String url = String.format("locations/%s/quantities/%s/timeseries?process=measurement&startTime=%s&endTime=%s",
                 location,
                 quantity,
                 startTime,

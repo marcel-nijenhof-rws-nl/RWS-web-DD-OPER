@@ -8,8 +8,10 @@ import MapsChips from "./Components/MapsChips.jsx";
 import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
 import IconButton from "@material-ui/core/IconButton";
 import Chart3D from "./Components/3DChart2Q.jsx";
+import QuantityChart from "./Components/QuantityChart.jsx";
 
 let worldMap;
+let clusterId;
 
 const promise1 = new Promise((resolve, reject) => {
     resolve("SUCCESS");
@@ -83,7 +85,9 @@ function showQuantities() {
 
 function showMarkerInfo(e) {
     let chartElement = document.querySelector("div.grid-chart");
+    let chartElement2 = document.querySelector("div.grid-waterlevel");
     ReactDOM.unmountComponentAtNode(chartElement);
+    ReactDOM.unmountComponentAtNode(chartElement2);
 
     let quantities = localStorage.getItem('quantities');
 
@@ -93,120 +97,26 @@ function showMarkerInfo(e) {
         newArr.push(quantities.split(',')[0]);
         newArr.push(quantities.split(',')[1]);
 
-        ReactDOM.render(<Chart3D marker={e} quantities={newArr}/>, chartElement);
+        if (newArr[0] !== undefined
+            && newArr[0] !== null
+            && newArr[1] !== undefined
+            && newArr[1] !== null) {
+            ReactDOM.render(<Chart3D marker={e} quantities={newArr}/>, chartElement);
+            ReactDOM.render(<QuantityChart marker={e} quantity={newArr[0]}/>, chartElement2);
+        } else {
+            ReactDOM.render(<QuantityChart marker={e} quantity={newArr[0]}/>, chartElement);
+        }
     }
-
-    // $.ajax({
-    //     type: 'GET',
-    //     url: '/charts/locations/quantities/' + e.displayName,
-    //     success: (res) => {
-    //         if (res.results.includes("waveenergy") || res.results.includes("waterflowspeed") || res.results.includes("wavedirection")) {
-    //             let quantity;
-    //             if (res.results.includes("waveenergy")) {
-    //                 quantity = "waveenergy";
-    //             } else if (res.results.includes("waterflowspeed")) {
-    //                 quantity = "waterflowspeed";
-    //             } else if (res.results.includes("wavedirection")) {
-    //                 quantity = "wavedirection";
-    //             }
-    //
-    //             $.ajax({
-    //                 type: 'GET',
-    //                 url: '/charts/24hr/' + e.displayName + '/' + quantity,
-    //                 success: (f) => {
-    //                     ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
-    //                     ReactDOM.render(<Chart3D
-    //                             provider={f.provider}
-    //                             results={f.results[0]}
-    //                             hasWaveEnergy={res.results.includes("waveenergy")}
-    //                             hasWaveDirection={res.results.includes("wavedirection")}
-    //                             hasWaterflowspeed={res.results.includes("waterflowspeed")}
-    //                         />,
-    //                         document.querySelector("div.marker-3dchart"));
-    //                 },
-    //                 error: () => {
-    //                     ReactDOM.render(<CustomSnackbar
-    //                             message={"Data kon niet worden geladen"}
-    //                             severityStrength={"error"}/>,
-    //                         document.querySelector("div.snackbar-holder"));
-    //                     ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
-    //                 }
-    //             });
-    //         } else {
-    //             ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-3dchart"));
-    //         }
-    //         if (res.results.includes("waterlevel")) {
-    //             $.ajax({
-    //                 type: 'GET',
-    //                 url: '/charts/24hr/' + e.displayName + '/waterlevel',
-    //                 success: (f) => {
-    //                     let values = [];
-    //                     let sum = 0;
-    //                     f.results[0].events.forEach(item => {
-    //                         values.push(item.value);
-    //                         sum += item.value;
-    //                     });
-    //
-    //                     let minlevel = Math.min(...values);
-    //                     let maxlevel = Math.max(...values);
-    //                     let average = (sum / f.results[0].events.length);
-    //
-    //                     let valuesSorted = values.sort((a, b) => a - b);
-    //                     let middleIndex = Math.ceil(valuesSorted.length / 2);
-    //                     let median = valuesSorted % 2 === 0
-    //                         ? ((valuesSorted[middleIndex] + valuesSorted[middleIndex - 1]) / 2)
-    //                         : valuesSorted[middleIndex - 1];
-    //
-    //
-    //                     if (
-    //                         minlevel != null
-    //                         && maxlevel != null
-    //                         && average != null
-    //                         && median != null
-    //                         && !isNaN(minlevel)
-    //                         && !isNaN(maxlevel)
-    //                         && !isNaN(average)
-    //                         && !isNaN(median)
-    //                         && minlevel !== Infinity
-    //                         && maxlevel !== Infinity
-    //                         && average !== Infinity
-    //                         && median !== Infinity
-    //                         && minlevel !== -Infinity
-    //                         && maxlevel !== -Infinity
-    //                         && average !== -Infinity
-    //                         && median !== -Infinity
-    //                     ) {
-    //                         ReactDOM.render(<WaterLevelLegend
-    //                                 minLevel={minlevel}
-    //                                 maxLevel={maxlevel}
-    //                                 averageLevel={average}
-    //                                 median={median}
-    //                                 location={f.results[0].location.properties.displayNameGlobal}/>,
-    //                             document.querySelector("div.marker-waterlevel"));
-    //                     }
-    //                 },
-    //                 error: () => {
-    //                     ReactDOM.render(<CustomSnackbar
-    //                             message={"Data kon niet worden geladen"}
-    //                             severityStrength={"error"}/>,
-    //                         document.querySelector("div.snackbar-holder"));
-    //                     ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
-    //                 }
-    //             });
-    //         } else {
-    //             ReactDOM.unmountComponentAtNode(document.querySelector("div.marker-waterlevel"));
-    //         }
-    //     }
-    // });
 }
 
 function clearMarkers() {
-    if (worldMap) {
+    if (clusterId != null) {
         worldMap.eachLayer((layer) => {
-            if (layer._leaflet_id !== 26) {
+            if (layer._leaflet_id === clusterId) {
                 worldMap.removeLayer(layer);
             }
         });
+        clusterId = null;
     }
 }
 
@@ -225,6 +135,8 @@ export function drawMarkers(quantities = null, searchString = null) {
             });
         }
     });
+
+    clusterId = markers._leaflet_id;
 
     if (quantities != null && (quantities !== [] && quantities.length > 0)) {
         function retrieveLocations() {
@@ -284,21 +196,25 @@ export function drawMarkers(quantities = null, searchString = null) {
         }
 
         function addMarkers(coordinates) {
+            let checked = [];
             coordinates.forEach(coordinate => {
-                let marker = L.marker([coordinate.lat, coordinate.long])
-                    .bindTooltip('<p>' +
-                        coordinate.displayNameGlobal + '<br>' +
-                        coordinate.displayName + '<br>' +
-                        coordinate.lat + ', ' + coordinate.long
-                        + '</p>',
-                        {
-                            direction: 'auto',
-                            className: 'tooltip'
-                        })
-                    .openTooltip()
-                    .on('click', () => showMarkerInfo(coordinate));
+                if (!checked.includes(coordinate.displayName)) {
+                    checked.push(coordinate.displayName);
+                    let marker = L.marker([coordinate.lat, coordinate.long])
+                        .bindTooltip('<p>' +
+                            coordinate.displayNameGlobal + '<br>' +
+                            coordinate.displayName + '<br>' +
+                            coordinate.lat + ', ' + coordinate.long
+                            + '</p>',
+                            {
+                                direction: 'auto',
+                                className: 'tooltip'
+                            })
+                        .openTooltip()
+                        .on('click', () => showMarkerInfo(coordinate));
 
-                markers.addLayer(marker);
+                    markers.addLayer(marker);
+                }
             });
             return markers;
         }

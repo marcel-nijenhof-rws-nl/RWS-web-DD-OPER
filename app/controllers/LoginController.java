@@ -193,4 +193,30 @@ public class LoginController extends Controller {
     }
 
 
+    public Result GetDatabaseURL(String token) {
+        String databaseUrl = HTTPSUtils.GetBaseDatabaseURL(token);
+        return ok(databaseUrl);
+    }
+
+    public Result SetDatabaseURL(Http.Request request) {
+        JsonNode node = request.body().asJson();
+        String email = HTTPSUtils.GetEmailFromToken(node.get("token").textValue());
+        String databaseUrl = node.get("databaseUrl").textValue();
+
+
+        SessionFactory sessionFactory = HibernateUtil.getSession();
+        EntityManager em = sessionFactory.createEntityManager();
+        em.getTransaction().begin();
+
+        em.createQuery("update from UserProfile set databaseUrl = :databaseUrl where email = :email")
+                .setParameter("databaseUrl", databaseUrl)
+                .setParameter("email", email)
+                .executeUpdate();
+
+        em.close();
+
+
+        return ok();
+    }
+
 }

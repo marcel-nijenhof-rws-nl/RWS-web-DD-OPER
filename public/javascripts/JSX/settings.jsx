@@ -9,6 +9,8 @@ import CustomSnackbar from "./Components/CustomSnackbar.jsx";
 import Input from "@material-ui/core/Input";
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from "@material-ui/core/FormControl";
+import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
 
 
 export default class SettingsPanel extends React.Component {
@@ -18,10 +20,13 @@ export default class SettingsPanel extends React.Component {
 
         this.state = {
             editable: false,
+            databaseUrl: "",
         };
 
         this.toggleEdit = this.toggleEdit.bind(this);
         this.saveEdit = this.saveEdit.bind(this);
+        this.setDatabaseUrl = this.setDatabaseUrl.bind(this);
+        this.getDatabaseUrl = this.getDatabaseUrl.bind(this);
 
     }
 
@@ -83,8 +88,58 @@ export default class SettingsPanel extends React.Component {
                     document.querySelector("div.snackbar-holder"));
             }
         });
+    }
+
+    getDatabaseUrl() {
+        let token = localStorage.getItem("session-token");
+        if (token) {
+            $.ajax({
+                type: "GET",
+                url: "settings/user/db/" + token,
+                success: (response) => {
+                    this.setState({databaseUrl: response});
+                },
+                error: () => {
+                    ReactDOM.render(<CustomSnackbar
+                            message={"Database voorkeur kon niet worden opgehaald."}
+                            severityStrength={"error"}/>,
+                        document.querySelector("div.snackbar-holder"));
+                }
+            });
+        }
+    }
 
 
+    setDatabaseUrl(value) {
+        let body = {
+            databaseUrl: value,
+            token: localStorage.getItem("session-token")
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "settings/user/db",
+            data: JSON.stringify(body),
+            contentType: 'application/json; charset=utf-8',
+            success: () => {
+                this.setState({databaseUrl: value}, () => {
+                    ReactDOM.render(<CustomSnackbar
+                            message={"Database voorkeur opgeslagen."}
+                            severityStrength={"success"}/>,
+                        document.querySelector("div.snackbar-holder"));
+                });
+            },
+            error: () => {
+                ReactDOM.render(<CustomSnackbar
+                        message={"Database voorkeur kon niet worden opgeslagen."}
+                        severityStrength={"error"}/>,
+                    document.querySelector("div.snackbar-holder"));
+            }
+        });
+    }
+
+    componentDidMount() {
+        this.getDatabaseUrl();
     }
 
     render() {
@@ -196,6 +251,37 @@ export default class SettingsPanel extends React.Component {
                 }
             </Paper>
 
+            <Paper elevation={0} variant={"outlined"} className={"paper"}>
+            <span>
+                <Typography variant={"h4"} className={"label-text"}>{"Database Voorkeur"}</Typography>
+            </span>
+                <FormControl className={"textfield--edit"} variant={"outlined"}>
+                    <InputLabel id={"quantity-select-label"} className={"label-white"}>{"Database URL"}</InputLabel>
+                    <Select id={"url-select"}
+                            labelId={"quantity-select-label"}
+                            value={this.state.databaseUrl}
+                            label={"Database URL"}
+                            onChange={(e) => this.setDatabaseUrl(e.target.value)}
+                            style={{
+                                width: '25vw'
+                            }}
+                    >
+                        <MenuItem key={"https://ddapi-test.intranet.rws.nl"}
+                                  value={"https://ddapi-test.intranet.rws.nl"}>{"https://ddapi-test.intranet.rws.nl"}</MenuItem>
+                        <MenuItem key={"https://ddapi-acceptance.intranet.rws.nl"}
+                                  value={"https://ddapi-acceptance.intranet.rws.nl"}>{"https://ddapi-acceptance.intranet.rws.nl"}</MenuItem>
+                        <MenuItem key={"https://ddapi.intranet.rws.nl"}
+                                  value={"https://ddapi.intranet.rws.nl"}>{"https://ddapi.intranet.rws.nl"}</MenuItem>
+                        <MenuItem key={"https://ddapi-p1.intranet.rws.nl"}
+                                  value={"https://ddapi-p1.intranet.rws.nl"}>{"https://ddapi-p1.intranet.rws.nl"}</MenuItem>
+                        <MenuItem key={"https://ddapi-p2.intranet.rws.nl"}
+                                  value={"https://ddapi-p2.intranet.rws.nl"}>{"https://ddapi-p2.intranet.rws.nl"}</MenuItem>
+                        <MenuItem key={"https://ddapi.rws.nl"}
+                                  value={"https://ddapi.rws.nl"}>{"https://ddapi.rws.nl"}</MenuItem>
+
+                    </Select>
+                </FormControl>
+            </Paper>
         </>
     }
 }
