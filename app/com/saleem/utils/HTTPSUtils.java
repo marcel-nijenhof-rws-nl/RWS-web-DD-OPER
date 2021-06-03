@@ -8,9 +8,7 @@ import org.hibernate.SessionFactory;
 import javax.inject.Singleton;
 import javax.net.ssl.*;
 import javax.persistence.EntityManager;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -80,6 +78,8 @@ public class HTTPSUtils {
             is.close();
             return node;
 
+        } catch (IOException ex) {
+            System.err.println("Server responded with no data");
         } catch (Exception e) {
             e.printStackTrace();
         }
