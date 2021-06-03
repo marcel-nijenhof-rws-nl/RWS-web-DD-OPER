@@ -248,7 +248,6 @@ export default class ChartMenu extends React.Component {
             this.selectBookmark = this.selectBookmark.bind(this);
             this.clearDatasets = this.clearDatasets.bind(this);
             this.loadBookmarks = this.loadBookmarks.bind(this);
-            this.openSunburstDialog = this.openSunburstDialog.bind(this);
         }
     }
 
@@ -389,138 +388,138 @@ export default class ChartMenu extends React.Component {
                 scales: {
                     yAxes: [
                         {
-                        stacked: false,
-                        display: false,
-                        id: 'level',
-                        position: 'left',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "cm"
-                        }
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'sqcms',
-                        position: 'left',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "cm^2 per seconde"
-                        }
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'speed',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "m/s"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'temperature',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Celcius"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'pressure',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "hPa"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'angle',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Hoek in Graden"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'm3s',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Kubieke meters per seconde"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'mgl',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "milligram per liter"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'gkg',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "gram per kilogram"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'kgm3',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "kilogram per Kubieke meter"
-                        },
-                    }, {
-                        stacked: false,
-                        display: false,
-                        id: 'siemens',
-                        position: 'right',
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Siemens per meter"
-                        },
-                    }],
+                            stacked: false,
+                            display: false,
+                            id: 'level',
+                            position: 'left',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "cm"
+                            }
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'sqcms',
+                            position: 'left',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "cm^2 per seconde"
+                            }
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'speed',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "m/s"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'temperature',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Celcius"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'pressure',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "hPa"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'angle',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Hoek in Graden"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'm3s',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Kubieke meters per seconde"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'mgl',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "milligram per liter"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'gkg',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "gram per kilogram"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'kgm3',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "kilogram per Kubieke meter"
+                            },
+                        }, {
+                            stacked: false,
+                            display: false,
+                            id: 'siemens',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Siemens per meter"
+                            },
+                        }],
                     xAxes: [{
                         stacked: false,
                         type: 'time',
@@ -1044,19 +1043,6 @@ export default class ChartMenu extends React.Component {
         });
     }
 
-    openSunburstDialog() {
-        let dialog = <>
-            <Dialog open={true} onClose={this.closeDialog}>
-                <DialogTitle>{"Sunburst Diagram"}</DialogTitle>
-                <DialogContent>
-                    <SunburstZoomable/>
-                </DialogContent>
-            </Dialog>
-        </>;
-
-        ReactDOM.render(dialog, document.querySelector("div.dialog-holder"));
-    }
-
     render() {
         return <>
             <FormControl className={"formControl"} variant={"outlined"}>
@@ -1125,164 +1111,180 @@ export default class ChartMenu extends React.Component {
                 />
             </FormControl>
 
-            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"quantity-select-label"} className={"label-white"}>Kwantiteit</InputLabel>
-                <Select className={"label-white"}
-                        id={"quantity-select"}
-                        labelId={"quantity-select-label"}
-                        value={this.state.quantity}
-                        label={"Kwantiteit"}
-                        onChange={(e) => this.setQuantity(e.target.value)}
-                >
-                    {this.state.quantities.map(quantity => (
-                        <MenuItem key={quantity} value={quantity}>{quantity}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <div hidden={this.state.quantities[0] === ""}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"quantity-select-label"} className={"label-white"}>Kwantiteit</InputLabel>
+                    <Select className={"label-white"}
+                            id={"quantity-select"}
+                            labelId={"quantity-select-label"}
+                            value={this.state.quantity}
+                            label={"Kwantiteit"}
+                            onChange={(e) => this.setQuantity(e.target.value)}
+                    >
+                        {this.state.quantities.map(quantity => (
+                            <MenuItem key={quantity} value={quantity}>{quantity}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
 
-            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"type-select-label"} className={"label-white"}>Type Data</InputLabel>
-                <Select className={"label-white"}
-                        id={"type-select"}
-                        labelId={"type-select-label"}
-                        value={this.state.type}
-                        label={"Type Data"}
-                        onChange={(e) => this.setDataType(e.target.value)}
-                >
-                    <MenuItem selected key={"measurement"} value={"measurement"}>{"Measurement"}</MenuItem>
-                    <MenuItem key={"astronomical"} value={"astronomical"}>{"Astronomical"}</MenuItem>
-                    <MenuItem key={"forecast"} value={"forecast"}>{"Forecast"}</MenuItem>
-                </Select>
-            </FormControl>
+            <div hidden={this.state.quantities[0] === ""}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"type-select-label"} className={"label-white"}>Type Data</InputLabel>
+                    <Select className={"label-white"}
+                            id={"type-select"}
+                            labelId={"type-select-label"}
+                            value={this.state.type}
+                            label={"Type Data"}
+                            onChange={(e) => this.setDataType(e.target.value)}
+                    >
+                        <MenuItem selected key={"measurement"} value={"measurement"}>{"Measurement"}</MenuItem>
+                        <MenuItem key={"astronomical"} value={"astronomical"}>{"Astronomical"}</MenuItem>
+                        <MenuItem key={"forecast"} value={"forecast"}>{"Forecast"}</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
 
-            <FormControl hidden={this.state.quantities[0] === ""} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"aspect-select-label"} className={"label-white"}>Aspect Set</InputLabel>
-                <Select className={"label-white"}
-                        id={"aspect-select"}
-                        labelId={"aspect-select-label"}
-                        value={this.state.aspectSet}
-                        label={"Aspect Set"}
-                        onChange={(e) => this.setAspectSet(e.target.value)}
-                >
-                    <MenuItem key={"minimum"} value={"minimum"}>{"Minimum"}</MenuItem>
-                    <MenuItem selected key={"standard"} value={"standard"}>{"Standaard"}</MenuItem>
-                    <MenuItem key={"maximum"} value={"maximum"}>{"Maximum"}</MenuItem>
-                </Select>
-            </FormControl>
+            <div hidden={this.state.quantities[0] === ""}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"aspect-select-label"} className={"label-white"}>Aspect Set</InputLabel>
+                    <Select className={"label-white"}
+                            id={"aspect-select"}
+                            labelId={"aspect-select-label"}
+                            value={this.state.aspectSet}
+                            label={"Aspect Set"}
+                            onChange={(e) => this.setAspectSet(e.target.value)}
+                    >
+                        <MenuItem key={"minimum"} value={"minimum"}>{"Minimum"}</MenuItem>
+                        <MenuItem selected key={"standard"} value={"standard"}>{"Standaard"}</MenuItem>
+                        <MenuItem key={"maximum"} value={"maximum"}>{"Maximum"}</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
 
-            <TextField
-                className={"label-white"}
-                hidden={this.state.quantities[0] === ""}
-                style={{
-                    backgroundColor: 'rgba(14, 121, 191, 0.4)',
-                    marginTop: 10,
-                    width: '95%',
-                    borderStyle: 'none',
-                    borderRadius: 5
-                }}
-                variant={"outlined"}
-                id="start-time"
-                label="Start Tijd"
-                type="datetime-local"
-                defaultValue={this.state.startTime}
-                InputLabelProps={{
-                    shrink: true,
-                    style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
-                }}
-                InputProps={{
-                    className: "label-white"
-                }}
-            />
+            <div hidden={this.state.quantities[0] === ""}>
+                <TextField
+                    className={"label-white"}
+                    style={{
+                        backgroundColor: 'rgba(14, 121, 191, 0.4)',
+                        marginTop: 10,
+                        width: '95%',
+                        borderStyle: 'none',
+                        borderRadius: 5
+                    }}
+                    variant={"outlined"}
+                    id="start-time"
+                    label="Start Tijd"
+                    type="datetime-local"
+                    defaultValue={this.state.startTime}
+                    InputLabelProps={{
+                        shrink: true,
+                        style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
+                    }}
+                    InputProps={{
+                        className: "label-white"
+                    }}
+                />
+            </div>
 
-            <TextField
-                className={"label-white"}
-                hidden={this.state.quantities[0] === ""}
-                style={{
-                    backgroundColor: 'rgba(14, 121, 191, 0.4)',
-                    marginTop: 10,
-                    width: '95%',
-                    borderStyle: 'none',
-                    borderRadius: 5
-                }}
-                variant={"outlined"}
-                id="end-time"
-                label="Eind Tijd"
-                type="datetime-local"
-                defaultValue={this.state.endTime}
-                InputLabelProps={{
-                    shrink: true,
-                    style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
-                }}
-                InputProps={{
-                    className: "label-white"
-                }}
-            />
+            <div hidden={this.state.quantities[0] === ""}>
+                <TextField
+                    className={"label-white"}
+                    style={{
+                        backgroundColor: 'rgba(14, 121, 191, 0.4)',
+                        marginTop: 10,
+                        width: '95%',
+                        borderStyle: 'none',
+                        borderRadius: 5
+                    }}
+                    variant={"outlined"}
+                    id="end-time"
+                    label="Eind Tijd"
+                    type="datetime-local"
+                    defaultValue={this.state.endTime}
+                    InputLabelProps={{
+                        shrink: true,
+                        style: {color: '#F2F2F2', backgroundColor: 'rgba(0,0,0,0)'}
+                    }}
+                    InputProps={{
+                        className: "label-white"
+                    }}
+                />
+            </div>
 
-            <FormControl hidden={this.state.quantity !== "waterlevel"} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"interval-select-label"} className={"label-white"}>Interval</InputLabel>
-                <Select className={"label-white"}
-                        id={"interval-select"}
-                        labelId={"interval-select-label"}
-                        value={this.state.interval}
-                        label={"Interval"}
-                        onChange={(e) => this.setInterval(e.target.value)}
-                >
-                    <MenuItem key={"1min"} value={"1min"}>{"1 Minuut"}</MenuItem>
-                    <MenuItem selected key={"10min"} value={"10min"}>{"10 Minuten"}</MenuItem>
-                </Select>
-            </FormControl>
+            <div hidden={this.state.quantity !== "waterlevel"}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"interval-select-label"} className={"label-white"}>Interval</InputLabel>
+                    <Select className={"label-white"}
+                            id={"interval-select"}
+                            labelId={"interval-select-label"}
+                            value={this.state.interval}
+                            label={"Interval"}
+                            onChange={(e) => this.setInterval(e.target.value)}
+                    >
+                        <MenuItem key={"1min"} value={"1min"}>{"1 Minuut"}</MenuItem>
+                        <MenuItem selected key={"10min"} value={"10min"}>{"10 Minuten"}</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
 
-            <FormControl hidden={this.state.quantity !== "waterchlorosity"} className={"formControl"}
-                         variant={"outlined"}>
-                <InputLabel id={"chlorosity-select-label"} className={"label-white"}>Chlorosity</InputLabel>
-                <Select className={"label-white"}
-                        id={"chlorosity-select"}
-                        labelId={"chlorosity-select-label"}
-                        value={this.state.chlorosity}
-                        label={"Chlorisity"}
-                        onChange={(e) => this.setChlorosity(e.target.value)}
-                >
-                    <MenuItem selected key={"Average"} value={"Average"}>{"Average"}</MenuItem>
-                    <MenuItem key={"AverageSalinity"} value={"AverageSalinity"}>{"AverageSalinity"}</MenuItem>
-                    <MenuItem key={"AverageSpecificWeight"}
-                              value={"AverageSpecificWeight"}>{"AverageSpecificWeight"}</MenuItem>
-                </Select>
-            </FormControl>
+            <div hidden={this.state.quantity !== "waterchlorosity"}>
+                <FormControl className={"formControl"}
+                             variant={"outlined"}>
+                    <InputLabel id={"chlorosity-select-label"} className={"label-white"}>Chlorosity</InputLabel>
+                    <Select className={"label-white"}
+                            id={"chlorosity-select"}
+                            labelId={"chlorosity-select-label"}
+                            value={this.state.chlorosity}
+                            label={"Chlorisity"}
+                            onChange={(e) => this.setChlorosity(e.target.value)}
+                    >
+                        <MenuItem selected key={"Average"} value={"Average"}>{"Average"}</MenuItem>
+                        <MenuItem key={"AverageSalinity"} value={"AverageSalinity"}>{"AverageSalinity"}</MenuItem>
+                        <MenuItem key={"AverageSpecificWeight"}
+                                  value={"AverageSpecificWeight"}>{"AverageSpecificWeight"}</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
 
-            <FormControl hidden={!this.state.extraOption} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"extra-option-select-label"} className={"label-white"}>Opties</InputLabel>
-                <Select className={"label-white"}
-                        id={"extra-option-select"}
-                        labelId={"extra-option-select-label"}
-                        value={this.state.option}
-                        label={"Opties"}
-                        onChange={(e) => this.setExtraOption(e.target.value)}
-                >
-                    {this.state.options.map(option => (
-                        <MenuItem key={option.name} value={option.name}>{option.name}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <div hidden={!this.state.extraOption}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"extra-option-select-label"} className={"label-white"}>Opties</InputLabel>
+                    <Select className={"label-white"}
+                            id={"extra-option-select"}
+                            labelId={"extra-option-select-label"}
+                            value={this.state.option}
+                            label={"Opties"}
+                            onChange={(e) => this.setExtraOption(e.target.value)}
+                    >
+                        {this.state.options.map(option => (
+                            <MenuItem key={option.name} value={option.name}>{option.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
 
-            <FormControl hidden={!this.state.depthOption} className={"formControl"} variant={"outlined"}>
-                <InputLabel id={"depth-option-select-label"} className={"label-white"}>Diepte</InputLabel>
-                <Select className={"label-white"}
-                        id={"depth-option-select"}
-                        labelId={"depth-option-select-label"}
-                        value={this.state.option}
-                        label={"Diepte"}
-                        onChange={(e) => this.setDepthOption(e.target.value)}
-                >
-                    {this.state.options.map(option => (
-                        <MenuItem key={option.name} value={option.value}>{option.name}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <div hidden={!this.state.depthOption}>
+                <FormControl className={"formControl"} variant={"outlined"}>
+                    <InputLabel id={"depth-option-select-label"} className={"label-white"}>Diepte</InputLabel>
+                    <Select className={"label-white"}
+                            id={"depth-option-select"}
+                            labelId={"depth-option-select-label"}
+                            value={this.state.option}
+                            label={"Diepte"}
+                            onChange={(e) => this.setDepthOption(e.target.value)}
+                    >
+                        {this.state.options.map(option => (
+                            <MenuItem key={option.name} value={option.value}>{option.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
 
             {this.state.graphs.length > 0
                 ?
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
-                    <ButtonGroup orientaion={"vertical"}>
+                    <ButtonGroup orientation={"vertical"} style={{width: '95%'}}>
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.addNewDataset()}>
                             {"Toevoegen"}
@@ -1299,7 +1301,7 @@ export default class ChartMenu extends React.Component {
                 </div>
                 :
                 <div style={{display: "flex", justifyContent: "center", margin: 10}}>
-                    <ButtonGroup orientation={"vertical"}>
+                    <ButtonGroup orientation={"vertical"} style={{width: '95%'}}>
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.addNewDataset()}>
                             {"Teken"}
@@ -1307,10 +1309,6 @@ export default class ChartMenu extends React.Component {
                         <Button color={"primary"} variant={"contained"}
                                 onClick={() => this.openChartWithToken()}>
                             {"Open"}
-                        </Button>
-                        <Button color={"primary"} variant={"contained"}
-                                onClick={() => this.openSunburstDialog()}>
-                            {"Sunburst"}
                         </Button>
                     </ButtonGroup>
                 </div>
