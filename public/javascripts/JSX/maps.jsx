@@ -5,50 +5,48 @@ import * as L1 from 'leaflet.markercluster';
 
 import CustomSnackbar from './Components/CustomSnackbar.jsx';
 import MapsChips from "./Components/MapsChips.jsx";
-import SwapHorizRoundedIcon from '@material-ui/icons/SwapHorizRounded';
-import IconButton from "@material-ui/core/IconButton";
-import Chart3D from "./Components/3DChart2Q.jsx";
-import QuantityChart from "./Components/QuantityChart.jsx";
+import WindowContainer from "./Components/WindowContainer.jsx";
 
 let worldMap;
 let clusterId;
+let activeWindows = [];
 
 const promise1 = new Promise((resolve, reject) => {
     resolve("SUCCESS");
 });
 
-function drawsSwitchButton() {
-
-    const mapGrid = document.querySelector("div.grid-map");
-    const chartGrid = document.querySelector("div.grid-chart");
-
-    function swapGrid() {
-        if (mapGrid.classList.contains("full-row")) {
-            mapGrid.classList.remove("full-row");
-            chartGrid.classList.add("full-row");
-            worldMap.setView([50.3727598, 9.8936041], 7);
-        } else {
-            mapGrid.classList.add("full-row");
-            chartGrid.classList.remove("full-row");
-            worldMap.setView([52.3727598, 4.8936041], 8);
-        }
-    }
-
-    let button = <>
-        <IconButton
-            onClick={swapGrid}
-            style={{
-                borderRadius: '5px',
-                height: '100%',
-                backgroundColor: '#cccccc'
-            }}
-        >
-            <SwapHorizRoundedIcon/>
-        </IconButton>
-    </>
-
-    ReactDOM.render(button, document.querySelector("div.grid-button-switch"));
-}
+// function drawsSwitchButton() {
+//
+//     const mapGrid = document.querySelector("div.grid-map");
+//     const chartGrid = document.querySelector("div.grid-chart");
+//
+//     function swapGrid() {
+//         if (mapGrid.classList.contains("full-row")) {
+//             mapGrid.classList.remove("full-row");
+//             chartGrid.classList.add("full-row");
+//             worldMap.setView([50.3727598, 9.8936041], 7);
+//         } else {
+//             mapGrid.classList.add("full-row");
+//             chartGrid.classList.remove("full-row");
+//             worldMap.setView([52.3727598, 4.8936041], 8);
+//         }
+//     }
+//
+//     let button = <>
+//         <IconButton
+//             onClick={swapGrid}
+//             style={{
+//                 borderRadius: '5px',
+//                 height: '100%',
+//                 backgroundColor: '#cccccc'
+//             }}
+//         >
+//             <SwapHorizRoundedIcon/>
+//         </IconButton>
+//     </>
+//
+//     ReactDOM.render(button, document.querySelector("div.grid-button-switch"));
+// }
 
 function drawMap() {
     let map = L
@@ -83,16 +81,20 @@ function showQuantities() {
     });
 }
 
+export function updateWindows(windows) {
+    activeWindows = windows;
+}
+
 function showMarkerInfo(e) {
-    let chartElement = document.querySelector("div.grid-chart");
-    let chartElement2 = document.querySelector("div.grid-waterlevel");
-    ReactDOM.unmountComponentAtNode(chartElement);
-    ReactDOM.unmountComponentAtNode(chartElement2);
+
+    // let chartElement = document.querySelector("div.grid-chart");
+    // let chartElement2 = document.querySelector("div.grid-waterlevel");
+    // ReactDOM.unmountComponentAtNode(chartElement);
+    // ReactDOM.unmountComponentAtNode(chartElement2);
 
     let quantities = localStorage.getItem('quantities');
 
     if (quantities != null && !quantities.includes("waterchlorosity")) {
-
         let newArr = [];
         newArr.push(quantities.split(',')[0]);
         newArr.push(quantities.split(',')[1]);
@@ -101,11 +103,30 @@ function showMarkerInfo(e) {
             && newArr[0] !== null
             && newArr[1] !== undefined
             && newArr[1] !== null) {
-            ReactDOM.render(<Chart3D marker={e} quantities={newArr}/>, chartElement);
-            ReactDOM.render(<QuantityChart marker={e} quantity={newArr[0]}/>, chartElement2);
+            if (activeWindows.find(window => window.marker === e && window.quantity[0] === newArr[0] && window.quantity[1] === newArr[1]) == null) {
+                activeWindows.push({marker: e, quantity: newArr});
+                ReactDOM.render(<WindowContainer children={activeWindows}/>,
+                    document.querySelector("div.window-container"));
+            } else {
+                ReactDOM.render(<CustomSnackbar message={"Venster staat al open"}
+                                                severityStrength={"info"}/>,
+                    document.querySelector("div.snackbar-holder"));
+            }
         } else {
-            ReactDOM.render(<QuantityChart marker={e} quantity={newArr[0]}/>, chartElement);
+            if (activeWindows.find(window => window.marker === e && window.quantity[0] === newArr[0]) == null) {
+                activeWindows.push({marker: e, quantity: newArr});
+                ReactDOM.render(<WindowContainer children={activeWindows}/>,
+                    document.querySelector("div.window-container"));
+            } else {
+                ReactDOM.render(<CustomSnackbar message={"Venster staat al open"}
+                                                severityStrength={"info"}/>,
+                    document.querySelector("div.snackbar-holder"));
+            }
         }
+    } else {
+        ReactDOM.render(<CustomSnackbar message={"Kies eerst een kwantiteit"}
+                                        severityStrength={"info"}/>,
+            document.querySelector("div.snackbar-holder"));
     }
 }
 
@@ -154,7 +175,10 @@ export function drawMarkers(quantities = null, searchString = null) {
                         });
                     },
                     error: () => {
-                        console.log("ERROR")
+                        ReactDOM.render(<CustomSnackbar
+                                message={"Locaties konden niet worden geladen"}
+                                severityStrength={"error"}/>,
+                            document.querySelector("div.snackbar-holder"));
                     }
                 });
             }
@@ -296,4 +320,4 @@ promise1
     .then(drawMap)
     .then(drawMarkers)
     .then(showQuantities)
-    .then(drawsSwitchButton)
+// .then(drawsSwitchButton)

@@ -25,6 +25,7 @@
     "plotly.js-dist": "^1.58.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-draggable": "^4.4.3",
     "react-liquidchart": "^0.3.0",
     "rimraf": "^3.0.2",
     "watchify": "^4.0.0"

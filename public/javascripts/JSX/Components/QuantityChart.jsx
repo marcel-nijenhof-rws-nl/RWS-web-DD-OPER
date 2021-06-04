@@ -2,33 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CustomSnackbar from './CustomSnackbar.jsx';
 import Chart from 'chart.js';
-import {CircularProgress} from "@material-ui/core";
+import Chart3D2Q from "./3DChart2Q.jsx";
 
 export default class QuantityChart extends React.Component {
     constructor(props) {
         super(props);
 
+        let chartID = "chart2d-" + this.props.quantity + "-" + this.props.marker.displayName.replace('.', '-');
+
         this.state = {
-            chartReady: false
+            chartReady: false,
+            chartID: chartID
         }
 
         this.getData = this.getData.bind(this);
     }
 
     getData() {
-        let node = document.querySelector("div.grid-waterlevel");
         $.ajax({
             type: 'get',
             url: '/charts/24hr/' + this.props.marker.displayName + '/' + this.props.quantity,
             success: (response) => {
                 let xValues = [];
                 let dataPoints = [];
-
                 if (response.results[0].events.length === 0) {
-                    ReactDOM.unmountComponentAtNode(node);
                     ReactDOM.render(<CustomSnackbar message={"Geen data beschikbaar"}
                                                     severityStrength={"error"}/>,
                         document.querySelector("div.snackbar-holder"));
+                    return;
                 }
 
                 if (response.results[0].events[0].hasOwnProperty("value")) {
@@ -42,10 +43,20 @@ export default class QuantityChart extends React.Component {
                         })
                     });
                 } else {
-                    ReactDOM.unmountComponentAtNode(node);
-                    ReactDOM.render(<CustomSnackbar message={"Niet genoeg data voor 3D render"}
-                                                    severityStrength={"warning"}/>,
-                        document.querySelector("div.snackbar-holder"));
+                    switch (this.props.quantity) {
+                        case "waveenergy":
+                        case "wavedirection":
+                            debugger;
+                            let id = "#" + this.props.windowID;
+                            ReactDOM.render(<Chart3D2Q quantities={[this.props.quantity, null]} marker={this.props.marker}/>,
+                                document.querySelector(id));
+                            break;
+                        default:
+                            ReactDOM.render(<CustomSnackbar message={"Niet genoeg data voor 3D render"}
+                                                            severityStrength={"warning"}/>,
+                                document.querySelector("div.snackbar-holder"));
+                            break;
+                    }
                 }
 
                 let data = {
@@ -62,7 +73,8 @@ export default class QuantityChart extends React.Component {
                 }
 
                 this.setState({chartReady: true}, () => {
-                    new Chart(document.querySelector('#chart-quantity'), {
+                    let chartID = "#" + this.state.chartID;
+                    new Chart(document.querySelector(chartID), {
                         type: 'line',
                         data: data,
                         options: {
@@ -72,8 +84,8 @@ export default class QuantityChart extends React.Component {
                                 position: 'nearest',
                                 callbacks: {
                                     label: function (x, y) {
-                                        return "Y-Waarde: " + y.datasets[x.datasetIndex].data[x.index].y
-                                            + " - Eenheid: " + y.datasets[x.datasetIndex].data[x.index].unit;
+                                        return y.datasets[x.datasetIndex].data[x.index].y
+                                            + " " + y.datasets[x.datasetIndex].data[x.index].unit;
 
                                     }
                                 }
@@ -88,8 +100,7 @@ export default class QuantityChart extends React.Component {
                             },
                             maintainAspectRatio: false,
                             legend: {
-                                display: true,
-                                position: 'bottom',
+                                display: false,
                             },
                             scales: {
                                 xAxes: [{
@@ -116,8 +127,7 @@ export default class QuantityChart extends React.Component {
                 });
             },
             error: () => {
-                ReactDOM.unmountComponentAtNode(node);
-                ReactDOM.render(<CustomSnackbar message={"Data kon niet worden geladen"}
+                ReactDOM.render(<CustomSnackbar message={"Geen data beschikbaar"}
                                                 severityStrength={"error"}/>,
                     document.querySelector("div.snackbar-holder"));
             }
@@ -125,23 +135,14 @@ export default class QuantityChart extends React.Component {
 
     }
 
-
     componentDidMount() {
         this.getData();
     }
 
     render() {
         return <>
-            <div hidden={this.state.chartReady}>
-                <CircularProgress/>
-            </div>
-            <div
-                hidden={!this.state.chartReady}
-                style={{
-                    height: '100%'
-                }}
-            >
-                <canvas id={"chart-quantity"}/>
+            <div style={{height: '100%'}}>
+                <canvas id={this.state.chartID}/>
             </div>
         </>
     }
