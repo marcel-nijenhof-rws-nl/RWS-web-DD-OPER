@@ -15,39 +15,6 @@ const promise1 = new Promise((resolve, reject) => {
     resolve("SUCCESS");
 });
 
-// function drawsSwitchButton() {
-//
-//     const mapGrid = document.querySelector("div.grid-map");
-//     const chartGrid = document.querySelector("div.grid-chart");
-//
-//     function swapGrid() {
-//         if (mapGrid.classList.contains("full-row")) {
-//             mapGrid.classList.remove("full-row");
-//             chartGrid.classList.add("full-row");
-//             worldMap.setView([50.3727598, 9.8936041], 7);
-//         } else {
-//             mapGrid.classList.add("full-row");
-//             chartGrid.classList.remove("full-row");
-//             worldMap.setView([52.3727598, 4.8936041], 8);
-//         }
-//     }
-//
-//     let button = <>
-//         <IconButton
-//             onClick={swapGrid}
-//             style={{
-//                 borderRadius: '5px',
-//                 height: '100%',
-//                 backgroundColor: '#cccccc'
-//             }}
-//         >
-//             <SwapHorizRoundedIcon/>
-//         </IconButton>
-//     </>
-//
-//     ReactDOM.render(button, document.querySelector("div.grid-button-switch"));
-// }
-
 function drawMap() {
     let map = L
         .map('grid-map')
@@ -86,12 +53,6 @@ export function updateWindows(windows) {
 }
 
 function showMarkerInfo(e) {
-
-    // let chartElement = document.querySelector("div.grid-chart");
-    // let chartElement2 = document.querySelector("div.grid-waterlevel");
-    // ReactDOM.unmountComponentAtNode(chartElement);
-    // ReactDOM.unmountComponentAtNode(chartElement2);
-
     let quantities = localStorage.getItem('quantities');
 
     if (quantities != null && !quantities.includes("waterchlorosity")) {
@@ -320,4 +281,3 @@ promise1
     .then(drawMap)
     .then(drawMarkers)
     .then(showQuantities)
-// .then(drawsSwitchButton)

@@ -40,14 +40,51 @@ export default class Chart3D extends React.Component {
         }
 
         this.draw3D = this.draw3D.bind(this);
-        // this.draw2D = this.draw2D.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
         this.switchDimension = this.switchDimension.bind(this);
         this.interpolateCubic = this.interpolateCubic.bind(this);
     }
 
-    interpolateCubic(t) {
+    interpolateCubic(values) {
+        for (let j = 0; j < values.length; j++) {
+            let p0, p1, p2, p3, a, b, c, d;
+            if (j > 1 && j < values.length - 1 && values[j] === 99999) {
+                p0 = values[j - 1];
+                p1 = values[j - 2];
 
+                if (p0 === 99999 && p1 !== 99999) {
+                    p0 = p1;
+                } else if ((p0 === 99999 && p1 === 99999) || (p1 === 99999 && p0 !== 99999)) {
+                    continue;
+                }
+
+                for (let k = j; k < values.length; k++) {
+                    if (k < values.length - 2 && values[k] === 99999) {
+                        p2 = values[k + 1];
+                        p3 = values[k + 2];
+                    }
+
+                    if (p3 === 99999 && p2 !== 99999) {
+                        p3 = p2;
+                    } else if ((p2 === 99999 && p3 === 99999) || (p3 !== 99999 && p2 === 99999)) {
+                        continue;
+                    }
+
+                    if (p0 && p1 && p2 && p3) {
+                        a = (-0.5 * p0) + (1.5 * p1) + (-1.5 * p2) + (0.5 * p3);
+                        b = p0 - (2.5 * p1) + (2 * p2) - (0.5 * p3);
+                        c = (-0.5 * p0) + (0.5 * p2);
+                        d = p1;
+
+                        values[j] = (a * Math.pow(j, 3)) + (b * Math.pow(j, 2)) + (c * j) + d;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        return values;
     }
 
     draw3D() {
@@ -133,43 +170,11 @@ export default class Chart3D extends React.Component {
                 continue;
             }
 
-            for (let i = 0; i < values.length; i++) {
-                if (values[i] === 99999) {
-                    console.log("Faulty Data Detected!")
-                }
+            if (values.some(value => value === 99999)) {
+                values = this.interpolateCubic(values);
             }
-
             valuesMatrix.push(values);
-
-            // debugger;
-            // for (let j = 0; j < values.length; j++) {
-            //     let lastValidValue;
-            //     let nextValidValue;
-            //     if (j > 0 && j < values.length && values[j] === 99999) {
-            //         lastValidValue = values[j - 1];
-            //         for (let k = j; k < values.length; k++) {
-            //             if (values[k] !== 99999) {
-            //                 nextValidValue = values[k];
-            //
-            //                 let steps = k - j;
-            //                 let stepValue = Math.floor((lastValidValue - nextValidValue) / steps);
-            //                 for (let l = j; l < steps; l++) {
-            //                     values[l] = lastValidValue + (stepValue * l);
-            //                 }
-            //
-            //                 break;
-            //             }
-            //         }
-            //
-            //     }
-            // }
-            // debugger;
-            //
-            // valuesMatrix.push(values);
-            //
-
         }
-
 
 
         for (let i = 0; i < sensors.length; i++) {
@@ -196,121 +201,6 @@ export default class Chart3D extends React.Component {
         }
     }
 
-    // draw2D() {
-    //     let traces = [];
-    //     let sensors = [];
-    //     let values = [];
-    //     let valuesMatrix = [];
-    //
-    //     let layout = {
-    //         autosize: false,
-    //         width: '700',
-    //         height: '350',
-    //         font: {
-    //             family: "Roboto",
-    //             size: 11,
-    //             color: '#000'
-    //         },
-    //         plot_bgcolor: 'rgba(0,0,0,0)',
-    //         paper_bgcolor: 'rgba(0,0,0,0)',
-    //         margin: {
-    //             l: 0,
-    //             r: 0,
-    //             b: 0,
-    //             t: 0,
-    //         },
-    //         scene: {
-    //             aspectratio: {
-    //                 x: 2,
-    //                 y: 2.25,
-    //                 z: 0.8,
-    //             },
-    //             xaxis: {
-    //                 title: {
-    //                     text: "Tijd",
-    //                 },
-    //                 showgrid: false,
-    //                 spikecolor: "#ff3c00",
-    //             },
-    //             yaxis: {
-    //                 title: {
-    //                     text: "Sensor",
-    //                 },
-    //                 showgrid: false,
-    //                 spikecolor: "#ff3c00",
-    //             },
-    //             zaxis: {
-    //                 title: {
-    //                     text: this.state.results.observationType.aspectSet.aspects[0].unit,
-    //                 },
-    //                 spikecolor: "#ff3c00",
-    //             },
-    //             borderradius: 15,
-    //         },
-    //         legend: {}
-    //     };
-    //
-    //     // Add all sensors
-    //     this.state.results.events[0].aspects.forEach(aspect => {
-    //         sensors.push(aspect.name);
-    //     });
-    //
-    //     // Add all values per sensor
-    //     this.state.results.events.forEach(event => {
-    //         for (let i = 0; i < sensors.length; i++) {
-    //             if (event.aspects[i].name === sensors[i]) {
-    //                 values.push(event.aspects[i].value);
-    //             }
-    //         }
-    //         // let length = event.aspects.length;
-    //         // let noValidValues = false;
-    //         // for (let i = 0; i < length; i++) {
-    //         //     if (noValidValues) break;
-    //         //     if (i > 0 && i < length && event.aspects[i].value === 99999) {
-    //         //         let previousValidAspectValue = event.aspects[i - 1].value;
-    //         //         let nextValidAspectValue;
-    //         //         for (let j = i; j < length; j++) {
-    //         //             if (event.aspects[j].value !== 99999) {
-    //         //                 nextValidAspectValue = event.aspects[j].value;
-    //         //                 let steps = j - i;
-    //         //                 let stepValue = Math.floor((nextValidAspectValue - previousValidAspectValue) / steps);
-    //         //                 for (let k = i; k < j; k++) {
-    //         //                     event.aspects[k].value = (previousValidAspectValue + (stepValue * k));
-    //         //                 }
-    //         //                 break;
-    //         //             } else {
-    //         //                 noValidValues = true;
-    //         //                 break;
-    //         //             }
-    //         //         }
-    //         //     }
-    //         //
-    //         //     values.push({sensor: event.aspects[i].name, value: event.aspects[i].value});
-    //         // }
-    //     });
-    //
-    //
-    //     for (let i = 0; i < sensors.length; i++) {
-    //         let data = [];
-    //         values.forEach(item => {
-    //             if (item.sensor === sensors[i]) {
-    //                 data.push(item.value);
-    //             }
-    //         });
-    //         if (data.every(value => value != null)) {
-    //             traces.push({
-    //                 y: data,
-    //                 type: 'box',
-    //                 name: sensors[i]
-    //             });
-    //         }
-    //     }
-    //
-    //     this.setState({chartReady: true, noData: false}, () => {
-    //         Plotly.react("chart3d", traces, layout, config);
-    //     });
-    // }
-
     switchDimension() {
         this.setState({twoDimensional: !this.state.twoDimensional, chartReady: false}, () => {
             this.draw3D();
@@ -329,15 +219,6 @@ export default class Chart3D extends React.Component {
                         results: response.results[0]
                     }, () => {
                         this.draw3D();
-                        // switch (this.state.currentQuantity) {
-                        //     case "waveenergy":
-                        //     case "wavedirection":
-                        //         this.state.twoDimensional ? this.draw2D() : this.draw3D();
-                        //         break;
-                        //     default:
-                        //         this.draw2D();
-                        //         break;
-                        // }
                     });
                 },
                 error: () => {
@@ -345,29 +226,6 @@ export default class Chart3D extends React.Component {
                             message={"Kwantiteit " + e + " kon niet worden geladen"}
                             severityStrength={"error"}/>,
                         document.querySelector("div.snackbar-holder"));
-
-                    // $.ajax({
-                    //     type: 'GET',
-                    //     url: '/charts/24hr/' + this.state.results.location.properties.locationName + '/' + prevQuantity,
-                    //     success: (response) => {
-                    //         this.setState({
-                    //             currentQuantity: prevQuantity,
-                    //             results: response.results[0]
-                    //         }, () => {
-                    //             this.draw3D();
-                    //             // switch (this.state.currentQuantity) {
-                    //             //     case "waveenergy":
-                    //             //     case "wavedirection":
-                    //             //         this.state.twoDimensional ? this.draw2D() : this.draw3D();
-                    //             //         break;
-                    //             //     default:
-                    //             //         this.draw2D();
-                    //             //         break;
-                    //             // }
-                    //         });
-                    //     },
-                    //
-                    // });
                 }
             });
         });
@@ -401,45 +259,6 @@ export default class Chart3D extends React.Component {
                         )
                 }
             </div>
-            {
-                this.state.availableQuantities.length > 1
-                    ?
-                    <div className={"center"}
-                         style={{
-                             marginTop: '10px',
-                             paddingBottom: 'auto',
-                         }}
-                    >
-                        <ButtonGroup>
-                            {this.state.availableQuantities.map(quantity => (
-                                <Button key={quantity}
-                                        variant={'contained'}
-                                        color={"primary"}
-                                        disabled={this.state.currentQuantity === quantity}
-                                        disableElevation
-                                        onClick={() => this.changeQuantity(quantity)}>
-                                    {quantity}
-                                </Button>
-                            ))}
-                            <Button color={"primary"} onClick={this.switchDimension}>
-                                {this.state.twoDimensional ? "3D" : "2D"}
-                            </Button>
-                        </ButtonGroup>
-                    </div>
-                    :
-                    <div className={"center"}
-                         style={{
-                             marginTop: '10px',
-                             paddingBottom: 'auto',
-                         }}
-                    >
-                        <ButtonGroup>
-                            <Button color={"primary"} onClick={this.switchDimension}>
-                                {this.state.twoDimensional ? "3D" : "2D"}
-                            </Button>
-                        </ButtonGroup>
-                    </div>
-            }
         </>
     }
 }

@@ -57,7 +57,6 @@ export default class Chart3D2Q extends React.Component {
                     zValues.push(event.value);
                 });
 
-                // Duplicate as long as the values need to, to create 3rd dimension
                 let realZvalues = [];
                 for (let i = 0; i < yValues.length; i++) {
                     realZvalues.push(zValues);
