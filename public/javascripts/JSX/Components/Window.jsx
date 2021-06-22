@@ -98,19 +98,15 @@ export default class Window extends React.Component {
                             </div>
                         </div>
                         <div id={id}
-                             className={"draggable-window-title"}
-                             hidden={this.state.minimised}
+                             className={this.state.minimised ? "draggable-window-title__minimized" : "draggable-window-title"}
                              style={{
                                  gridColumn: '1',
                                  gridRow: '1',
                              }}>
                             <Typography variant={"h6"}
-                                        style={{
-                                            marginTop: '5px',
-                                            marginLeft: '45px',
-                                        }}
+                                        className={this.state.minimised ? "window-title__minimised" : "window-title"}
                             >
-                                {this.props.marker.displayNameGlobal + " - " + this.props.quantity}
+                                {this.state.minimised ? this.props.marker.displayNameGlobal : this.props.marker.displayNameGlobal + " - " + this.props.quantity}
                             </Typography>
                         </div>
 

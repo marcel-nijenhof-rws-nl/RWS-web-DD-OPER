@@ -134,7 +134,7 @@ div.grid-waterlevel {
 }
 
 .draggable-window-minimised {
-    width: 50px;
+    width: 220px;
     height: 50px;
     position: absolute;
     left: 500px;
@@ -147,7 +147,37 @@ div.grid-waterlevel {
     z-index: 1;
 }
 
-.draggable-window-title:active {
+.window-title {
+    cursor: grab;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 45px;
+    margin-top: 4%;
+}
+
+.window-title__minimised {
+    cursor: grab;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+    margin-top: 4%;
+    max-height: 50px;
+    max-width: 150px;
+}
+
+.draggable-window-title__minimised {
+    cursor: grab;
+    z-index: 1;
+}
+
+.window-title:active {
+    cursor: grabbing;
+    z-index: 200;
+}
+
+.window-title__minimised:active {
     cursor: grabbing;
     z-index: 200;
 }
