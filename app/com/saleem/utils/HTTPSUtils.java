@@ -21,7 +21,7 @@ public class HTTPSUtils {
     @Singleton
     final static Properties properties = new Properties();
     @Singleton
-    static String databaseUrl = "https://ddapi.rws.nl/dd-oper/2.0/";
+    static String DefaultDatabaseUrl = "https://ddapi.rws.nl/dd-oper/2.0/";
     final static String currentPath = System.getProperty("user.dir");
 
     public static void InitializeProperties() {
@@ -61,7 +61,7 @@ public class HTTPSUtils {
 
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
-            URL url = new URL(HTTPSUtils.databaseUrl.concat(urlString));
+            URL url = new URL(HTTPSUtils.DefaultDatabaseUrl.concat(urlString));
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
@@ -188,7 +188,7 @@ public class HTTPSUtils {
         String databaseUrl = GetBaseDatabaseURL(token);
 
         if (databaseUrl != null) {
-            HTTPSUtils.databaseUrl = databaseUrl.concat(urlPostfix);
+            HTTPSUtils.DefaultDatabaseUrl = databaseUrl.concat(urlPostfix);
         }
     }
 

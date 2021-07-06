@@ -160,7 +160,11 @@ public class BookmarkController extends Controller {
 
             List<List> bookmarksList = new ArrayList<>();
             for (BookmarkGroup groupItem : bookmarkGroups) {
-                List bookmarks = em.createQuery("from Bookmark b left join BookmarkGroup bg on b.bookmarkGroup_id = bg.id where bg.userprofile_id = :userId and bg.id = :groupId and bg.name = :name")
+                List bookmarks = em.createQuery("from Bookmark b left join BookmarkGroup bg " +
+                        "on b.bookmarkGroup_id = bg.id " +
+                        "where bg.userprofile_id = :userId " +
+                        "and bg.id = :groupId " +
+                        "and bg.name = :name")
                         .setParameter("userId", userProfile.getId())
                         .setParameter("groupId", groupItem.getId())
                         .setParameter("name", name)

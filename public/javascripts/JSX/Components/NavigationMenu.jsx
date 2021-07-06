@@ -73,15 +73,15 @@ class NavigationMenu extends React.Component {
     render() {
         return <div className="menu">
             <List>
-                <ListItem onClick={this.navigateCharts} style={{cursor: "pointer"}}>
-                    <ListItemIcon><TimeLineIcon fontSize={"large"}
-                                                style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
-                    <ListItemText primary={"Grafieken"}/>
-                </ListItem>
                 <ListItem onClick={this.navigateMaps} style={{cursor: "pointer"}}>
                     <ListItemIcon><ExploreRoundedIcon fontSize={"large"}
                                                       style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Kaart"}/>
+                </ListItem>
+                <ListItem onClick={this.navigateCharts} style={{cursor: "pointer"}}>
+                    <ListItemIcon><TimeLineIcon fontSize={"large"}
+                                                style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemText primary={"Grafieken"}/>
                 </ListItem>
                 <ListItem onClick={this.navigateBookmarks} style={{cursor: "pointer"}}>
                     <ListItemIcon><BookmarksRoundedIcon fontSize={"large"}
@@ -96,15 +96,15 @@ class NavigationMenu extends React.Component {
 
                 <Divider/>
 
-                <ListItem onClick={this.logout} style={{cursor: "pointer"}}>
-                    <ListItemIcon><ExitToAppRoundedIcon fontSize={"large"}
-                                                        style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
-                    <ListItemText primary={"Afmelden"}/>
-                </ListItem>
                 <ListItem onClick={this.openGithubIssues} style={{cursor: "pointer"}}>
                     <ListItemIcon><BugReportRoundedIcon fontSize={"large"}
                                                         style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
                     <ListItemText primary={"Rapporteer"}/>
+                </ListItem>
+                <ListItem onClick={this.logout} style={{cursor: "pointer"}}>
+                    <ListItemIcon><ExitToAppRoundedIcon fontSize={"large"}
+                                                        style={{color: 'rgba(255,255,255,0.8)'}}/></ListItemIcon>
+                    <ListItemText primary={"Afmelden"}/>
                 </ListItem>
             </List>
         </div>

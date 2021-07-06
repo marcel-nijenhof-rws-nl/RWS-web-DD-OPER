@@ -39494,8 +39494,8 @@ var React = _interopRequireWildcard(require("react"));
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 
 var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
-  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-}), 'Delete');
+  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"
+}), 'DeleteRounded');
 
 exports.default = _default;
 },{"./utils/createSvgIcon":382,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"react":501}],377:[function(require,module,exports){
@@ -51570,7 +51570,7 @@ arguments[4][460][0].apply(exports,arguments)
 arguments[4][461][0].apply(exports,arguments)
 },{"./cjs/react-is.development.js":480,"./cjs/react-is.production.min.js":481,"_process":474,"dup":461}],483:[function(require,module,exports){
 (function (process){(function (){
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -62918,7 +62918,7 @@ function flushSyncCallbackQueueImpl() {
 }
 
 // TODO: this is special because it gets imported during build.
-var ReactVersion = '17.0.1';
+var ReactVersion = '17.0.2';
 
 var NoMode = 0;
 var StrictMode = 1; // TODO: Remove BlockingMode and ConcurrentMode by reading from the root
@@ -77835,7 +77835,7 @@ exports.version = ReactVersion;
 
 }).call(this)}).call(this,require('_process'))
 },{"_process":474,"object-assign":472,"react":501,"scheduler":506,"scheduler/tracing":507}],484:[function(require,module,exports){
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -78126,12 +78126,12 @@ function sk(a,b){b||(b=a?9===a.nodeType?a.documentElement:a.firstChild:null,b=!(
 function tk(a,b,c,d,e){var f=c._reactRootContainer;if(f){var g=f._internalRoot;if("function"===typeof e){var h=e;e=function(){var a=mk(g);h.call(a)}}lk(b,g,a,e)}else{f=c._reactRootContainer=sk(c,d);g=f._internalRoot;if("function"===typeof e){var k=e;e=function(){var a=mk(g);k.call(a)}}Xj(function(){lk(b,g,a,e)})}return mk(g)}ec=function(a){if(13===a.tag){var b=Hg();Jg(a,4,b);ok(a,4)}};fc=function(a){if(13===a.tag){var b=Hg();Jg(a,67108864,b);ok(a,67108864)}};
 gc=function(a){if(13===a.tag){var b=Hg(),c=Ig(a);Jg(a,c,b);ok(a,c)}};hc=function(a,b){return b()};
 yb=function(a,b,c){switch(b){case "input":ab(a,c);b=c.name;if("radio"===c.type&&null!=b){for(c=a;c.parentNode;)c=c.parentNode;c=c.querySelectorAll("input[name="+JSON.stringify(""+b)+'][type="radio"]');for(b=0;b<c.length;b++){var d=c[b];if(d!==a&&d.form===a.form){var e=Db(d);if(!e)throw Error(y(90));Wa(d);ab(d,e)}}}break;case "textarea":ib(a,c);break;case "select":b=c.value,null!=b&&fb(a,!!c.multiple,b,!1)}};Gb=Wj;
-Hb=function(a,b,c,d,e){var f=X;X|=4;try{return gg(98,a.bind(null,b,c,d,e))}finally{X=f,0===X&&(wj(),ig())}};Ib=function(){0===(X&49)&&(Vj(),Oj())};Jb=function(a,b){var c=X;X|=2;try{return a(b)}finally{X=c,0===X&&(wj(),ig())}};function uk(a,b){var c=2<arguments.length&&void 0!==arguments[2]?arguments[2]:null;if(!rk(b))throw Error(y(200));return kk(a,b,null,c)}var vk={Events:[Cb,ue,Db,Eb,Fb,Oj,{current:!1}]},wk={findFiberByHostInstance:wc,bundleType:0,version:"17.0.1",rendererPackageName:"react-dom"};
+Hb=function(a,b,c,d,e){var f=X;X|=4;try{return gg(98,a.bind(null,b,c,d,e))}finally{X=f,0===X&&(wj(),ig())}};Ib=function(){0===(X&49)&&(Vj(),Oj())};Jb=function(a,b){var c=X;X|=2;try{return a(b)}finally{X=c,0===X&&(wj(),ig())}};function uk(a,b){var c=2<arguments.length&&void 0!==arguments[2]?arguments[2]:null;if(!rk(b))throw Error(y(200));return kk(a,b,null,c)}var vk={Events:[Cb,ue,Db,Eb,Fb,Oj,{current:!1}]},wk={findFiberByHostInstance:wc,bundleType:0,version:"17.0.2",rendererPackageName:"react-dom"};
 var xk={bundleType:wk.bundleType,version:wk.version,rendererPackageName:wk.rendererPackageName,rendererConfig:wk.rendererConfig,overrideHookState:null,overrideHookStateDeletePath:null,overrideHookStateRenamePath:null,overrideProps:null,overridePropsDeletePath:null,overridePropsRenamePath:null,setSuspenseHandler:null,scheduleUpdate:null,currentDispatcherRef:ra.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=cc(a);return null===a?null:a.stateNode},findFiberByHostInstance:wk.findFiberByHostInstance||
 pk,findHostInstancesForRefresh:null,scheduleRefresh:null,scheduleRoot:null,setRefreshHandler:null,getCurrentFiber:null};if("undefined"!==typeof __REACT_DEVTOOLS_GLOBAL_HOOK__){var yk=__REACT_DEVTOOLS_GLOBAL_HOOK__;if(!yk.isDisabled&&yk.supportsFiber)try{Lf=yk.inject(xk),Mf=yk}catch(a){}}exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=vk;exports.createPortal=uk;
 exports.findDOMNode=function(a){if(null==a)return null;if(1===a.nodeType)return a;var b=a._reactInternals;if(void 0===b){if("function"===typeof a.render)throw Error(y(188));throw Error(y(268,Object.keys(a)));}a=cc(b);a=null===a?null:a.stateNode;return a};exports.flushSync=function(a,b){var c=X;if(0!==(c&48))return a(b);X|=1;try{if(a)return gg(99,a.bind(null,b))}finally{X=c,ig()}};exports.hydrate=function(a,b,c){if(!rk(b))throw Error(y(200));return tk(null,a,b,!0,c)};
 exports.render=function(a,b,c){if(!rk(b))throw Error(y(200));return tk(null,a,b,!1,c)};exports.unmountComponentAtNode=function(a){if(!rk(a))throw Error(y(40));return a._reactRootContainer?(Xj(function(){tk(null,null,a,!1,function(){a._reactRootContainer=null;a[ff]=null})}),!0):!1};exports.unstable_batchedUpdates=Wj;exports.unstable_createPortal=function(a,b){return uk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
-exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!rk(c))throw Error(y(200));if(null==a||void 0===a._reactInternals)throw Error(y(38));return tk(a,b,c,!1,d)};exports.version="17.0.1";
+exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!rk(c))throw Error(y(200));if(null==a||void 0===a._reactInternals)throw Error(y(38));return tk(a,b,c,!1,d)};exports.version="17.0.2";
 
 },{"object-assign":472,"react":501,"scheduler":506}],485:[function(require,module,exports){
 (function (process){(function (){
@@ -80367,7 +80367,7 @@ exports.classNamesShape = classNamesShape;
 }).call(this)}).call(this,require('_process'))
 },{"_process":474,"prop-types":478}],499:[function(require,module,exports){
 (function (process){(function (){
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -80385,7 +80385,7 @@ if (process.env.NODE_ENV !== "production") {
 var _assign = require('object-assign');
 
 // TODO: this is special because it gets imported during build.
-var ReactVersion = '17.0.1';
+var ReactVersion = '17.0.2';
 
 // ATTENTION
 // When adding new symbols to this file,
@@ -82703,7 +82703,7 @@ exports.version = ReactVersion;
 
 }).call(this)}).call(this,require('_process'))
 },{"_process":474,"object-assign":472}],500:[function(require,module,exports){
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -82725,7 +82725,7 @@ exports.Children={map:P,forEach:function(a,b,c){P(a,function(){b.apply(this,argu
 exports.cloneElement=function(a,b,c){if(null===a||void 0===a)throw Error(z(267,a));var e=l({},a.props),d=a.key,k=a.ref,h=a._owner;if(null!=b){void 0!==b.ref&&(k=b.ref,h=G.current);void 0!==b.key&&(d=""+b.key);if(a.type&&a.type.defaultProps)var g=a.type.defaultProps;for(f in b)H.call(b,f)&&!I.hasOwnProperty(f)&&(e[f]=void 0===b[f]&&void 0!==g?g[f]:b[f])}var f=arguments.length-2;if(1===f)e.children=c;else if(1<f){g=Array(f);for(var m=0;m<f;m++)g[m]=arguments[m+2];e.children=g}return{$$typeof:n,type:a.type,
 key:d,ref:k,props:e,_owner:h}};exports.createContext=function(a,b){void 0===b&&(b=null);a={$$typeof:r,_calculateChangedBits:b,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.Provider={$$typeof:q,_context:a};return a.Consumer=a};exports.createElement=J;exports.createFactory=function(a){var b=J.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};exports.forwardRef=function(a){return{$$typeof:t,render:a}};exports.isValidElement=L;
 exports.lazy=function(a){return{$$typeof:v,_payload:{_status:-1,_result:a},_init:Q}};exports.memo=function(a,b){return{$$typeof:u,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return S().useCallback(a,b)};exports.useContext=function(a,b){return S().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return S().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return S().useImperativeHandle(a,b,c)};
-exports.useLayoutEffect=function(a,b){return S().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return S().useMemo(a,b)};exports.useReducer=function(a,b,c){return S().useReducer(a,b,c)};exports.useRef=function(a){return S().useRef(a)};exports.useState=function(a){return S().useState(a)};exports.version="17.0.1";
+exports.useLayoutEffect=function(a,b){return S().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return S().useMemo(a,b)};exports.useReducer=function(a,b,c){return S().useReducer(a,b,c)};exports.useRef=function(a){return S().useRef(a)};exports.useState=function(a){return S().useState(a)};exports.version="17.0.2";
 
 },{"object-assign":472}],501:[function(require,module,exports){
 (function (process){(function (){
@@ -82740,7 +82740,7 @@ if (process.env.NODE_ENV === 'production') {
 }).call(this)}).call(this,require('_process'))
 },{"./cjs/react.development.js":499,"./cjs/react.production.min.js":500,"_process":474}],502:[function(require,module,exports){
 (function (process){(function (){
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler-tracing.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -83090,7 +83090,7 @@ exports.unstable_wrap = unstable_wrap;
 
 }).call(this)}).call(this,require('_process'))
 },{"_process":474}],503:[function(require,module,exports){
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler-tracing.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -83102,7 +83102,7 @@ exports.unstable_wrap = unstable_wrap;
 
 },{}],504:[function(require,module,exports){
 (function (process){(function (){
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -83118,7 +83118,7 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var enableSchedulerDebugging = false;
-var enableProfiling = true;
+var enableProfiling = false;
 
 var requestHostCallback;
 var requestHostTimeout;
@@ -83388,172 +83388,13 @@ function compare(a, b) {
 }
 
 // TODO: Use symbols?
-var NoPriority = 0;
 var ImmediatePriority = 1;
 var UserBlockingPriority = 2;
 var NormalPriority = 3;
 var LowPriority = 4;
 var IdlePriority = 5;
 
-var runIdCounter = 0;
-var mainThreadIdCounter = 0;
-var profilingStateSize = 4;
-var sharedProfilingBuffer =  // $FlowFixMe Flow doesn't know about SharedArrayBuffer
-typeof SharedArrayBuffer === 'function' ? new SharedArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : // $FlowFixMe Flow doesn't know about ArrayBuffer
-typeof ArrayBuffer === 'function' ? new ArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : null // Don't crash the init path on IE9
-;
-var profilingState =  sharedProfilingBuffer !== null ? new Int32Array(sharedProfilingBuffer) : []; // We can't read this but it helps save bytes for null checks
-
-var PRIORITY = 0;
-var CURRENT_TASK_ID = 1;
-var CURRENT_RUN_ID = 2;
-var QUEUE_SIZE = 3;
-
-{
-  profilingState[PRIORITY] = NoPriority; // This is maintained with a counter, because the size of the priority queue
-  // array might include canceled tasks.
-
-  profilingState[QUEUE_SIZE] = 0;
-  profilingState[CURRENT_TASK_ID] = 0;
-} // Bytes per element is 4
-
-
-var INITIAL_EVENT_LOG_SIZE = 131072;
-var MAX_EVENT_LOG_SIZE = 524288; // Equivalent to 2 megabytes
-
-var eventLogSize = 0;
-var eventLogBuffer = null;
-var eventLog = null;
-var eventLogIndex = 0;
-var TaskStartEvent = 1;
-var TaskCompleteEvent = 2;
-var TaskErrorEvent = 3;
-var TaskCancelEvent = 4;
-var TaskRunEvent = 5;
-var TaskYieldEvent = 6;
-var SchedulerSuspendEvent = 7;
-var SchedulerResumeEvent = 8;
-
-function logEvent(entries) {
-  if (eventLog !== null) {
-    var offset = eventLogIndex;
-    eventLogIndex += entries.length;
-
-    if (eventLogIndex + 1 > eventLogSize) {
-      eventLogSize *= 2;
-
-      if (eventLogSize > MAX_EVENT_LOG_SIZE) {
-        // Using console['error'] to evade Babel and ESLint
-        console['error']("Scheduler Profiling: Event log exceeded maximum size. Don't " + 'forget to call `stopLoggingProfilingEvents()`.');
-        stopLoggingProfilingEvents();
-        return;
-      }
-
-      var newEventLog = new Int32Array(eventLogSize * 4);
-      newEventLog.set(eventLog);
-      eventLogBuffer = newEventLog.buffer;
-      eventLog = newEventLog;
-    }
-
-    eventLog.set(entries, offset);
-  }
-}
-
-function startLoggingProfilingEvents() {
-  eventLogSize = INITIAL_EVENT_LOG_SIZE;
-  eventLogBuffer = new ArrayBuffer(eventLogSize * 4);
-  eventLog = new Int32Array(eventLogBuffer);
-  eventLogIndex = 0;
-}
-function stopLoggingProfilingEvents() {
-  var buffer = eventLogBuffer;
-  eventLogSize = 0;
-  eventLogBuffer = null;
-  eventLog = null;
-  eventLogIndex = 0;
-  return buffer;
-}
-function markTaskStart(task, ms) {
-  {
-    profilingState[QUEUE_SIZE]++;
-
-    if (eventLog !== null) {
-      // performance.now returns a float, representing milliseconds. When the
-      // event is logged, it's coerced to an int. Convert to microseconds to
-      // maintain extra degrees of precision.
-      logEvent([TaskStartEvent, ms * 1000, task.id, task.priorityLevel]);
-    }
-  }
-}
-function markTaskCompleted(task, ms) {
-  {
-    profilingState[PRIORITY] = NoPriority;
-    profilingState[CURRENT_TASK_ID] = 0;
-    profilingState[QUEUE_SIZE]--;
-
-    if (eventLog !== null) {
-      logEvent([TaskCompleteEvent, ms * 1000, task.id]);
-    }
-  }
-}
-function markTaskCanceled(task, ms) {
-  {
-    profilingState[QUEUE_SIZE]--;
-
-    if (eventLog !== null) {
-      logEvent([TaskCancelEvent, ms * 1000, task.id]);
-    }
-  }
-}
 function markTaskErrored(task, ms) {
-  {
-    profilingState[PRIORITY] = NoPriority;
-    profilingState[CURRENT_TASK_ID] = 0;
-    profilingState[QUEUE_SIZE]--;
-
-    if (eventLog !== null) {
-      logEvent([TaskErrorEvent, ms * 1000, task.id]);
-    }
-  }
-}
-function markTaskRun(task, ms) {
-  {
-    runIdCounter++;
-    profilingState[PRIORITY] = task.priorityLevel;
-    profilingState[CURRENT_TASK_ID] = task.id;
-    profilingState[CURRENT_RUN_ID] = runIdCounter;
-
-    if (eventLog !== null) {
-      logEvent([TaskRunEvent, ms * 1000, task.id, runIdCounter]);
-    }
-  }
-}
-function markTaskYield(task, ms) {
-  {
-    profilingState[PRIORITY] = NoPriority;
-    profilingState[CURRENT_TASK_ID] = 0;
-    profilingState[CURRENT_RUN_ID] = 0;
-
-    if (eventLog !== null) {
-      logEvent([TaskYieldEvent, ms * 1000, task.id, runIdCounter]);
-    }
-  }
-}
-function markSchedulerSuspended(ms) {
-  {
-    mainThreadIdCounter++;
-
-    if (eventLog !== null) {
-      logEvent([SchedulerSuspendEvent, ms * 1000, mainThreadIdCounter]);
-    }
-  }
-}
-function markSchedulerUnsuspended(ms) {
-  {
-    if (eventLog !== null) {
-      logEvent([SchedulerResumeEvent, ms * 1000, mainThreadIdCounter]);
-    }
-  }
 }
 
 /* eslint-disable no-var */
@@ -83594,11 +83435,6 @@ function advanceTimers(currentTime) {
       pop(timerQueue);
       timer.sortIndex = timer.expirationTime;
       push(taskQueue, timer);
-
-      {
-        markTaskStart(timer, currentTime);
-        timer.isQueued = true;
-      }
     } else {
       // Remaining timers are pending.
       return;
@@ -83627,9 +83463,6 @@ function handleTimeout(currentTime) {
 }
 
 function flushWork(hasTimeRemaining, initialTime) {
-  {
-    markSchedulerUnsuspended(initialTime);
-  } // We'll need a host callback the next time work is scheduled.
 
 
   isHostCallbackScheduled = false;
@@ -83664,12 +83497,6 @@ function flushWork(hasTimeRemaining, initialTime) {
     currentTask = null;
     currentPriorityLevel = previousPriorityLevel;
     isPerformingWork = false;
-
-    {
-      var _currentTime = exports.unstable_now();
-
-      markSchedulerSuspended(_currentTime);
-    }
   }
 }
 
@@ -83690,18 +83517,13 @@ function workLoop(hasTimeRemaining, initialTime) {
       currentTask.callback = null;
       currentPriorityLevel = currentTask.priorityLevel;
       var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
-      markTaskRun(currentTask, currentTime);
+
       var continuationCallback = callback(didUserCallbackTimeout);
       currentTime = exports.unstable_now();
 
       if (typeof continuationCallback === 'function') {
         currentTask.callback = continuationCallback;
-        markTaskYield(currentTask, currentTime);
       } else {
-        {
-          markTaskCompleted(currentTask, currentTime);
-          currentTask.isQueued = false;
-        }
 
         if (currentTask === peek(taskQueue)) {
           pop(taskQueue);
@@ -83846,10 +83668,6 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
     sortIndex: -1
   };
 
-  {
-    newTask.isQueued = false;
-  }
-
   if (startTime > currentTime) {
     // This is a delayed task.
     newTask.sortIndex = startTime;
@@ -83870,11 +83688,6 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
   } else {
     newTask.sortIndex = expirationTime;
     push(taskQueue, newTask);
-
-    {
-      markTaskStart(newTask, currentTime);
-      newTask.isQueued = true;
-    } // Schedule a host callback, if needed. If we're already performing work,
     // wait until the next time we yield.
 
 
@@ -83903,13 +83716,6 @@ function unstable_getFirstCallbackNode() {
 }
 
 function unstable_cancelCallback(task) {
-  {
-    if (task.isQueued) {
-      var currentTime = exports.unstable_now();
-      markTaskCanceled(task, currentTime);
-      task.isQueued = false;
-    }
-  } // Null out the callback to indicate the task has been canceled. (Can't
   // remove from the queue because you can't remove arbitrary nodes from an
   // array based heap, only the first one.)
 
@@ -83922,11 +83728,7 @@ function unstable_getCurrentPriorityLevel() {
 }
 
 var unstable_requestPaint = requestPaint;
-var unstable_Profiling =  {
-  startLoggingProfilingEvents: startLoggingProfilingEvents,
-  stopLoggingProfilingEvents: stopLoggingProfilingEvents,
-  sharedProfilingBuffer: sharedProfilingBuffer
-} ;
+var unstable_Profiling =  null;
 
 exports.unstable_IdlePriority = IdlePriority;
 exports.unstable_ImmediatePriority = ImmediatePriority;
@@ -83949,7 +83751,7 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 
 }).call(this)}).call(this,require('_process'))
 },{"_process":474}],505:[function(require,module,exports){
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -84123,6 +83925,10 @@ exports.BookmarkTable = void 0;
 
 var _core = require("@material-ui/core");
 
+var _DeleteRounded = _interopRequireDefault(require("@material-ui/icons/DeleteRounded"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -84185,10 +83991,7 @@ var TextField = require('@material-ui/core/TextField')["default"];
 
 var Tooltip = require('@material-ui/core/Tooltip')["default"];
 
-var CustomSnackbar = require('./Components/CustomSnackbar.jsx'); // ICONS
-
-
-var DeleteIcon = require('@material-ui/icons/Delete')["default"];
+var CustomSnackbar = require('./Components/CustomSnackbar.jsx');
 
 var SaveIcon = require('@material-ui/icons/Save')["default"];
 
@@ -84217,11 +84020,6 @@ function createRow(groupName, id, bookmark) {
     id: id,
     bookmark: bookmark
   };
-} // TODO: Make all rows (de)selected
-
-
-function selectAll(event) {
-  console.log(event.target.checked);
 }
 
 function Row(props) {
@@ -84236,6 +84034,11 @@ function Row(props) {
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       editName = _React$useState4[0],
       enableEdit = _React$useState4[1];
+
+  var _React$useState5 = React.useState(false),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      checked = _React$useState6[0],
+      setCheck = _React$useState6[1];
 
   var saveAndClose = function saveAndClose(row) {
     enableEdit(false);
@@ -84323,7 +84126,11 @@ function Row(props) {
       return setOpen(!open);
     }
   }, open ? /*#__PURE__*/React.createElement(KeyboardArrowUpIcon, null) : /*#__PURE__*/React.createElement(KeyboardArrowDownIcon, null))), /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(_core.Checkbox, {
-    color: "primary"
+    color: "primary",
+    checked: checked,
+    onClick: function onClick() {
+      return setCheck(!checked);
+    }
   })), !editName ? /*#__PURE__*/React.createElement(TableCell, {
     align: "left"
   }, row.groupName) : /*#__PURE__*/React.createElement(TableCell, {
@@ -84357,7 +84164,7 @@ function Row(props) {
   }, /*#__PURE__*/React.createElement(IconButton, {
     "aria-label": "delete",
     onClick: deleteRow.bind(this, row)
-  }, /*#__PURE__*/React.createElement(DeleteIcon, null)))))), /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, {
+  }, /*#__PURE__*/React.createElement(_DeleteRounded["default"], null)))))), /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, {
     style: {
       paddingBottom: 0,
       paddingTop: 0
@@ -84373,7 +84180,7 @@ function Row(props) {
     variant: "h6",
     gutterBottom: true,
     component: "div"
-  }, "Bladwijzers"), /*#__PURE__*/React.createElement(Table, {
+  }, "Parameters"), /*#__PURE__*/React.createElement(Table, {
     size: "small",
     "aria-label": "purchases"
   }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(Typography, {
@@ -84397,13 +84204,28 @@ var BookmarkTable = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(BookmarkTable);
 
-  function BookmarkTable() {
+  function BookmarkTable(props) {
+    var _this;
+
     _classCallCheck(this, BookmarkTable);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.state = {
+      allSelected: false,
+      rows: _this.props.rows
+    };
+    _this.selectAll = _this.selectAll.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(BookmarkTable, [{
+    key: "selectAll",
+    value: function selectAll(event) {
+      this.setState({
+        allSelected: event.target.checked
+      }, function () {});
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/React.createElement(TableContainer, {
@@ -84416,14 +84238,16 @@ var BookmarkTable = /*#__PURE__*/function (_React$Component) {
           width: "700"
         },
         "aria-label": "simple table"
-      }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null), /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(_core.Checkbox, {
+      }, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRow, null, /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement("div", {
+        hidden: !this.state.allSelected
+      }, /*#__PURE__*/React.createElement(IconButton, null, /*#__PURE__*/React.createElement(_DeleteRounded["default"], null)))), /*#__PURE__*/React.createElement(TableCell, null, /*#__PURE__*/React.createElement(_core.Checkbox, {
         color: "primary",
-        onChange: selectAll
-      })), /*#__PURE__*/React.createElement(TableCell, {
+        onChange: this.selectAll
+      }), "Selecteer Alles"), /*#__PURE__*/React.createElement(TableCell, {
         align: "left"
       }, "Naam"), /*#__PURE__*/React.createElement(TableCell, {
         align: "center"
-      }, "Acties"))), /*#__PURE__*/React.createElement(TableBody, null, this.props.rows.map(function (row) {
+      }, "Acties"))), /*#__PURE__*/React.createElement(TableBody, null, this.state.rows.map(function (row) {
         return /*#__PURE__*/React.createElement(Row, {
           key: row.id,
           row: row
@@ -84470,4 +84294,4 @@ function refreshTable() {
 
 refreshTable();
 
-},{"./Components/CustomSnackbar.jsx":509,"@material-ui/core":309,"@material-ui/core/Box":49,"@material-ui/core/Collapse":82,"@material-ui/core/IconButton":144,"@material-ui/core/Paper":196,"@material-ui/core/Table":269,"@material-ui/core/TableBody":250,"@material-ui/core/TableCell":252,"@material-ui/core/TableContainer":254,"@material-ui/core/TableHead":258,"@material-ui/core/TableRow":263,"@material-ui/core/TextField":275,"@material-ui/core/Tooltip":281,"@material-ui/core/Typography":283,"@material-ui/icons/Delete":376,"@material-ui/icons/Edit":377,"@material-ui/icons/KeyboardArrowDown":378,"@material-ui/icons/KeyboardArrowUp":379,"@material-ui/icons/Launch":380,"@material-ui/icons/Save":381,"react":501,"react-dom":485}]},{},[510]);
+},{"./Components/CustomSnackbar.jsx":509,"@material-ui/core":309,"@material-ui/core/Box":49,"@material-ui/core/Collapse":82,"@material-ui/core/IconButton":144,"@material-ui/core/Paper":196,"@material-ui/core/Table":269,"@material-ui/core/TableBody":250,"@material-ui/core/TableCell":252,"@material-ui/core/TableContainer":254,"@material-ui/core/TableHead":258,"@material-ui/core/TableRow":263,"@material-ui/core/TextField":275,"@material-ui/core/Tooltip":281,"@material-ui/core/Typography":283,"@material-ui/icons/DeleteRounded":376,"@material-ui/icons/Edit":377,"@material-ui/icons/KeyboardArrowDown":378,"@material-ui/icons/KeyboardArrowUp":379,"@material-ui/icons/Launch":380,"@material-ui/icons/Save":381,"react":501,"react-dom":485}]},{},[510]);

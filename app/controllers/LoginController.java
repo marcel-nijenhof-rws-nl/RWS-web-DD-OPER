@@ -34,11 +34,11 @@ public class LoginController extends Controller {
         EntityManager em = sessionFactory.createEntityManager();
         em.getTransaction().begin();
 
-        List<UserProfile> g = em.createQuery("select g from UserProfile g where email = :email", UserProfile.class)
+        UserProfile u = em.createQuery("select g from UserProfile g where g.email = :email", UserProfile.class)
                 .setParameter("email", email)
-                .getResultList();
+                .getSingleResult();
 
-        if (g.size() > 0) {
+        if (u != null) {
             return badRequest("Email is already in use.");
         } else {
             String hashedPassword = HashPassword(password);

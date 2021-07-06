@@ -48968,18 +48968,6 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/React.createElement("div", {
         className: "menu"
       }, /*#__PURE__*/React.createElement(_List["default"], null, /*#__PURE__*/React.createElement(_ListItem["default"], {
-        onClick: this.navigateCharts,
-        style: {
-          cursor: "pointer"
-        }
-      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_TimelineRounded["default"], {
-        fontSize: "large",
-        style: {
-          color: 'rgba(255,255,255,0.8)'
-        }
-      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
-        primary: "Grafieken"
-      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
         onClick: this.navigateMaps,
         style: {
           cursor: "pointer"
@@ -48991,6 +48979,18 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
         }
       })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
         primary: "Kaart"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.navigateCharts,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_TimelineRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Grafieken"
       })), /*#__PURE__*/React.createElement(_ListItem["default"], {
         onClick: this.navigateBookmarks,
         style: {
@@ -49016,18 +49016,6 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
         primary: "Instellingen"
       })), /*#__PURE__*/React.createElement(_Divider["default"], null), /*#__PURE__*/React.createElement(_ListItem["default"], {
-        onClick: this.logout,
-        style: {
-          cursor: "pointer"
-        }
-      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_ExitToAppRounded["default"], {
-        fontSize: "large",
-        style: {
-          color: 'rgba(255,255,255,0.8)'
-        }
-      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
-        primary: "Afmelden"
-      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
         onClick: this.openGithubIssues,
         style: {
           cursor: "pointer"
@@ -49039,6 +49027,18 @@ var NavigationMenu = /*#__PURE__*/function (_React$Component) {
         }
       })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
         primary: "Rapporteer"
+      })), /*#__PURE__*/React.createElement(_ListItem["default"], {
+        onClick: this.logout,
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/React.createElement(_ListItemIcon["default"], null, /*#__PURE__*/React.createElement(_ExitToAppRounded["default"], {
+        fontSize: "large",
+        style: {
+          color: 'rgba(255,255,255,0.8)'
+        }
+      })), /*#__PURE__*/React.createElement(_ListItemText["default"], {
+        primary: "Afmelden"
       }))));
     }
   }]);

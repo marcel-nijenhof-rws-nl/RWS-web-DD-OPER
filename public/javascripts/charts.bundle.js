@@ -115905,6 +115905,8 @@ var ChartMenu = /*#__PURE__*/function (_React$Component) {
             }), document.querySelector("div.snackbar-holder"));
           },
           success: function success(e) {
+            console.log(e);
+
             if (myChart) {
               var _e$results$0$location, _e$results$0$location2, _e$results$0$observat, _e$provider;
 

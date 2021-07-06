@@ -571,6 +571,7 @@ export default class ChartMenu extends React.Component {
                         document.querySelector("div.snackbar-holder"));
                 },
                 success: (e) => {
+                    console.log(e);
                     if (myChart) {
                         if (myChart.data.datasets.length > 0) {
                             this.setState({colorIndex: this.state.colorIndex + 1});

@@ -1,4 +1,6 @@
 import {Checkbox} from "@material-ui/core";
+// ICONS
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 
 const React = require('react');
 const ReactDOM = require('react-dom');
@@ -19,8 +21,6 @@ const Tooltip = require('@material-ui/core/Tooltip').default;
 
 const CustomSnackbar = require('./Components/CustomSnackbar.jsx');
 
-// ICONS
-const DeleteIcon = require('@material-ui/icons/Delete').default;
 const SaveIcon = require('@material-ui/icons/Save').default;
 const EditIcon = require('@material-ui/icons/Edit').default;
 const LaunchIcon = require('@material-ui/icons/Launch').default;
@@ -37,16 +37,13 @@ function createRow(groupName, id, bookmark) {
     return {groupName, id, bookmark}
 }
 
-// TODO: Make all rows (de)selected
-function selectAll(event) {
-    console.log(event.target.checked);
-}
 
 
 function Row(props) {
     const {row} = props;
     const [open, setOpen] = React.useState(false);
     const [editName, enableEdit] = React.useState(false);
+    const [checked, setCheck] = React.useState(false);
 
     const saveAndClose = (row) => {
         enableEdit(false);
@@ -121,7 +118,7 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
                     </IconButton>
                 </TableCell>
-                <TableCell><Checkbox color="primary"/></TableCell>
+                <TableCell><Checkbox color="primary" checked={checked} onClick={() => setCheck(!checked)}/></TableCell>
                 {!editName ?
                     <TableCell align="left">{row.groupName}</TableCell> :
                     <TableCell align="left">
@@ -150,7 +147,7 @@ function Row(props) {
                             </Tooltip>
                             <Tooltip title="Verwijder">
                                 <IconButton aria-label="delete" onClick={deleteRow.bind(this, row)}>
-                                    <DeleteIcon/>
+                                    <DeleteRoundedIcon/>
                                 </IconButton>
                             </Tooltip>
                         </>
@@ -162,7 +159,7 @@ function Row(props) {
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography variant="h6" gutterBottom component="div">
-                                Bladwijzers
+                                Parameters
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
@@ -193,25 +190,42 @@ function Row(props) {
 }
 
 export class BookmarkTable extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            allSelected : false,
+            rows: this.props.rows,
+        }
+
+        this.selectAll = this.selectAll.bind(this);
+    }
+
+    selectAll(event) {
+        this.setState({allSelected : event.target.checked}, () => {
+        });
+    }
+
 
     render() {
         return <TableContainer component={Paper} style={{width: "80vw"}}>
             <Table style={{width: "700"}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell/>
-                        <TableCell><Checkbox color="primary" onChange={selectAll}/></TableCell>
+                        <TableCell>
+                            <div hidden={!this.state.allSelected}><IconButton><DeleteRoundedIcon/></IconButton></div>
+                        </TableCell>
+                        <TableCell><Checkbox color="primary" onChange={this.selectAll}/>Selecteer Alles</TableCell>
                         <TableCell align="left">Naam</TableCell>
                         <TableCell align="center">Acties</TableCell>
                     </TableRow>
                 </TableHead>
 
                 <TableBody>
-                    {this.props.rows.map((row) => (
+                    {this.state.rows.map((row) => (
                         <Row key={row.id} row={row}/>
                     ))}
                 </TableBody>
-
             </Table>
         </TableContainer>
     }

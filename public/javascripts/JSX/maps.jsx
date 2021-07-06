@@ -109,7 +109,7 @@ export function drawMarkers(quantities = null, searchString = null) {
 
     clearMarkers();
 
-    let markers = new L1.MarkerClusterGroup({
+    let markerClusterGroup = new L1.MarkerClusterGroup({
         showCoverageOnHover: true,
         iconCreateFunction: (cluster) => {
             return L.divIcon({
@@ -118,7 +118,7 @@ export function drawMarkers(quantities = null, searchString = null) {
         }
     });
 
-    clusterId = markers._leaflet_id;
+    clusterId = markerClusterGroup._leaflet_id;
 
     if (quantities != null && (quantities !== [] && quantities.length > 0)) {
         function retrieveLocations() {
@@ -180,9 +180,9 @@ export function drawMarkers(quantities = null, searchString = null) {
             return coordinates;
         }
 
-        function addMarkers(coordinates) {
+        function addMarkers(location) {
             let checked = [];
-            coordinates.forEach(coordinate => {
+            location.forEach(coordinate => {
                 if (!checked.includes(coordinate.displayName)) {
                     checked.push(coordinate.displayName);
                     let marker = L.marker([coordinate.lat, coordinate.long])
@@ -198,10 +198,10 @@ export function drawMarkers(quantities = null, searchString = null) {
                         .openTooltip()
                         .on('click', () => showMarkerInfo(coordinate));
 
-                    markers.addLayer(marker);
+                    markerClusterGroup.addLayer(marker);
                 }
             });
-            return markers;
+            return markerClusterGroup;
         }
 
         function redrawMap(markers) {
@@ -261,11 +261,11 @@ export function drawMarkers(quantities = null, searchString = null) {
                             .openTooltip()
                             .on('click', () => showMarkerInfo(coordinate));
 
-                        markers.addLayer(marker);
+                        markerClusterGroup.addLayer(marker);
                     }
                 });
 
-                worldMap.addLayer(markers);
+                worldMap.addLayer(markerClusterGroup);
             },
             error: () => {
                 ReactDOM.render(<CustomSnackbar
