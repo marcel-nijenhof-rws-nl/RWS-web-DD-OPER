@@ -1,6 +1,9 @@
+# Archived code
+This project is obsolete and out of support.
+
 # Rijkswaterstaat DD-OPER API
 
-This project is made for Rijkswaterstaat as a reference implementation of the [DD-OPER API](https://digitaledeltaorg.github.io/dd-oper.v201.html).
+This project is made as internship assignment for Rijkswaterstaat as a reference implementation of the [DD-OPER API](https://digitaledeltaorg.github.io/dd-oper.v201.html).
 
 # Installation
 
